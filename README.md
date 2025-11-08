@@ -1,5 +1,6 @@
 ![Demo](putaminishell.gif)
 
+```
 minishell/
 ├── src/
 │   ├── main.c
@@ -15,7 +16,7 @@ minishell/
 Pipeline de Ejecución
 
 Input → Lexer → Parser → Expander → Executor
-
+```
 tokenizacion jerarquía; comillas dobles ("..."), comillas simples ('...') y sin comillas (Expansión normal).
 
 TIPOS DE TOKENS;
