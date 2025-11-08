@@ -1,1 +1,1 @@
-[minishell](putaminishell.gif)
+![Demo](putaminishell.gif)
