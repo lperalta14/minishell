@@ -82,7 +82,14 @@ int open(const char *pathname, int flags, mode_t mode);
 
 **💡 Uso en Minishell:**  
 Abrir archivos durante redirecciones de salida (>) con permisos 0644. Abrir archivos de entrada (<) en modo solo lectura. Crear archivos temporales para heredocs. Gestionar redirecciones de append (>>).
+Flags comunes:
 
+O_RDONLY: Solo lectura
+O_WRONLY: Solo escritura
+O_RDWR: Lectura y escritura
+O_CREAT: Crear si no existe
+O_TRUNC: Truncar a 0 bytes
+O_APPEND: Añadir al final
 ---
 
 ### `close`
