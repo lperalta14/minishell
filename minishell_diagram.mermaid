@@ -1,0 +1,46 @@
+graph TD
+    A[Inicio: main] --> B[Inicializar Señales]
+    B --> C[Configurar Entorno]
+    C --> D{Loop Principal}
+    
+    D --> E[readline: Mostrar Prompt]
+    E --> F{¿Input recibido?}
+    
+    F -->|CTRL-D / NULL| Z[Salir del programa]
+    F -->|Línea vacía| D
+    F -->|Comando válido| G[add_history]
+    
+    G --> H[LEXER: Tokenizar]
+    H --> I{¿Errores de sintaxis?}
+    
+    I -->|Sí| J[Mostrar error]
+    J --> D
+    
+    I -->|No| K[PARSER: Crear AST]
+    K --> L[EXPANDER: Variables y Quotes]
+    
+    L --> M{¿Es Builtin?}
+    
+    M -->|Sí| N[Ejecutar en Padre]
+    N --> O[Actualizar Exit Status]
+    O --> D
+    
+    M -->|No| P[fork - Crear Hijo]
+    P --> Q{¿En el Hijo?}
+    
+    Q -->|Sí| R[Configurar Redirecciones]
+    R --> S[Configurar Pipes]
+    S --> T[Buscar en PATH]
+    T --> U[execve: Ejecutar]
+    U --> V{¿Éxito?}
+    V -->|No| W[perror + exit 127/126]
+    
+    Q -->|No, Padre| X[waitpid: Esperar Hijo]
+    X --> Y[Capturar Exit Status]
+    Y --> D
+    
+    style D fill:#e1f5ff
+    style M fill:#fff4e1
+    style P fill:#ffe1e1
+    style N fill:#e1ffe1
+    style Z fill:#ff9999
