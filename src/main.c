@@ -19,5 +19,7 @@ int main(int argc, char **argv, char **envp)
 		printf("Input: %s\n", input);
 		free(input);
 	}
+	clear_history();
+	rl_clear_history();
 	return(0);
 }
