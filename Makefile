@@ -5,6 +5,16 @@ NAME = minishell
 INCLUDES_DIR = include
 OBJ_DIR = obj
 
+# Includes 
+INCLUDES = $(INCLUDES_DIR)/minishell.h \
+	$(INCLUDES_DIR)/libft.h \
+	$(INCLUDES_DIR)/builtins.h \
+	$(INCLUDES_DIR)/executor.h \
+	$(INCLUDES_DIR)/expander.h \
+	$(INCLUDES_DIR)/parser.h \
+	$(INCLUDES_DIR)/lexer.h \
+	$(INCLUDES_DIR)/utils.h
+
 # Source directories
 BUIL_DIR = src/builtins
 EXE_DIR = src/executor
@@ -13,7 +23,7 @@ PARS_DIR = src/parser
 TOK_DIR = src/tokenizer
 UTILS_DIR = src/utils
 
-# Source files (estructura real del repo)
+# Source files
 BUILTINS = $(BUIL_DIR)/cdcommand.c
 
 EXECUTOR = $(EXE_DIR)/pipes.c

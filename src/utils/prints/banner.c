@@ -49,8 +49,8 @@ printf("%s", NC);
  */
 void	print_banner(char *text)
 {
-	int	i;
-	int	fd;
+	int		i;
+	int		fd;
 	char	*line;
 	char	*color[6];
 
@@ -61,9 +61,10 @@ void	print_banner(char *text)
 	color[4] = BLUE;
 	color[5] = PURPLE;
 	fd = open(text, O_RDONLY);
-	i = 0;
+	if (fd<0)
+		return ;
 	line = get_next_line(fd);
-	while (line )
+	while (line)
 	{
 		printf("%s%s", color[i % 6], line);
 		free(line);
