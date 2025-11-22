@@ -70,6 +70,7 @@ void	print_banner(char *text)
 		line = get_next_line(fd);
 		i++;
 	}
-	printf("%s\n", NC);
+	printf("%s%s%s%s%s%s%s%s%s%s%s\n", RED, "by: ", ORANGE, 
+		"msed", GREEN, "eno- &", BLUE, "& lpera", PURPLE, "lta :)", NC);
 	close(fd);
 }
