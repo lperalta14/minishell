@@ -3,7 +3,7 @@ name: CI - Build minishell
 on:
   pull_request:
     branches:
-      - devops
+      - develop
       - main
 
 jobs:
