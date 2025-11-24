@@ -6,7 +6,7 @@
 /*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 17:19:52 by lperalta          #+#    #+#             */
-/*   Updated: 2025/11/21 20:08:52 by lperalta         ###   ########.fr       */
+/*   Updated: 2025/11/24 12:24:28 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ printf("%s", NC);
  */
 void	print_banner(char *text)
 {
-	int	i;
-	int	fd;
+	int		i = 0;
+	int		fd;
 	char	*line;
 	char	*color[6];
 
+	i = 0;
 	color[0] = RED;
 	color[1] = ORANGE;
 	color[2] = YELLOW;
@@ -61,14 +62,14 @@ void	print_banner(char *text)
 	color[4] = BLUE;
 	color[5] = PURPLE;
 	fd = open(text, O_RDONLY);
-	i = 0;
+	if (fd<0)
+		return ;
 	line = get_next_line(fd);
-	while (line )
+	while (line && ++i)
 	{
 		printf("%s%s", color[i % 6], line);
 		free(line);
 		line = get_next_line(fd);
-		i++;
 	}
 	printf("%s%s%s%s%s%s%s%s%s%s%s\n", RED, "by: ", ORANGE, 
 		"msed", GREEN, "eno- &", BLUE, "& lpera", PURPLE, "lta :)", NC);

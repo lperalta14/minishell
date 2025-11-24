@@ -1,0 +1,22 @@
+name: CI - Build minishell
+
+on:
+  pull_request:
+    branches:
+      - devops
+      - main
+
+jobs:
+  build:
+    name: Build with make
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
+      - name: Compile project
+        run: make
