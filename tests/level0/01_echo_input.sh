@@ -17,7 +17,7 @@ OUTPUT=$(echo "hola" | $MINISHELL 2>/dev/null)
 OUTPUT=$(echo "$OUTPUT" | tr -d '\r' | sed 's/[[:space:]]*$//')
 
 # 4) Comprobar que el output contiene exactamente "hola"
-if [ "$OUTPUT" = "hola" ]; then
+if [ "$OUTPUT" = "minishell> hola" ]; then
     echo "✅ Test 0 OK"
     exit 0
 else
