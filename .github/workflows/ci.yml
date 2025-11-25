@@ -24,7 +24,7 @@ jobs:
         run: make fclean || true
 
       - name: Compile project
-        run: make
+        run: make > build.log 2>&1
 
       - name: Check output binary
         run: |
@@ -32,3 +32,9 @@ jobs:
             echo "❌ Error: No se ha generado el ejecutable minishell"
             exit 1
           fi
+
+      - name: Upload build log
+        uses: actions/upload_artifact@v4
+        with:
+          name: build-log
+          path: build.log
