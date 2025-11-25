@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+
+# Test 0: minishell devuelve el input correctamente
+# Compatible con banners y prompt "minishell>"
+
+set timeout 5
+set expected "hola"
+
+# Ejecutar minishell
+spawn ./minishell
+
+# Esperar el prompt inicial
+expect "minishell> "
+
+# Enviar input
+send "$expected\r"
+
+# Esperar que la shell imprima exactamente el input
+expect {
+    "$expected" { puts "✅ Test 0 OK" }
+    timeout {
+        puts "❌ Test 0 FAIL: '$expected' no recibido"
+        exit 1
+    }
+}
+
+# Salir con Ctrl+D
+send "\004"
+
+# Esperar que termine la shell
+expect eof
+exit 0

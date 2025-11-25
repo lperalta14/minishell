@@ -1,0 +1,47 @@
+name: CI - Build minishell
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    name: Build with make
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libreadline-dev expect
+
+      - name: Clean previous builds
+        run: make fclean || true
+
+      - name: Compile project
+        run: make > build.log 2>&1
+
+      - name: Check output binary
+        run: |
+          if [ ! -f minishell ]; then
+            echo "❌ Error: No se ha generado el ejecutable minishell"
+            exit 1
+          fi
+
+      - name: Upload build log
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+
+      - name: Run level 0 interactive test
+        run: |
+          chmod +x tests/level0/*.exp
+          for t in tests/level0/*.exp; do
+            $t
+          done
