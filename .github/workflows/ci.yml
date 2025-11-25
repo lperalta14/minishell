@@ -38,3 +38,10 @@ jobs:
         with:
           name: build-log
           path: build.log
+
+      - name: Run level 0 tests
+        run: |
+          chmod +x tests/level0/*.sh
+          for t in tests/level0/*sh; do
+            $t
+          done
