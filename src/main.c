@@ -4,19 +4,20 @@ int main(int argc, char **argv, char **envp)
 {
 	char	*input;
 
-	if (argc > 0 || argv[0] || envp)
-	print_banner("banners/acrobata.txt");
+	if (argc > 0 || argv || envp)
+	if (isatty(STDIN_FILENO))//para los test (isatty solo muestra el banner si es interactivo)
+		print_banner("banners/acrobata.txt");
 	while (1)
 	{
 		input = readline("minishell> ");
 		if (!input)
 		{
-			print_banner("banners/bye.txt");
+			if (isatty(STDIN_FILENO))
+				print_banner("banners/bye.txt");
 			break;;
 		}
-		else
-			add_history(input);
-		printf("Input: %s\n", input);
+		add_history(input);
+		printf("%s\n", input);
 		free(input);
 	}
 	clear_history();

@@ -16,19 +16,32 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run:  |
+        run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libreadline-de
+          sudo apt-get install -y build-essential libreadline-dev
 
       - name: Clean previous builds
         run: make fclean || true
 
       - name: Compile project
-        run: make
+        run: make > build.log 2>&1
 
       - name: Check output binary
-        run:  |
+        run: |
           if [ ! -f minishell ]; then
             echo "❌ Error: No se ha generado el ejecutable minishell"
             exit 1
           fi
+
+      - name: Upload build log
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+
+      - name: Run level 0 tests
+        run: |
+          chmod +x tests/level0/*.sh
+          for t in tests/level0/*sh; do
+            $t
+          done
