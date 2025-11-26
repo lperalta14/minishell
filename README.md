@@ -1,8 +1,8 @@
 # 🐚 Minishell
 
 <div align="center">
-
-![Minishell Banner](minishell.gif)
+![WORKINPROGRESS](banners/workinprogres.gif)
+![Minishell Banner](banners/minishell.gif)
 
 **Una reimplementación moderna de Bash como proyecto de 42**
 
