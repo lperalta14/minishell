@@ -1,4 +1,4 @@
-![Demo](putaminishell.gif)
+![Demo](minishell.gif)
 
 ```
 minishell/
