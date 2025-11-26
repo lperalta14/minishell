@@ -467,8 +467,8 @@ El proyecto incluye hooks automatizados:
       <sub>lperalta@student.42.fr</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/colaborador">
-        <img src="https://github.com/github.png" width="100px;" alt="Colaborador"/>
+      <a href="https://github.com/casimarasn">
+        <img src="https://cdn.intra.42.fr/users/1c2b22c55757980443f96ecd768eddf3/msedeno-.jpg" width="100px;" alt="Colaborador"/>
         <br />
         <sub><b>Colaborador</b></sub>
       </a>
