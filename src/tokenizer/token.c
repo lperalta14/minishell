@@ -5,17 +5,30 @@
 
 ✅ Termina add_token()
 ✅ Añade t_quote_type a las estructuras
-✅ Crea tokenize() básico que solo detecte operadores y palabras SIN comillas
-✅ Crea print_tokens() para debug
-✅ Prueba con strings simples: "ls | grep hola"
-✅ Implementa try_extract_quoted() con backtracking
-✅ Integra el manejo de comillas en tokenize()
-✅ Prueba casos complejos
+ Crea tokenize() básico que solo detecte operadores y palabras SIN comillas
+ Crea print_tokens() para debug
+ Prueba con strings simples: "ls | grep hola"
+ Implementa try_extract_quoted() con backtracking
+ Integra el manejo de comillas en tokenize()
+ Prueba casos complejos
 
 */
 
 tokenize()
 {
+	t_token	*tokens;
+	t_lexer_state *state;
+
+	while (state->pos < state->len)
+	{
+		skip_spaces(state);
+		if (is_operator(state->input[state->pos]))
+			check_operator(state, &tokens);
+		else if (is_quote(state->input[state->pos]))
+			try_extract_quoted(state, &tokens);
+		else
+			extract_word(state, &tokens);
+	}
 	mientras no llegues al final del string:
 	- saltar espacios
 	- si es operador → crear token operador
@@ -23,13 +36,7 @@ tokenize()
 		- si falla → tratar como palabra normal
 	- si no → extraer palabra normal
 }
-/**
- * @brief 
- * 
- * @param type 
- * @param value 
- * @return t_token* 
- */
+ 
 t_token	*createtoken(t_token_type type, char *value)
 {
 	t_token	*token;
@@ -64,49 +71,52 @@ void	add_token(t_token **head, t_token *new)
 	tmp->next = new;
 }
 
+static void	operator_red(t_lexer_state *state, t_token **tokens)
+{
+	char	c;
+
+	c = state->input[state->pos];
+	if (c == '<' && state->input[state->pos + 1] == '<')
+	{
+		add_token(tokens, createtoken(TOKEN_HEREDOC, "<<"));
+		state->pos += 2;
+	}
+	else if (c == '<')
+	{
+		add_token(tokens, createtoken(TOKEN_REDIR_IN, "<"));
+		state->pos++;
+	}
+	else if (c == '>' && state->input[state->pos + 1] == '>')
+	{
+		add_token(tokens, createtoken(TOKEN_APPEND, ">>"));
+		state->pos += 2;
+	}
+	else if (c == '>')
+	{
+		add_token(tokens, createtoken(TOKEN_REDIR_OUT, ">"));
+		state->pos++;
+	}
+}
+
+
 /**
  * @brief Construct a new check operator object
  * 
  * @param state 
  */
-check_operator(t_lexer_state *state)
+void check_operator(t_lexer_state *state, t_token **tokens)
 {
 	char	c;
 
 	c = state->input[state->pos];
-	while (c)
+
+	if (c == '|')
 	{
-		if (c == '|')
-		{
-			t_token *token = createtoken(TOKEN_PIPE, "|");
-			add_token( head, token);
-			state->pos++;
-		}
-		if (c == '<' && state->input[state->pos+1] == '<')
-		{
-			t_token *token = createtoken(TOKEN_APPEND, "<<");
-			add_token( head, token);
-			state->pos += 2;
-		}
-		else
-		{
-			t_token *token = createtoken(TOKEN_REDIR_IN , "<");
-			add_token( head, token);
-			state->pos++;
-		}
-		if (c == '>' && state->input[state->pos+1] == '>')
-		{
-			t_token *token = createtoken(TOKEN_HEREDOC, ">>");
-			add_token( head, token);
-			state->pos += 2;
-		}
-		else
-		{
-			t_token *token = createtoken(TOKEN_REDIR_OUT, ">");
-			add_token( head, token);
-			state->pos++;
-		}
+		add_token(tokens, createtoken(TOKEN_PIPE, "|"));
+		state->pos++;
 	}
+	else if ((c == '<') || (c == '>'))
+		operator_red(state, tokens);
 }
 
 /**
@@ -114,8 +124,9 @@ check_operator(t_lexer_state *state)
  * 
  * @param state 
  */
-extract_word(t_lexer_state *state)
+extract_word(t_lexer_state *state, t_token **tokens)
 {
+
 Debe:
 
 Leer caracteres mientras no sean espacios ni operadores
@@ -133,14 +144,43 @@ Guardas la posición actual (checkpoint)
 Intentas encontrar la comilla de cierre
 Si la encuentras → Éxito, creas token con el tipo de comilla
 Si NO la encuentras → BACKTRACK: vuelves al checkpoint y tratas la comilla como un carácter normal
-
-Pregunta para ti: ¿Entiendes por qué esto es backtracking? Es como decir "a ver si funciona, y si no, deshago y pruebo otra cosa".
-Función: try_extract_quoted(t_lexer_state *state, char quote_char)
-Debe retornar:
+*/
+	Debe retornar:
 
 El string extraído si tuvo éxito
-NULL si falló (y entonces haces backtrack)
+NULL
+backtrack
+char	*try_extract_quoted(t_lexer_state *state)
+{
+	int		start;
+	int		i;
+	char	quote;
+	char	*result;
 
+	quote = state->input[state->pos];
+	start = state->pos;
+	i = start + 1;
+	while (i < state->len)
+	{
+		if (quote == '"' && state->input[i] == '\\'
+			&& i + 1 < state->len)
+		{
+			i += 2;
+			continue ;
+		}
+		if (state->input[i] == quote)
+		{
+			result = ft_substr(state->input, start + 1, i - (start + 1));
+			state->pos = i + 1;
+			return (result);
+		}
+		i++;
+	}
+	state->pos = start;
+	return (NULL);
+}
+
+/*
 Detalles importantes:
 
 En comillas dobles ", el backslash \ escapa el siguiente carácter
@@ -163,3 +203,4 @@ Cuando estás dentro de comillas simples, las dobles son literales:
 Pero ojo: la jerarquía aplica cuando estás buscando qué comilla abrir. Si encuentras primero ", buscas su cierre ignorando ' intermedias.
 Pregunta: ¿Ves la diferencia entre "jerarquía de apertura" y "anidamiento"? No es lo mismo.
 */
+
