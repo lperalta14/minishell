@@ -13,16 +13,92 @@
 ✅ Prueba casos complejos
 
 */
+/**
+ * @brief Salta espacios y tabulaciones en el input
+ * 
+ * @param state Estado del lexer con posición actual
+ */
+void	skip_spaces(t_lexer_state *state)
+{
+	while (state->pos < state->len && (state->input[state->pos] == ' '
+			|| state->input[state->pos] == '\t'))
+		state->pos++;
 
+}
+
+/**
+ * @brief
+ * 
+ * @param
+ */
+int	is_operator(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
+}
+
+/**
+ * @brief Construct a new extract word object
+ * 
+ * @param state
+ * @param tokens Puntero a la lista de tokens
+ */
+void	*extract_word(t_lexer_state *state, t_token **tokens)
+{
+	int		start;
+	int		len;
+	char	*word;
+	t_token	*token;
+
+	start = state->pos;
+	len = 0;
+	while (state->pos < state->len && !is_operator(state->input[state->pos])
+		&& state->input[state->pos] != ' ' && state->input[state->pos] != '\t')
+	{
+		len++;
+		state->pos++;
+	}
+	word = ft_substr(state->input, start, len);
+	if (!word)
+		return ;
+	token = createtoken(TOKEN_WORD, word);
+	if (token)
+		token->quote = QUOTE_NONE;
+	add_token(tokens, token);
+	free(word);
+}
+
+Debe:
+
+Leer caracteres mientras no sean espacios ni operadores
+Crear un string con esos caracteres
+Crear un token TOKEN_WORD con quote = QUOTE_NONE
+Avanzar posición
+
+/**
+ * @brief
+ * 
+ * @param
+ */
 tokenize()
 {
-	mientras no llegues al final del string:
-	- saltar espacios
+	t_token *tokens;
+	t_lexer_state *state;
+	while (state->pos < state->len)
+	{
+		skip_spaces(state);
+		if (is_operator(state->input[state->pos]))
+			addtoken(&tokens, createtoken(check_operator(t_lexer_state *state)))
+		else if (is_quote(state->input[state->pos]))
+			try_extract_quoted(state, &tokens);
+		else
+			extract_word(state, &tokens);
+	}
 	- si es operador → crear token operador
 	- si es comilla → intentar extraer con backtracking
 		- si falla → tratar como palabra normal
 	- si no → extraer palabra normal
 }
+
 /**
  * @brief 
  * 
@@ -38,7 +114,18 @@ t_token	*createtoken(t_token_type type, char *value)
 	if (!token)
 		return (NULL);
 	token->type = type;
-	token->value = ft_strdup(value);
+	token->quote = QUOTE_NONE;
+	if (value)
+	{
+		token->value = ft_strdup(value);
+		if (!token->value)
+		{
+			free(token);
+			return (NULL);
+		}
+	}
+	else
+		token->value = NULL;
 	token->next = NULL;
 	return (token);
 }
@@ -109,20 +196,7 @@ check_operator(t_lexer_state *state)
 	}
 }
 
-/**
- * @brief Construct a new extract word object
- * 
- * @param state 
- */
-extract_word(t_lexer_state *state)
-{
-Debe:
 
-Leer caracteres mientras no sean espacios ni operadores
-Crear un string con esos caracteres
-Crear un token TOKEN_WORD con quote = QUOTE_NONE
-Avanzar posición
-}
 
 /*
 BACKTRACKING 🎯
