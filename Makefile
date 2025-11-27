@@ -32,7 +32,7 @@ EXPANDER = $(EXP_DIR)/expand.c
 
 PARSER = $(PARS_DIR)/parse.c
 
-TOKENIZER = $(TOK_DIR)/token.c
+TOKENIZER = $(TOK_DIR)/token.c $(TOK_DIR)/quotes.c $(TOK_DIR)utils_tokens.c
 
 UTILS = $(UTILS_DIR)/prints/banner.c
 

@@ -13,35 +13,7 @@
  Prueba casos complejos
 
 */
-/**
- * @brief Salta espacios y tabulaciones en el input
- * 
- * @param state Estado del lexer con posición actual
- */
-void	skip_spaces(t_lexer_state *state)
-{
-	while (state->pos < state->len && (state->input[state->pos] == ' '
-			|| state->input[state->pos] == '\t'))
-		state->pos++;
 
-}
-
-/**
- * @brief
- * 
- * @param
- */
-int	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-}
-
-/**
- * @brief Construct a new extract word object
- * 
- * @param state
- * @param tokens Puntero a la lista de tokens
- */
 void	*extract_word(t_lexer_state *state, t_token **tokens)
 {
 	int		start;
@@ -67,18 +39,6 @@ void	*extract_word(t_lexer_state *state, t_token **tokens)
 	free(word);
 }
 
-Debe:
-
-Leer caracteres mientras no sean espacios ni operadores
-Crear un string con esos caracteres
-Crear un token TOKEN_WORD con quote = QUOTE_NONE
-Avanzar posición
-
-/**
- * @brief
- * 
- * @param
- */
 tokenize()
 {
 	t_token	*tokens;
@@ -94,66 +54,15 @@ tokenize()
 		else
 			extract_word(state, &tokens);
 	}
+}
+/*
 	mientras no llegues al final del string:
 	- saltar espacios
 	- si es operador → crear token operador
 	- si es comilla → intentar extraer con backtracking
 		- si falla → tratar como palabra normal
 	- si no → extraer palabra normal
-}
-
-/**
- * @brief 
- * 
- * @param type 
- * @param value 
- * @return t_token* 
- */
-t_token	*createtoken(t_token_type type, char *value)
-{
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = type;
-	token->quote = QUOTE_NONE;
-	if (value)
-	{
-		token->value = ft_strdup(value);
-		if (!token->value)
-		{
-			free(token);
-			return (NULL);
-		}
-	}
-	else
-		token->value = NULL;
-	token->next = NULL;
-	return (token);
-}
-
-/**
- * @brief 
- * 
- * @param head 
- * @param new 
- */
-void	add_token(t_token **head, t_token *new)
-{
-	t_token	*tmp;
-
-	if (!*head)
-	{
-		*head = new;
-		return ;
-	}
-	tmp = *head;
-	while (tmp-> next)
-		tmp = tmp->next;
-	tmp->next = new;
-}
-
+*/
 static void	operator_red(t_lexer_state *state, t_token **tokens)
 {
 	char	c;
@@ -182,11 +91,6 @@ static void	operator_red(t_lexer_state *state, t_token **tokens)
 }
 
 
-/**
- * @brief Construct a new check operator object
- * 
- * @param state 
- */
 void check_operator(t_lexer_state *state, t_token **tokens)
 {
 	char	c;
@@ -213,40 +117,6 @@ Intentas encontrar la comilla de cierre
 Si la encuentras → Éxito, creas token con el tipo de comilla
 Si NO la encuentras → BACKTRACK: vuelves al checkpoint y tratas la comilla como un carácter normal
 */
-	Debe retornar:
-
-El string extraído si tuvo éxito
-NULL
-backtrack
-char	*try_extract_quoted(t_lexer_state *state)
-{
-	int		start;
-	int		i;
-	char	quote;
-	char	*result;
-
-	quote = state->input[state->pos];
-	start = state->pos;
-	i = start + 1;
-	while (i < state->len)
-	{
-		if (quote == '"' && state->input[i] == '\\'
-			&& i + 1 < state->len)
-		{
-			i += 2;
-			continue ;
-		}
-		if (state->input[i] == quote)
-		{
-			result = ft_substr(state->input, start + 1, i - (start + 1));
-			state->pos = i + 1;
-			return (result);
-		}
-		i++;
-	}
-	state->pos = start;
-	return (NULL);
-}
 
 /*
 Detalles importantes:

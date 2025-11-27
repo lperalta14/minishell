@@ -1,6 +1,78 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+# include "minishell.h"
+
+#########################################################
+#					UTILS_TOKENS.C						#
+#########################################################
+
+/**
+ * @brief Salta espacios y tabulaciones en el input
+ * 
+ * @param state Estado del lexer con posición actual
+ */
+void	skip_spaces(t_lexer_state *state);
+
+/**
+ * @brief 
+ * 
+ * @param c 
+ * @return int 
+ */
+int	is_operator(char c);
+
+/**
+ * @brief 
+ * 
+ * @param type 
+ * @param value 
+ * @return t_token* 
+ */
+t_token	*createtoken(t_token_type type, char *value);
+
+/**
+ * @brief 
+ * 
+ * @param head 
+ * @param new 
+ */
+void	add_token(t_token **head, t_token *new);
+
+#########################################################
+#						TOKEN.C							#
+#########################################################
+
+/**
+ * @brief Construct a new extract word object
+ * 
+ * @param state
+ * @param tokens Puntero a la lista de tokens
+ */
+void	*extract_word(t_lexer_state *state, t_token **tokens);
+
+tokenize();
+
+/**
+ * @brief 
+ * 
+ * @param state 
+ * @param tokens 
+ */
+void check_operator(t_lexer_state *state, t_token **tokens);
+
+#########################################################
+#						QUOTES.C						#
+#########################################################
+/**
+ * @brief 
+ * 
+ * @param st 
+ * @param tokens 
+ * @return int 
+ */
+int	try_extract_quoted(t_lexer_state *st, t_token **tokens);
+
 typedef enum e_token_type
 {
 	TOKEN_WORD,
