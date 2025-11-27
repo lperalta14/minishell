@@ -14,7 +14,7 @@
 
 */
 
-void	*extract_word(t_lexer_state *state, t_token **tokens)
+void	extract_word(t_lexer_state *state, t_token **tokens)
 {
 	int		start;
 	int		len;
@@ -39,18 +39,20 @@ void	*extract_word(t_lexer_state *state, t_token **tokens)
 	free(word);
 }
 
-tokenize()
+void	tokenize()
 {
 	t_token	*tokens;
 	t_lexer_state *state;
 
+	state = NULL;
+	state->pos = 0;
 	while (state->pos < state->len)
 	{
 		skip_spaces(state);
 		if (is_operator(state->input[state->pos]))
-			addtoken(&tokens, createtoken(check_operator(state)))
-		else if (is_quote(state->input[state->pos]))
-			try_extract_quoted(state, &tokens);
+			check_operator(state, &tokens);
+		else if ((state->input[state->pos] == '\"') || (state->input[state->pos] == '\''))
+			try_extract_quoted(state, &tokens, NULL);
 		else
 			extract_word(state, &tokens);
 	}

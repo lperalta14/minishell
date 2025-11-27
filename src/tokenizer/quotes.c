@@ -20,7 +20,7 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 	int	step;
 
 	i = st->pos + 1;
-	while (str[i] != '\0')
+	while (st->input[i])
 	{
 		step = handle_escape(st->input, i, quote);
 		if (step == 2)
@@ -46,7 +46,7 @@ static char	*extract_quoted_value(t_lexer_state *st, int end)
 	return (str);
 }
 
-int	try_extract_quoted(t_lexer_state *st, t_token **tokens)
+int	try_extract_quoted(t_lexer_state *st, t_token **tokens, t_token *token)
 {
 	int		end;
 	char	quote;
@@ -59,10 +59,17 @@ int	try_extract_quoted(t_lexer_state *st, t_token **tokens)
 	value = extract_quoted_value(st, end);
 	if (!value)
 		return (0);
+	token = createtoken(TOKEN_WORD, value);
+	if (!token)
+	{
+		free(value);
+		return (0);
+	}
 	if (quote == '"')
-		add_token(tokens, createtoken(TOKEN_DQUOTE, value));
+		token->quote = QUOTE_DOUBLE;
 	else
-		add_token(tokens, createtoken(TOKEN_SQUOTE, value));
+		token->quote = QUOTE_SINGLE;
+	add_token(tokens, token);
 	free(value);
 	st->pos = end + 1;
 	return (1);

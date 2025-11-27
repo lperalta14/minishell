@@ -3,10 +3,8 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	t_
 
-	(void)argc;
-	(void)argv;
+	if (argc > 0 || argv || envp)
 	// TODO: Inicializar señales (signal/sigaction)
 	// TODO: Guardar envp en una estructura global
 	if ( isatty(STDIN_FILENO))//test (isatty solo muest banner si interact)
