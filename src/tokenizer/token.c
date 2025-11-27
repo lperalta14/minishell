@@ -13,6 +13,7 @@ t_token	*createtoken(t_token_type type, char *value)
 	token->next = NULL;
 	return (token);
 }
+
 void	add_token(t_token **head, t_token *new)
 {
 	t_token	*tmp;
@@ -24,9 +25,8 @@ void	add_token(t_token **head, t_token *new)
 	}
 	tmp = *head;
 	while (tmp-> next)
-	{
-		
-	}
+		tmp = tmp->next;
+	tmp->next = new;
 }
 
 check_operator(t_lexer_state *state)
