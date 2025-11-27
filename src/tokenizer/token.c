@@ -28,3 +28,17 @@ void	add_token(t_token **head, t_token *new)
 		
 	}
 }
+
+check_operator(t_lexer_state *state)
+{
+	ver si el caracter actual es |, <, >, (, )
+	si es > o <, mirar si el siguente tambien lo es (>>, <<)
+	crear el token correspondiente
+	Avanzar la posicion
+
+	ORDEN DE IMPLEMENTACION
+	 Pipe | (más fácil)
+	 Parentesis ( y )
+	 Redirecciones simples < y >
+	 Redirecciones dobles >> y <<
+}
