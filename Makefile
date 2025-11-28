@@ -34,7 +34,7 @@ PARSER = $(PARS_DIR)/parse.c
 
 TOKENIZER = $(TOK_DIR)/token.c $(TOK_DIR)/quotes.c $(TOK_DIR)/utils_tokens.c
 
-UTILS = $(UTILS_DIR)/prints/banner.c
+UTILS = $(UTILS_DIR)/prints/banner.c $(UTILS_DIR)/prints/tokens.c
 
 SRCS = src/main.c $(BUILTINS) $(EXECUTOR) $(EXPANDER) $(PARSER) \
 	$(TOKENIZER) $(UTILS)

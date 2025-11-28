@@ -87,7 +87,7 @@ void	add_token(t_token **head, t_token *new);
  */
 void	extract_word(t_lexer_state *state, t_token **tokens);
 
-void	tokenize();
+t_token	*tokenize(char *line);
 
 /**
  * @brief 

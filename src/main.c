@@ -3,6 +3,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	t_token	*tokens;
 
 	if (argc > 0 || argv || envp)
 	// TODO: Inicializar señales (signal/sigaction)
@@ -20,7 +21,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		add_history(input);
 		// TODO: Llamar al lexer/parser aquí en lugar de printf
-		printf("%s\n", input);
+		tokens = tokenize(input);
+		print_tokens(tokens);
 		free(input);
 	}
 	rl_clear_history();

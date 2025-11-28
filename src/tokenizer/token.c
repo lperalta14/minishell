@@ -14,6 +14,42 @@
 
 */
 
+t_token	*tokenize(char *line)
+{
+	t_token	*tokens;
+	t_lexer_state *state;
+
+	tokens = NULL;
+	state = malloc(sizeof(t_lexer_state));
+	if (!state)
+		return (NULL);
+	state->input = line;
+	state->pos = 0;
+	state->len = ft_strlen(line);
+	while (state->pos < state->len)
+	{
+		skip_spaces(state);
+		if (state->pos >= state->len)
+			break;
+		if (is_operator(state->input[state->pos]))
+			check_operator(state, &tokens);
+		else if ((state->input[state->pos] == '\"') || (state->input[state->pos] == '\''))
+			try_extract_quoted(state, &tokens, NULL);
+		else
+			extract_word(state, &tokens);
+	}
+	free(state);
+	return (tokens);
+}
+/*
+	mientras no llegues al final del string:
+	- saltar espacios
+	- si es operador → crear token operador
+	- si es comilla → intentar extraer con backtracking
+		- si falla → tratar como palabra normal
+	- si no → extraer palabra normal
+*/
+
 void	extract_word(t_lexer_state *state, t_token **tokens)
 {
 	int		start;
@@ -39,32 +75,6 @@ void	extract_word(t_lexer_state *state, t_token **tokens)
 	free(word);
 }
 
-void	tokenize()
-{
-	t_token	*tokens;
-	t_lexer_state *state;
-
-	state = NULL;
-	state->pos = 0;
-	while (state->pos < state->len)
-	{
-		skip_spaces(state);
-		if (is_operator(state->input[state->pos]))
-			check_operator(state, &tokens);
-		else if ((state->input[state->pos] == '\"') || (state->input[state->pos] == '\''))
-			try_extract_quoted(state, &tokens, NULL);
-		else
-			extract_word(state, &tokens);
-	}
-}
-/*
-	mientras no llegues al final del string:
-	- saltar espacios
-	- si es operador → crear token operador
-	- si es comilla → intentar extraer con backtracking
-		- si falla → tratar como palabra normal
-	- si no → extraer palabra normal
-*/
 static void	operator_red(t_lexer_state *state, t_token **tokens)
 {
 	char	c;
