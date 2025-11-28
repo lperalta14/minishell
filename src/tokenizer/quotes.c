@@ -38,11 +38,11 @@ static char	*extract_quoted_value(t_lexer_state *st, int end)
 	int		len;
 	char	*str;
 
-	len = end - st->pos - 1;
+	len = end - st->pos;
 	str = malloc(len + 1);
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, st->input + st->pos + 1, len + 1);
+	ft_strlcpy(str, st->input + st->pos + 1, len);
 	return (str);
 }
 

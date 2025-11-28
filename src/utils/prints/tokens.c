@@ -7,7 +7,7 @@ t_token	*tmp = tokens;
 printf("\n---- TOKENS ----\n");
 while (tmp)
 {
-	printf("TYPE: %d | VALUE: \"%s\"\n", tmp->type, tmp->value);
+	printf("TYPE: %d | QUOTE: %d | VALUE: \"%s\"\n", tmp->type, tmp->quote, tmp->value);
 	tmp = tmp->next;
 }
 printf("----------------\n\n");

@@ -34,7 +34,8 @@ t_token	*tokenize(char *line)
 		if (is_operator(state->input[state->pos]))
 			check_operator(state, &tokens);
 		else if ((state->input[state->pos] == '\"') || (state->input[state->pos] == '\''))
-			try_extract_quoted(state, &tokens, NULL);
+		{	if (!try_extract_quoted(state, &tokens, NULL))
+				break;}
 		else
 			extract_word(state, &tokens);
 	}
@@ -60,7 +61,8 @@ void	extract_word(t_lexer_state *state, t_token **tokens)
 	start = state->pos;
 	len = 0;
 	while (state->pos < state->len && !is_operator(state->input[state->pos])
-		&& state->input[state->pos] != ' ' && state->input[state->pos] != '\t')
+		&& state->input[state->pos] != ' ' && state->input[state->pos] != '\t' 
+		&& state->input[state->pos] != '\"')
 	{
 		len++;
 		state->pos++;
