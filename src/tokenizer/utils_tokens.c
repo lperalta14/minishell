@@ -57,3 +57,41 @@ void	add_token(t_token **head, t_token *new)
 		tmp = tmp->next;
 	tmp->next = new;
 }
+
+t_token *last_token(t_token *tokens)
+{
+	if (!tokens)
+		return (NULL);
+	while (tokens->next)
+		tokens = tokens->next;
+	return (tokens);
+}
+
+char	*join_token_value(char *old, char *add)
+{
+	char	*joined;
+	size_t	len_old;
+	size_t	len_add;
+
+	if (!old && !add)
+		return (NULL);
+	if (!old)
+	{
+		joined = ft_strdup(add);
+		free(add);
+		return (joined);
+	}
+	if (!add)
+		return (old);
+	len_old = ft_strlen(old);
+	len_add = ft_strlen(add);
+	joined = malloc(len_old + len_add + 1);
+	if (!joined)
+		return (free(add), old);
+	ft_memcpy(joined, old, len_old);
+	ft_memcpy(joined + len_old, add, len_add);
+	joined[len_old + len_add] = '\0';
+	free(old);
+	free(add);
+	return (joined);
+}

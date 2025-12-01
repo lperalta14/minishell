@@ -61,11 +61,12 @@ static char	*extract_quoted_value(t_lexer_state *st, int end)
 	return (str);
 }
 
-int	try_extract_quoted(t_lexer_state *st, t_token **tokens, t_token *token)
+t_token	*try_extract_quoted(t_lexer_state *st)
 {
 	int		end;
 	char	quote;
 	char	*value;
+	t_token	*token;
 
 	quote = st->input[st->pos];
 	end = find_closing_quote(st, quote);
@@ -73,19 +74,16 @@ int	try_extract_quoted(t_lexer_state *st, t_token **tokens, t_token *token)
 		return (0);
 	value = extract_quoted_value(st, end);
 	if (!value)
-		return (0);
+		return (NULL);
 	token = createtoken(TOKEN_WORD, value);
+	free(value);
 	if (!token)
-	{
-		free(value);
-		return (0);
-	}
+		return (NULL);
 	if (quote == '"')
 		token->quote = QUOTE_DOUBLE;
 	else
 		token->quote = QUOTE_SINGLE;
-	add_token(tokens, token);
-	free(value);
+//	add_token(tokens, token);
 	st->pos = end + 1;
-	return (1);
+	return (token);
 }

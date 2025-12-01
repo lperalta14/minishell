@@ -1,5 +1,26 @@
 
 #include "../../include/lexer.h"
+int	join_quote(t_lexer_state *st, t_token **tokens)
+{
+	t_token	*last;
+	t_token	*new_token;
+	char	prequote;
+
+	prequote = st->input[st->pos - 1];
+	last = last_token(*tokens);
+	new_token = try_extract_quoted(st);
+	if (!new_token)
+		return (1);
+	if (last && last->type == TOKEN_WORD && st->pos > 0 && prequote != ' ')
+	{
+		last->value = join_token_value(last->value, new_token->value);
+		//free(new_token->value);
+		free(new_token);
+	}
+	else
+		add_token(tokens, new_token);
+	return (0);
+}
 
 t_token	*tokenize(char *line)
 {
@@ -22,12 +43,8 @@ t_token	*tokenize(char *line)
 			check_operator(state, &tokens);
 		else if (is_quote(state->input[state->pos]))
 		{
-			/*if (pos > 0 && state->input[state->pos - 1] != ' ')
-			{
-				
-			}*/
-			if (!try_extract_quoted(state, &tokens, NULL))
-				break;
+			if (join_quote(state, &tokens))
+				break ;
 		}
 		else
 			extract_word(state, &tokens);

@@ -3,7 +3,6 @@
 
 # include "minishell.h"
 
-
 typedef enum e_token_type
 {
 	TOKEN_WORD,
@@ -85,6 +84,9 @@ t_token	*createtoken(t_token_type type, char *value);
  */
 void	add_token(t_token **head, t_token *new);
 
+char	*join_token_value(char *old, char *add);
+t_token *last_token(t_token *tokens);
+
 /********************************************************/
 /*						TOKEN.C							*/
 /********************************************************/
@@ -117,6 +119,6 @@ void check_operator(t_lexer_state *state, t_token **tokens);
  * @param tokens 
  * @return int 
  */
-int	try_extract_quoted(t_lexer_state *st, t_token **tokens, t_token *token);
+t_token	*try_extract_quoted(t_lexer_state *st);
 
 #endif
