@@ -16,8 +16,8 @@
 
 t_token	*tokenize(char *line)
 {
-	t_token	*tokens;
-	t_lexer_state *state;
+	t_token			*tokens;
+	t_lexer_state	*state;
 
 	tokens = NULL;
 	state = malloc(sizeof(t_lexer_state));
@@ -30,7 +30,7 @@ t_token	*tokenize(char *line)
 	{
 		skip_spaces(state);
 		if (state->pos >= state->len)
-			break;
+			break ;
 		if (is_operator(state->input[state->pos]))
 			check_operator(state, &tokens);
 		else if ((state->input[state->pos] == '\"') || (state->input[state->pos] == '\''))
@@ -105,7 +105,7 @@ static void	operator_red(t_lexer_state *state, t_token **tokens)
 }
 
 
-void check_operator(t_lexer_state *state, t_token **tokens)
+void	check_operator(t_lexer_state *state, t_token **tokens)
 {
 	char	c;
 

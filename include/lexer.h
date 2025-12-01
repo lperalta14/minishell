@@ -34,9 +34,9 @@ typedef struct s_token
 
 typedef struct s_lexer_state
 {
-	char *input;
-	int pos;
-	int len;
+	char	*input;
+	int		pos;
+	int		len;
 }	t_lexer_state;
 
 /********************************************************/
@@ -56,7 +56,7 @@ void	skip_spaces(t_lexer_state *state);
  * @param c 
  * @return int 
  */
-int	is_operator(char c);
+int		is_operator(char c);
 
 /**
  * @brief 
@@ -95,7 +95,7 @@ t_token	*tokenize(char *line);
  * @param state 
  * @param tokens 
  */
-void check_operator(t_lexer_state *state, t_token **tokens);
+void	check_operator(t_lexer_state *state, t_token **tokens);
 
 /********************************************************/
 /*						QUOTES.C						*/
@@ -107,6 +107,6 @@ void check_operator(t_lexer_state *state, t_token **tokens);
  * @param tokens 
  * @return int 
  */
-int	try_extract_quoted(t_lexer_state *st, t_token **tokens, t_token *token);
+int		try_extract_quoted(t_lexer_state *st, t_token **tokens, t_token *token);
 
 #endif
