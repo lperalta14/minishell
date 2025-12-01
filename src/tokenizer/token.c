@@ -104,13 +104,11 @@ static void	operator_red(t_lexer_state *state, t_token **tokens)
 	}
 }
 
-
 void	check_operator(t_lexer_state *state, t_token **tokens)
 {
 	char	c;
 
 	c = state->input[state->pos];
-
 	if (c == '|')
 	{
 		add_token(tokens, createtoken(TOKEN_PIPE, "|"));
@@ -120,7 +118,6 @@ void	check_operator(t_lexer_state *state, t_token **tokens)
 		operator_red(state, tokens);
 }
 
-
 /*
 BACKTRACKING 🎯
 Concepto clave:
@@ -129,7 +126,8 @@ Cuando encuentras una comilla (" o '):
 Guardas la posición actual (checkpoint)
 Intentas encontrar la comilla de cierre
 Si la encuentras → Éxito, creas token con el tipo de comilla
-Si NO la encuentras → BACKTRACK: vuelves al checkpoint y tratas la comilla como un carácter normal
+Si NO la encuentras → BACKTRACK: vuelves al checkpoint y tratas
+la comilla como un carácter normal
 */
 
 /*
@@ -152,6 +150,8 @@ Cuando estás dentro de comillas dobles, las simples son literales:
 "texto con 'simples'" → una sola palabra
 Cuando estás dentro de comillas simples, las dobles son literales:
 'texto con "dobles"' → una sola palabra
-Pero ojo: la jerarquía aplica cuando estás buscando qué comilla abrir. Si encuentras primero ", buscas su cierre ignorando ' intermedias.
-Pregunta: ¿Ves la diferencia entre "jerarquía de apertura" y "anidamiento"? No es lo mismo.
+Pero ojo: la jerarquía aplica cuando estás buscando qué comilla abrir.
+Si encuentras primero ", buscas su cierre ignorando ' intermedias.
+Pregunta: ¿Ves la diferencia entre "jerarquía de apertura"
+y "anidamiento"? No es lo mismo.
 */
