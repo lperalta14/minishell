@@ -26,7 +26,16 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 		if (step == 2)
 			i += 2;
 		else if (is_closing_quote(st->input, i, quote))
+		{
+			if (st->input[i+1] != ' ')
+			{
+				st->elimquote = i;
+				i++;
+				while (!isspace(st->input[i]))
+					i++;
+			}
 			return (i);
+		}
 		else
 			i++;
 	}
@@ -42,7 +51,13 @@ static char	*extract_quoted_value(t_lexer_state *st, int end)
 	str = malloc(len + 1);
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, st->input + st->pos + 1, len);
+	if (st->elimquote)
+	{
+		ft_strlcpy(str, st->input + st->pos +1, st->elimquote - st->pos);
+		ft_strlcat(str, st->input + st->elimquote +1, len - 1);
+	}
+	else 
+		ft_strlcpy(str, st->input + st->pos + 1, len);
 	return (str);
 }
 

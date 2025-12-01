@@ -12,6 +12,13 @@ int	is_operator(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
+int	 is_word(char c)
+{
+	if (!is_operator(c) && !is_quote(c) && !isspace(c))
+		return (1);
+	return (0);
+}
+
 t_token	*createtoken(t_token_type type, char *value)
 {
 	t_token	*token;

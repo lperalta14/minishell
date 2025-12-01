@@ -1,18 +1,5 @@
 
 #include "../../include/lexer.h"
-/*
-🎯 Mi recomendación de orden REAL
-
-✅ Termina add_token()
-✅ Añade t_quote_type a las estructuras
- Crea tokenize() básico que solo detecte operadores y palabras SIN comillas
- Crea print_tokens() para debug
- Prueba con strings simples: "ls | grep hola"
- Implementa try_extract_quoted() con backtracking
- Integra el manejo de comillas en tokenize()
- Prueba casos complejos
-
-*/
 
 t_token	*tokenize(char *line)
 {
@@ -33,23 +20,21 @@ t_token	*tokenize(char *line)
 			break;
 		if (is_operator(state->input[state->pos]))
 			check_operator(state, &tokens);
-		else if ((state->input[state->pos] == '\"') || (state->input[state->pos] == '\''))
-		{	if (!try_extract_quoted(state, &tokens, NULL))
-				break;}
+		else if (is_quote(state->input[state->pos]))
+		{
+			/*if (pos > 0 && state->input[state->pos - 1] != ' ')
+			{
+				
+			}*/
+			if (!try_extract_quoted(state, &tokens, NULL))
+				break;
+		}
 		else
 			extract_word(state, &tokens);
 	}
 	free(state);
 	return (tokens);
 }
-/*
-	mientras no llegues al final del string:
-	- saltar espacios
-	- si es operador → crear token operador
-	- si es comilla → intentar extraer con backtracking
-		- si falla → tratar como palabra normal
-	- si no → extraer palabra normal
-*/
 
 void	extract_word(t_lexer_state *state, t_token **tokens)
 {
@@ -60,9 +45,7 @@ void	extract_word(t_lexer_state *state, t_token **tokens)
 
 	start = state->pos;
 	len = 0;
-	while (state->pos < state->len && !is_operator(state->input[state->pos])
-		&& state->input[state->pos] != ' ' && state->input[state->pos] != '\t' 
-		&& state->input[state->pos] != '\"')
+	while (state->pos < state->len && is_word(state->input[state->pos]))
 	{
 		len++;
 		state->pos++;

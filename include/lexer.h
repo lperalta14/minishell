@@ -29,14 +29,16 @@ typedef struct s_token
 	t_token_type	type;
 	char			*value;
 	t_quote_type	quote;
+	//int				elimquot;
 	struct s_token	*next;
 }					t_token;
 
 typedef struct s_lexer_state
 {
-	char *input;
-	int pos;
-	int len;
+	char	*input;
+	int		pos;
+	int		len;
+	int		elimquote;
 }	t_lexer_state;
 
 /********************************************************/
@@ -57,6 +59,14 @@ void	skip_spaces(t_lexer_state *state);
  * @return int 
  */
 int	is_operator(char c);
+
+/**
+ * @brief 
+ * 
+ * @param c 
+ * @return int 
+ */
+int	 is_word(char c);
 
 /**
  * @brief 
