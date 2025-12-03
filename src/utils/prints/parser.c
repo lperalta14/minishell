@@ -1,5 +1,4 @@
 #include "../../../include/minishell.h"
-#include "parse.h"
 
 
 void	print_commands(t_command *cmds)
@@ -10,33 +9,51 @@ void	print_commands(t_command *cmds)
 	count = 0;
 	while (cmds != NULL)
 	{
-		printf("--- Command cmd[0] ---");
-		if (cmd->args)
+		printf("--- Command %d ---\n", count);
+		if (cmds->args)
 		{
-			printf ("Args: ");
+			printf("Args: ");
 			i = 0;
-			while (cmd->args[i])
+			while (cmds->args[i])
 			{
-				printf("[", "%s", cmd->args[i], "]");
+				printf("[%s] ", cmds->args[i]);
 				i++;
 			}
 			printf("\n");
 		}
 		else
-			printf("Args: ");
-		if (cmd->redirs)
-			print_redirs(cmd->redirs);
+			printf("Args: (ninguno)\n");
+		if (cmds->redirs)
+			print_redirs(cmds->redirs);
 		else
-			printf("Redirections: \n")
+			printf("Redirections: (ninguna)\n");
 		if (cmds->next)
-		{
-			printf("        |");
-			printf("        v (PIPE)");
-			printf("\n");
-		}
+			printf("        |\n        v (PIPE)\n\n");
+		cmds = cmds->next;
+		count++;
 	}
 
 }
+
+void	print_redirs(t_redir *redirs)
+{
+	printf("Redirections:\n");
+	while (redirs)
+	{
+		printf("  ");
+		if (redirs->type == REDIR_IN)
+			printf("< ");
+		else if (redirs->type == REDIR_OUT)
+			printf("> ");
+		else if (redirs->type == REDIR_APPEND)
+			printf(">> ");
+		else if (redirs->type == REDIR_HEREDOC)
+			printf("<< ");
+		printf("%s\n", redirs->file);
+		redirs = redirs->next;
+	}
+}
+
 
 // --- Command 0 ---
 // Args: [ls] [-la]

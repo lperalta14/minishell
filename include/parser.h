@@ -44,6 +44,12 @@ typedef struct s_command
 /* ============================================ */
 
 // Aquí van free_commands, free_redirs, etc.
+/**
+ * @brief Libera array de strings terminado en NULL
+ * 
+ * @param args Array de strings a liberar
+ */
+void	free_args(char **args);
 
 /* ============================================ */
 /*          FUNCIONES DE DEBUG                  */
