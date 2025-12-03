@@ -39,6 +39,7 @@ t_token	*tokenize(char *line)
 		else
 			extract_word(state, &tokens);
 	}
+	add_token(&tokens, createtoken(TOKEN_END, NULL));
 	free(state);
 	return (tokens);
 }

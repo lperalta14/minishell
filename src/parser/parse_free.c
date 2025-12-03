@@ -39,8 +39,8 @@ void	free_commands(t_command *cmds)
 	{
 		tmp = cmds;
 		cmds = cmds->next;
-		free_args(cmds->args);
-		free_redirs(cmds->redirs);
+		free_args(tmp->args);
+		free_redirs(tmp->redirs);
 		free(tmp);
 	}
 }

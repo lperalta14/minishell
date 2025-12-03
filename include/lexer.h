@@ -19,6 +19,7 @@ typedef enum e_token_type
 
 typedef enum e_quote_type
 {
+	QUOTE_NONE,
 	QUOTE_DOUBLE,
 	QUOTE_SINGLE,
 }	t_quote_type;
@@ -73,6 +74,13 @@ t_token	*createtoken(t_token_type type, char *value);
  * @param new 
  */
 void	add_token(t_token **head, t_token *new);
+
+/**
+ * @brief Libera lista enlazada de tokens
+ * 
+ * @param tokens Lista de tokens a liberar
+ */
+void	free_tokens(t_token *tokens);
 
 /********************************************************/
 /*						TOKEN.C							*/

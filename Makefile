@@ -30,11 +30,11 @@ EXECUTOR = $(EXE_DIR)/pipes.c
 
 EXPANDER = $(EXP_DIR)/expand.c
 
-PARSER = $(PARS_DIR)/parse.c
+PARSER = $(PARS_DIR)/parse.c $(PARS_DIR)/parse_free.c $(PARS_DIR)/parse_utils.c
 
 TOKENIZER = $(TOK_DIR)/token.c $(TOK_DIR)/quotes.c $(TOK_DIR)/utils_tokens.c
 
-UTILS = $(UTILS_DIR)/prints/banner.c $(UTILS_DIR)/prints/tokens.c
+UTILS = $(UTILS_DIR)/prints/banner.c $(UTILS_DIR)/prints/tokens.c $(UTILS_DIR)/prints/parser.c
 
 SRCS = src/main.c $(BUILTINS) $(EXECUTOR) $(EXPANDER) $(PARSER) \
 	$(TOKENIZER) $(UTILS)

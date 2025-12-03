@@ -76,10 +76,29 @@ void		free_args(char **args);
  */
 void		free_redirs(t_redir *redirs);
 
+/**
+ * @brief Libera lista enlazada de comandos completa
+ * 
+ * @param cmds Lista de comandos a liberar
+ */
+void		free_commands(t_command *cmds);
+
 /* ============================================ */
 /*          FUNCIONES DE DEBUG                  */
 /* ============================================ */
 
-// Aquí van print_commands, print_redirs
+/**
+ * @brief Imprime lista de comandos (debugging)
+ * 
+ * @param cmds Lista de comandos a imprimir
+ */
+void		print_commands(t_command *cmds);
+
+/**
+ * @brief Imprime lista de redirecciones (debugging)
+ * 
+ * @param redirs Lista de redirecciones a imprimir
+ */
+void		print_redirs(t_redir *redirs);
 
 #endif

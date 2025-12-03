@@ -2,13 +2,16 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_token	*tokens;
+	char		*input;
+	t_token		*tokens;
+	t_command	*cmds;
 
-	if (argc > 0 || argv || envp)
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	// TODO: Inicializar señales (signal/sigaction)
 	// TODO: Guardar envp en una estructura global
-	if ( isatty(STDIN_FILENO))//test (isatty solo muest banner si interact)
+	if (isatty(STDIN_FILENO))
 		print_banner("banners/acrobata.txt");
 	while (1)
 	{
@@ -20,9 +23,18 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		add_history(input);
-		// TODO: Llamar al lexer/parser aquí en lugar de printf
 		tokens = tokenize(input);
-		print_tokens(tokens);
+		if (tokens)
+		{
+			print_tokens(tokens);
+			cmds = parse(tokens);
+			if (cmds)
+			{
+				print_commands(cmds);
+				free_commands(cmds);
+			}
+			free_tokens(tokens);
+		}
 		free(input);
 	}
 	rl_clear_history();

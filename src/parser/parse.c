@@ -14,7 +14,7 @@ t_command	*parse(t_token *tokens)
 	while (tokens && tokens->type == TOKEN_PIPE)
 	{
 		tokens = tokens->next;
-		if (!tokens && tokens->type == TOKEN_END)
+		if (!tokens || tokens->type == TOKEN_END)
 		{
 			free_commands(cmds);
 			return (NULL);
@@ -48,41 +48,59 @@ t_command	*create_command(t_token **tokens)
 	}
 	//parsear redirecciones(opcional por ahora);
 	//parse_redirections(tokens, cmd);
-	return(cmd);
+	return (cmd);
 
 }
 
 char	**extract_args(t_token **tokens)
 {
-	int	count;
-	int	i;
-	t_tokend	current;
+	int		count;
+	int		i;
+	t_token	*current;
+	char	**args;
 
-	current == *tokens;
-	while (current && current->type != PIPE & current->type != END)
+	current = *tokens;
+	count = 0;
+	while (current && current->type != TOKEN_PIPE && current->type != TOKEN_END)
 	{
-		if (current->type == WORD)
+		if (current->type == TOKEN_WORD)
 			count++;
+		else if (current->type >= TOKEN_REDIR_IN
+			&& current->type <= TOKEN_REDIR_HEREDOC)
+		{
+			current = current->next;
+			if (current && current->type == TOKEN_WORD)
+				current = current->next;
+			continue ;
+		}
 		current = current->next;
-		char **args;
 	}
 	args = malloc(sizeof(char *) * (count + 1));
 	if (!args)
-		retun (NULL);
+		return (NULL);
 	i = 0;
-	while (*tokens &&(*tokens)->type != PIPE && (*tokens->type 1= END))
+	while (*tokens && (*tokens)->type != TOKEN_PIPE
+		&& ((*tokens)->type != TOKEN_END))
 	{
-		if ((*tokens)->type == WORD)
+		if ((*tokens)->type == TOKEN_WORD)
 		{
-			args[i++] = ft_strdup ((*tokens))-> value;
+			args[i] = ft_strdup((*tokens)->value);
 			if (!args[i])
 			{
 				free_args(args);
 				return (NULL);
 			}
+			i++;
 		}
-		i++;
-		*tokens = (*tokens)->next;
+		else if ((*tokens)->type >= TOKEN_REDIR_IN
+			&& (*tokens)->type <= TOKEN_REDIR_HEREDOC)
+		{
+			*tokens = (*tokens)->next;
+			if (*tokens && (*tokens)->type == TOKEN_WORD)
+				*tokens = (*tokens)->next;
+		}
+		else
+			*tokens = (*tokens)->next;
 	}
 	args[i] = NULL;
 	return (args);
