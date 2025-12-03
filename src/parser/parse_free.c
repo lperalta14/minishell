@@ -17,12 +17,30 @@ void	free_args(char **args)
 
 void	free_redirs(t_redir *redirs)
 {
-	int	i;
+	t_redir	*tmp;
 
 	if (!redirs)
 		return ;
-	i = 0;
-	while (!redirs)
-	tmp = redirs;
-	redirs = redir
+	while (redirs)
+	{
+		tmp = redirs;
+		redirs = tmp->next;
+		if (tmp->file)
+			free(tmp->file);
+		free(tmp);
+	}
+}
+
+void	free_commands(t_command *cmds)
+{
+	t_command	*tmp;
+
+	while (cmds)
+	{
+		tmp = cmds;
+		cmds = cmds->next;
+		free_args(cmds->args);
+		free_redirs(cmds->redirs);
+		free(tmp);
+	}
 }

@@ -19,9 +19,8 @@ typedef enum e_token_type
 
 typedef enum e_quote_type
 {
-	QUOTE_NONE,
 	QUOTE_DOUBLE,
-	QUOTE_SINGLE
+	QUOTE_SINGLE,
 }	t_quote_type;
 
 typedef struct s_token

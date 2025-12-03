@@ -30,26 +30,51 @@ typedef struct s_command
 /* ============================================ */
 /*          FUNCIONES PRINCIPALES               */
 /* ============================================ */
-
-// Aquí van los prototipos de parse()
+/**
+ * @brief Parser principal: convierte tokens en comandos
+ * 
+ * @param tokens Lista de tokens del lexer
+ * @return t_command* Lista de comandos (separados por pipes)
+ */
+t_command	*parse(t_token *tokens);
 
 /* ============================================ */
 /*          FUNCIONES AUXILIARES                */
 /* ============================================ */
 
-// Aquí van create_command, extract_args, etc.
+/**
+ * @brief Crea un comando desde tokens
+ * 
+ * @param tokens Puntero a lista de tokens (se modifica)
+ * @return t_command* Comando creado o NULL si error
+ */
+t_command	*create_command(t_token **tokens);
+
+/**
+ * @brief Extrae argumentos de tokens hasta PIPE o END
+ * 
+ * @param tokens Puntero a lista de tokens (se modifica)
+ * @return char** Array de strings terminado en NULL
+ */
+char		**extract_args(t_token **tokens);
 
 /* ============================================ */
 /*          FUNCIONES DE LIMPIEZA               */
 /* ============================================ */
 
-// Aquí van free_commands, free_redirs, etc.
 /**
  * @brief Libera array de strings terminado en NULL
  * 
  * @param args Array de strings a liberar
  */
-void	free_args(char **args);
+void		free_args(char **args);
+
+/**
+ * @brief Libera lista enlazada de redirecciones
+ * 
+ * @param redirs Lista de redirecciones a liberar
+ */
+void		free_redirs(t_redir *redirs);
 
 /* ============================================ */
 /*          FUNCIONES DE DEBUG                  */
