@@ -30,8 +30,8 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 			if (st->input[i+1] != ' ' && !is_operator(st->input[i+1])
 				&& st->input[i+1] != quote)
 			{
-				st->elimquote = i++;
-				while (!isspace(st->input[i]) && !is_operator(st->input[i+1])
+				st->elimquote = i;
+				while (st->input[i+1] && !isspace(st->input[i+1]) && !is_operator(st->input[i+1])
 				&& st->input[i+1] != quote)
 					i++;
 			}
@@ -55,7 +55,7 @@ static char	*extract_quoted_value(t_lexer_state *st, int end)
 	{
 		count_quote(st, quote, end);
 		len = len - st->elimquote;
-		str = malloc(sizeof(char) * len + 1);
+		str = malloc(sizeof(char) * len);
 		if (!str)
 			return (NULL);
 		clean_quote(str, st, end, quote);
