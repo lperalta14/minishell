@@ -95,3 +95,34 @@ char	*join_token_value(char *old, char *add)
 	free(add);
 	return (joined);
 }
+
+void count_quote(t_lexer_state *st, char quote, int end)
+{
+	int	i;
+
+	i = st->pos +1;
+	st->elimquote = 0;
+	while(st->input[i] && i < end)
+	{
+		if (st->input[i] == quote)
+			st->elimquote ++;
+		i++;
+	}
+}
+
+void	clean_quote(char *str, t_lexer_state *st, int end, char quote)
+{
+	int	i;
+
+	i = st->pos;
+	while(st->input[i] && end)
+	{
+		if (st->input[i] != quote)
+		{
+			*str++ = st->input[i];
+		}
+		i++;
+		end--;
+	}
+	*str = 0;
+}

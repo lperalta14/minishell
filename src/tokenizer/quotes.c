@@ -27,11 +27,12 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 			i += 2;
 		else if (is_closing_quote(st->input, i, quote))
 		{
-			if (st->input[i+1] != ' ')
+			if (st->input[i+1] != ' ' && !is_operator(st->input[i+1])
+				&& st->input[i+1] != quote)
 			{
-				st->elimquote = i;
-				i++;
-				while (!isspace(st->input[i]))
+				st->elimquote = i++;
+				while (!isspace(st->input[i]) && !is_operator(st->input[i+1])
+				&& st->input[i+1] != quote)
 					i++;
 			}
 			return (i);
@@ -46,18 +47,26 @@ static char	*extract_quoted_value(t_lexer_state *st, int end)
 {
 	int		len;
 	char	*str;
+	char	quote;
 
+	quote = st->input[st->elimquote];
 	len = end - st->pos;
-	str = malloc(len + 1);
-	if (!str)
-		return (NULL);
 	if (st->elimquote)
 	{
-		ft_strlcpy(str, st->input + st->pos +1, st->elimquote - st->pos);
-		ft_strlcat(str, st->input + st->elimquote +1, len - 1);
+		count_quote(st, quote, end);
+		len = len - st->elimquote;
+		str = malloc(sizeof(char) * len + 1);
+		if (!str)
+			return (NULL);
+		clean_quote(str, st, end, quote);
 	}
-	else 
+	else
+	{
+		str = malloc(sizeof(char) * len + 1);
+		if (!str)
+			return (NULL);
 		ft_strlcpy(str, st->input + st->pos + 1, len);
+	}
 	return (str);
 }
 
@@ -83,7 +92,6 @@ t_token	*try_extract_quoted(t_lexer_state *st)
 		token->quote = QUOTE_DOUBLE;
 	else
 		token->quote = QUOTE_SINGLE;
-//	add_token(tokens, token);
 	st->pos = end + 1;
 	return (token);
 }

@@ -6,6 +6,7 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 	t_token	*new_token;
 	char	prequote;
 
+	//if (st->pos > 0)
 	prequote = st->input[st->pos - 1];
 	last = last_token(*tokens);
 	new_token = try_extract_quoted(st);

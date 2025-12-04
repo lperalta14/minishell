@@ -109,6 +109,10 @@ t_token	*tokenize(char *line);
  */
 void check_operator(t_lexer_state *state, t_token **tokens);
 
+void count_quote(t_lexer_state *st, char quote, int end);
+
+void	clean_quote(char *str, t_lexer_state *st, int end, char quote);
+
 /********************************************************/
 /*						QUOTES.C						*/
 /********************************************************/
