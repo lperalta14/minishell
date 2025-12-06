@@ -59,7 +59,7 @@ int	try_extract_quoted(t_lexer_state *st, t_token **tokens, t_token *token)
 	value = extract_quoted_value(st, end);
 	if (!value)
 		return (0);
-	token = createtoken(TOKEN_WORD, value);
+	token = createtoken(TK_WORD, value);
 	if (!token)
 	{
 		free(value);

@@ -39,7 +39,7 @@ t_token	*tokenize(char *line)
 		else
 			extract_word(state, &tokens);
 	}
-	add_token(&tokens, createtoken(TOKEN_END, NULL));
+	add_token(&tokens, createtoken(TK_END, NULL));
 	free(state);
 	return (tokens);
 }
@@ -62,7 +62,7 @@ void	extract_word(t_lexer_state *state, t_token **tokens)
 	start = state->pos;
 	len = 0;
 	while (state->pos < state->len && !is_operator(state->input[state->pos])
-		&& state->input[state->pos] != ' ' && state->input[state->pos] != '\t' 
+		&& state->input[state->pos] != ' ' && state->input[state->pos] != '\t'
 		&& state->input[state->pos] != '\"')
 	{
 		len++;
@@ -71,7 +71,7 @@ void	extract_word(t_lexer_state *state, t_token **tokens)
 	word = ft_substr(state->input, start, len);
 	if (!word)
 		return ;
-	token = createtoken(TOKEN_WORD, word);
+	token = createtoken(TK_WORD, word);
 	if (token)
 		token->quote = QUOTE_NONE;
 	add_token(tokens, token);
@@ -85,22 +85,22 @@ static void	operator_red(t_lexer_state *state, t_token **tokens)
 	c = state->input[state->pos];
 	if (c == '<' && state->input[state->pos + 1] == '<')
 	{
-		add_token(tokens, createtoken(TOKEN_HEREDOC, "<<"));
+		add_token(tokens, createtoken(TK_HEREDOC, "<<"));
 		state->pos += 2;
 	}
 	else if (c == '<')
 	{
-		add_token(tokens, createtoken(TOKEN_REDIR_IN, "<"));
+		add_token(tokens, createtoken(TK_R_IN, "<"));
 		state->pos++;
 	}
 	else if (c == '>' && state->input[state->pos + 1] == '>')
 	{
-		add_token(tokens, createtoken(TOKEN_APPEND, ">>"));
+		add_token(tokens, createtoken(TK_APPEND, ">>"));
 		state->pos += 2;
 	}
 	else if (c == '>')
 	{
-		add_token(tokens, createtoken(TOKEN_REDIR_OUT, ">"));
+		add_token(tokens, createtoken(TK_R_OUT, ">"));
 		state->pos++;
 	}
 }
@@ -112,7 +112,7 @@ void	check_operator(t_lexer_state *state, t_token **tokens)
 	c = state->input[state->pos];
 	if (c == '|')
 	{
-		add_token(tokens, createtoken(TOKEN_PIPE, "|"));
+		add_token(tokens, createtoken(TK_PIPE, "|"));
 		state->pos++;
 	}
 	else if ((c == '<') || (c == '>'))

@@ -1,10 +1,10 @@
-#include "minishell.h"
+#include "../../../include/minishell.h"
 
-void	create_redir(t_redir type, char *file)
+static t_redir	*create_redir(t_redir_type type, char *file)
 {
 	t_redir	*redir;
 
-	redir = malloc (sizeof(t_redir));
+	redir = malloc(sizeof(t_redir));
 	if (!redir)
 		return (NULL);
 	redir->type = type;
@@ -18,29 +18,29 @@ void	create_redir(t_redir type, char *file)
 	return (redir);
 }
 
-void	add_redir(t_redir head, t_redir new)
+void	add_redir(t_redir **head, t_redir *new)
 {
-	t_redir	current;
+	t_redir	*current;
 
 	if (!new)
 		return ;
-	if (!head)
+	if (!*head)
 	{
-		head = new;
+		*head = new;
 		return ;
 	}
-	current = head;
+	current = *head;
 	while (current->next)
 		current = current->next;
 	current->next = new;
 }
 
-void	parse_redirections(t_token **tokens, char *cmd)
+int	parse_redirections(t_token **tokens, t_command *cmd)
 {
 	t_redir			*new_redir;
 	t_redir_type	type;
 
-	while (tokens && (*tokens)->type != TK_PIPE && (*token)->type != TK_END)
+	while (*tokens && (*tokens)->type != TK_PIPE && (*tokens)->type != TK_END)
 	{
 		if ((*tokens)->type == TK_R_IN)
 			type = REDIR_IN;
@@ -56,16 +56,37 @@ void	parse_redirections(t_token **tokens, char *cmd)
 			continue ;
 		}
 		*tokens = (*tokens)->next;
-		if (!*tokens || (*tokens)-> type != TK_WORD)
+		if (!*tokens || (*tokens)->type != TK_WORD)
 			return (-1);
-		new_redir = create_redir(type, tokens->value);
+		new_redir = create_redir(type, (*tokens)->value);
 		if (!new_redir)
 			return (-1);
-		add_redir(cmd->redirs, new_redir);
-		tokens = tokens->next;
+		add_redir(&cmd->redirs, new_redir);
+		*tokens = (*tokens)->next;
 	}
-	return (1);
+	return (0);
 }
+
+// # Caso 1: Input simple
+// cat < file.txt
+
+// # Caso 2: Output simple
+// ls > output.txt
+
+// # Caso 3: Append
+// echo "text" >> log.txt
+
+// # Caso 4: Múltiples redirecciones
+// cat < in.txt > out.txt
+
+// # Caso 5: Con argumentos
+// grep "word" < file.txt > result.txt
+
+// # Caso 6: Error (sin archivo)
+// cat <    # ← Debe dar error
+
+// # Caso 7: Con pipes
+// cat < in.txt | grep test > out.txt
 
 // INPUT: "cat < input.txt > output.txt"
 
