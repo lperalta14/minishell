@@ -58,6 +58,23 @@ t_command	*create_command(t_token **tokens);
  */
 char		**extract_args(t_token **tokens);
 
+/**
+ * @brief Parsea redirecciones de tokens
+ * 
+ * @param tokens Puntero a lista de tokens
+ * @param cmd Comando donde añadir redirecciones
+ * @return int 0 si éxito, -1 si error
+ */
+int			parse_redirections(t_token **tokens, t_command *cmd);
+
+/**
+ * @brief Añade redirección a la lista
+ * 
+ * @param head Puntero a cabeza de lista
+ * @param new Nueva redirección
+ */
+void		add_redir(t_redir **head, t_redir *new);
+
 /* ============================================ */
 /*          FUNCIONES DE LIMPIEZA               */
 /* ============================================ */
