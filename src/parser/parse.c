@@ -48,8 +48,7 @@ t_command	*create_command(t_token **tokens)
 		free(cmd);
 		return (NULL);
 	}
-	*tokens = start;
-	if (parse_redirections(tokens, cmd) == -1)
+	if (parse_redirections(&start, cmd) == -1)
 	{
 		free_args(cmd->args);
 		free_redirs(cmd->redirs);
@@ -72,8 +71,8 @@ char	**extract_args(t_token **tokens)
 	{
 		if (current->type == TK_WORD)
 			count++;
-		else if ((*tokens)->type >= TK_R_IN || (*tokens)->type >= TK_R_OUT
-			|| (*tokens)->type >= TK_APPEND || (*tokens)->type <= TK_HEREDOC)
+		else if ((*tokens)->type == TK_R_IN || (*tokens)->type == TK_R_OUT
+			|| (*tokens)->type == TK_APPEND || (*tokens)->type == TK_HEREDOC)
 		{
 			current = current->next;
 			if (current && current->type == TK_WORD)
@@ -97,9 +96,10 @@ char	**extract_args(t_token **tokens)
 				return (NULL);
 			}
 			i++;
+			*tokens = (*tokens)->next;
 		}
-		else if ((*tokens)->type >= TK_R_IN || (*tokens)->type >= TK_R_OUT
-			|| (*tokens)->type >= TK_APPEND || (*tokens)->type <= TK_HEREDOC)
+		else if ((*tokens)->type == TK_R_IN || (*tokens)->type == TK_R_OUT
+			|| (*tokens)->type == TK_APPEND || (*tokens)->type == TK_HEREDOC)
 		{
 			*tokens = (*tokens)->next;
 			if (*tokens && (*tokens)->type == TK_WORD)
