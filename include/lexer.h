@@ -34,10 +34,11 @@ typedef struct s_token
 
 typedef struct s_lexer_state
 {
-	char	*input;
-	int		pos;
-	int		len;
-	int		elimquote;
+	char			*input;
+	int				pos;
+	int				len;
+	int				elimquote;
+	t_quote_type	quote;
 }	t_lexer_state;
 
 /********************************************************/
@@ -124,5 +125,22 @@ void	clean_quote(char *str, t_lexer_state *st, int end, char quote);
  * @return int 
  */
 t_token	*try_extract_quoted(t_lexer_state *st);
+
+/**
+ * @brief Checks whether the character at a given position is a valid quote.
+ * 
+ * This function verifies if the character at index `pos` in the string `str`
+ * is a valid single or double quote. A double quote preceded by a backslash
+ * (`\`) is considered escaped and therefore NOT valid as a quote delimiter.
+ * Single quotes are always treated as valid since they cannot be escaped
+ * in standard shell syntax.
+ * 
+ * @param str The input string to evaluate.
+ * @param pos The position of the character to check within the string.
+ * @return 1 if the character is a valid quote delimiter, 0 otherwise.
+ */
+int	is_valid_quote(char *str, int pos);
+
+char *clean_scape(char *dst, char *src, int len);
 
 #endif

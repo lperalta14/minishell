@@ -117,9 +117,45 @@ void	clean_quote(char *str, t_lexer_state *st, int end, char quote)
 	i = st->pos;
 	while(st->input[i] && i <= end)
 	{
-		if (st->input[i] != quote)
+		if (quote == '"' && st->input[i] == '\\')
+		{	
+			i++;
+			*str++ = st->input[i];
+		}
+		else if (st->input[i] != quote)
 			*str++ = st->input[i];
 		i++;
 	}
 	*str = 0;
+}
+
+char *clean_scape(char *dst, char *src, int len)
+{
+	int	del;
+	int	i;
+
+	i = 0;
+	del = 0;
+	//ft_printf("%i->len\n", len);
+	while (src[i] && i < len)
+	{
+		if (src[i] == '\\' && src[i+1] == '"')
+			del ++;
+		i++;
+	}
+	dst = ft_calloc(len - del + 1, sizeof(char));
+	if (!dst)
+		return (NULL);
+	i = 0;
+	del = 0;
+	while (src[i] && i < len)
+	{
+		//ft_printf("src %s i %i len %i dst %s\n", src+i, i, len, dst);
+		if (src[i] == '\\' && src[i+1] == '"')
+			i ++;
+		dst[del] = src[i];
+		del++;
+		i++;
+	}
+	return (dst);
 }
