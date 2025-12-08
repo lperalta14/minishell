@@ -1,9 +1,20 @@
 #include "../include/minishell.h"
 
+void	minishell(char *input)
+{
+	t_token	*tokens;
+
+	tokens = NULL;
+	tokens = init_token(input, tokens);
+	//tokens = tokenize(input);
+	print_tokens(tokens);
+	free(tokens);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	t_token	*tokens;
+	//t_token	*tokens;
 
 	if (argc > 0 || argv || envp)
 	// TODO: Inicializar señales (signal/sigaction)
@@ -21,9 +32,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		add_history(input);
 		// TODO: Llamar al lexer/parser aquí en lugar de printf
-		tokens = tokenize(input);
-		print_tokens(tokens);
-		//free(input);
+		minishell(input);
+		//print_tokens(tokens);
+		free(input);
 	}
 	rl_clear_history();
 	return (0);

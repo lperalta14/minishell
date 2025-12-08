@@ -87,6 +87,7 @@ void	add_token(t_token **head, t_token *new);
 
 char	*join_token_value(char *old, char *add);
 t_token *last_token(t_token *tokens);
+t_token	*init_token(char *line, t_token *tokens);
 
 /********************************************************/
 /*						TOKEN.C							*/
@@ -100,7 +101,7 @@ t_token *last_token(t_token *tokens);
  */
 void	extract_word(t_lexer_state *state, t_token **tokens);
 
-t_token	*tokenize(char *line);
+t_token	*tokenize(t_token *tokens, t_lexer_state *st);
 
 /**
  * @brief 
