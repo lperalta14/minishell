@@ -59,6 +59,15 @@ t_command	*create_command(t_token **tokens);
 char		**extract_args(t_token **tokens);
 
 /**
+ * @brief Asigna tipo de redirección según token
+ * 
+ * @param token_type Tipo de token
+ * @param type Puntero donde guardar el tipo de redirección
+ * @return int 1 si es redirección, 0 si no
+ */
+int			assign_redirections(t_token **token, t_redir_type *type);
+
+/**
  * @brief Parsea redirecciones de tokens
  * 
  * @param tokens Puntero a lista de tokens

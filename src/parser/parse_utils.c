@@ -1,4 +1,4 @@
-#include "../../../include/minishell.h"
+#include "../../include/minishell.h"
 
 static t_redir	*create_redir(t_redir_type type, char *file)
 {
@@ -35,6 +35,21 @@ void	add_redir(t_redir **head, t_redir *new)
 	current->next = new;
 }
 
+int	assign_redirections(t_token **token, t_redir_type *type)
+{
+	if ((*token)->type == TK_R_IN)
+		*type = REDIR_IN;
+	else if ((*token)->type == TK_R_OUT)
+		*type = REDIR_OUT;
+	else if ((*token)->type == TK_APPEND)
+		*type = REDIR_APPEND;
+	else if ((*token)->type == TK_HEREDOC)
+		*type = REDIR_HEREDOC;
+	else
+		return (0);
+	return (1);
+}
+
 int	parse_redirections(t_token **tokens, t_command *cmd)
 {
 	t_redir			*new_redir;
@@ -42,15 +57,7 @@ int	parse_redirections(t_token **tokens, t_command *cmd)
 
 	while (*tokens && (*tokens)->type != TK_PIPE && (*tokens)->type != TK_END)
 	{
-		if ((*tokens)->type == TK_R_IN)
-			type = REDIR_IN;
-		else if ((*tokens)->type == TK_R_OUT)
-			type = REDIR_OUT;
-		else if ((*tokens)->type == TK_APPEND)
-			type = REDIR_APPEND;
-		else if ((*tokens)->type == TK_HEREDOC)
-			type = REDIR_HEREDOC;
-		else
+		if (!assign_redirections(tokens, &type))
 		{
 			*tokens = (*tokens)->next;
 			continue ;
@@ -67,26 +74,7 @@ int	parse_redirections(t_token **tokens, t_command *cmd)
 	return (0);
 }
 
-// # Caso 1: Input simple
-// cat < file.txt
 
-// # Caso 2: Output simple
-// ls > output.txt
-
-// # Caso 3: Append
-// echo "text" >> log.txt
-
-// # Caso 4: Múltiples redirecciones
-// cat < in.txt > out.txt
-
-// # Caso 5: Con argumentos
-// grep "word" < file.txt > result.txt
-
-// # Caso 6: Error (sin archivo)
-// cat <    # ← Debe dar error
-
-// # Caso 7: Con pipes
-// cat < in.txt | grep test > out.txt
 
 // INPUT: "cat < input.txt > output.txt"
 
