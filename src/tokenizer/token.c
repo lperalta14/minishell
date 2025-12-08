@@ -19,6 +19,7 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 		last->value = join_token_value(last->value, new_token->value);
 		//ft_printf("19postjoin; %s\n", last->value);
 		//free(new_token->value);
+		//if (last->quote == QUOTE_NONE )
 		free(new_token);
 	}
 	else
@@ -27,18 +28,18 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 	return (0);
 }
 
-t_token	*tokenize(char *line)
+t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 {
-	t_token	*tokens;
-	t_lexer_state *st;
+	//t_token	*tokens;
+	//t_lexer_state *st;
 
-	tokens = NULL;
-	st = malloc(sizeof(t_lexer_state));
+	//tokens = NULL;
+	/*st = malloc(sizeof(t_lexer_state));
 	if (!st)
 		return (NULL);
 	st->input = line;
 	st->pos = 0;
-	st->len = ft_strlen(line);
+	st->len = ft_strlen(line);*/
 	while (st->pos < st->len)
 	{
 		skip_spaces(st);
@@ -63,7 +64,7 @@ t_token	*tokenize(char *line)
 			//ft_printf("salgo de extract: %s\n", st->input+st->pos);
 		}
 	}
-	free(st);
+	//free(st);
 	return (tokens);
 }
 
@@ -144,7 +145,20 @@ void check_operator(t_lexer_state *st, t_token **tokens)
 		operator_red(st, tokens);
 }
 
+t_token	*init_token(char *line, t_token *tokens)
+{
+	t_lexer_state *st;
 
+	st = malloc(sizeof(t_lexer_state));
+	if (!st)
+		return (NULL);
+	st->input = line;
+	st->pos = 0;
+	st->len = ft_strlen(line);
+	tokens = tokenize(tokens, st);
+	free(st);
+	return (tokens);
+}
 /*
 BACKTRACKING 🎯
 Concepto clave:
