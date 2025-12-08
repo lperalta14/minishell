@@ -1,5 +1,3 @@
-# 🐚 Minishell
-
 <div align="center">
 
 ![WORKINPROGRESS](banners/workinprogres.gif)

@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:35:30 by lperalta          #+#    #+#             */
-/*   Updated: 2025/04/22 12:35:49 by lperalta         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:01:00 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
+
+int	is_quote(char c)
+{
+	return (c == '\'' || c == '\"');
+}
 
 int	ft_isascii(int c)
 {
