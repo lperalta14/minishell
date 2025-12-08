@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:44:54 by lperalta          #+#    #+#             */
-/*   Updated: 2025/04/22 12:46:16 by lperalta         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:54:51 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,14 @@ int		ft_isdigit(int c);
  * @return 1 si el carácter es una letra o un dígito, 0 en caso contrario.
  */
 int		ft_isalnum(int c);
+
+/**
+ * @brief Comprueba si el carácter que se le pasa es un comilla simple o una doble.
+ * 
+ * @param c Carácter a evaluar (representado como un carácter).
+ * @return int valor diferente de 0 si es una comilla.
+ */
+int	is_quote(char c);
 
 /**
  * @brief Comprueba si un carácter pertenece al conjunto ASCII.

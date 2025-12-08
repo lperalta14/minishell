@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 		// TODO: Llamar al lexer/parser aquí en lugar de printf
 		tokens = tokenize(input);
 		print_tokens(tokens);
-		free(input);
+		//free(input);
 	}
 	rl_clear_history();
 	return (0);

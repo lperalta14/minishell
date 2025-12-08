@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libreadline-dev expect
+          sudo apt-get install -y build-essential libreadline-dev
 
       - name: Clean previous builds
         run: make fclean || true
@@ -39,9 +39,10 @@ jobs:
           name: build-log
           path: build.log
 
-      - name: Run level 0 interactive test
+      - name: Run level 0 tests
         run: |
-          chmod +x tests/level0/*.exp
-          for t in tests/level0/*.exp; do
+          chmod +x tests/level0/*.sh
+          for t in tests/level0/*.sh; do
+            echo "Running $t..."
             $t
           done
