@@ -1,74 +1,98 @@
 
 #include "../../include/lexer.h"
-/*
-🎯 Mi recomendación de orden REAL
-
-✅ Termina add_token()
-✅ Añade t_quote_type a las estructuras
- Crea tokenize() básico que solo detecte operadores y palabras SIN comillas
- Crea print_tokens() para debug
- Prueba con strings simples: "ls | grep hola"
- Implementa try_extract_quoted() con backtracking
- Integra el manejo de comillas en tokenize()
- Prueba casos complejos
-
-*/
-
-t_token	*tokenize(char *line)
+int	join_quote(t_lexer_state *st, t_token **tokens)
 {
-	t_token			*tokens;
-	t_lexer_state	*state;
+	t_token	*last;
+	t_token	*new_token;
+	char	prequote;
 
-	tokens = NULL;
-	state = malloc(sizeof(t_lexer_state));
-	if (!state)
-		return (NULL);
-	state->input = line;
-	state->pos = 0;
-	state->len = ft_strlen(line);
-	while (state->pos < state->len)
+	//if (st->pos > 0)
+	//t_printf("entro en join quote\n");
+	prequote = st->input[st->pos - 1];
+	last = last_token(*tokens);
+	new_token = try_extract_quoted(st);
+	if (!new_token)
+		return (1);
+	if (last && last->type == TK_WORD && st->pos > 0 && prequote != ' ')
 	{
-		skip_spaces(state);
-		if (state->pos >= state->len)
-			break ;
-		if (is_operator(state->input[state->pos]))
-			check_operator(state, &tokens);
-		else if ((state->input[state->pos] == '\"') || (state->input[state->pos] == '\''))
-		{	if (!try_extract_quoted(state, &tokens, NULL))
-				break;}
-		else
-			extract_word(state, &tokens);
+		//ft_printf("17prejoin new; %s  last; %s\n", new_token->value, last->value);
+		last->value = join_token_value(last->value, new_token->value);
+		//ft_printf("19postjoin; %s\n", last->value);
+		//free(new_token->value);
+		//if (last->quote == QUOTE_NONE )
+		free(new_token);
 	}
-	add_token(&tokens, createtoken(TK_END, NULL));
-	free(state);
+	else
+		add_token(tokens, new_token);
+	//ft_printf("salgo aquí\n");
+	return (0);
+}
+
+t_token	*tokenize(t_token *tokens, t_lexer_state *st)
+{
+	//t_token	*tokens;
+	//t_lexer_state *st;
+
+	//tokens = NULL;
+	/*st = malloc(sizeof(t_lexer_state));
+	if (!st)
+		return (NULL);
+	st->input = line;
+	st->pos = 0;
+	st->len = ft_strlen(line);*/
+	while (st->pos < st->len)
+	{
+		skip_spaces(st);
+		if (st->pos >= st->len)
+			break;
+		if (is_operator(st->input[st->pos]))
+			check_operator(st, &tokens);
+		else if (is_valid_quote(st->input, st->pos) == 1)
+		{
+			//ft_printf("char; %c pos;%i\n", st->input[st->pos], st->pos);
+			if (join_quote(st, &tokens))
+			{
+				ft_printf("syntax error\n");
+				free(tokens);//hay que cambiar esto por una funcion que libere bien los tokens.
+				return (NULL);
+			}
+		}
+		else
+		{
+			//ft_printf("entro en extract_word\n");
+			extract_word(st, &tokens);
+			//ft_printf("salgo de extract: %s\n", st->input+st->pos);
+		}
+	}
+	//free(st);
 	return (tokens);
 }
-/*
-	mientras no llegues al final del string:
-	- saltar espacios
-	- si es operador → crear token operador
-	- si es comilla → intentar extraer con backtracking
-		- si falla → tratar como palabra normal
-	- si no → extraer palabra normal
-*/
 
-void	extract_word(t_lexer_state *state, t_token **tokens)
+void	extract_word(t_lexer_state *st, t_token **tokens)
 {
 	int		start;
-	int		len;
+	//int		len;
 	char	*word;
 	t_token	*token;
 
-	start = state->pos;
-	len = 0;
-	while (state->pos < state->len && !is_operator(state->input[state->pos])
-		&& state->input[state->pos] != ' ' && state->input[state->pos] != '\t'
-		&& state->input[state->pos] != '\"')
+	start = st->pos;
+	//len = 0;
+	word = NULL;
+	while (st->pos < st->len && (is_valid_quote(st->input, st->pos) != 1)
+		&& !is_operator(st->input[st->pos]) && !isspace(st->input[st->pos]))
 	{
-		len++;
-		state->pos++;
+		//len++;
+		st->pos++;
+		//ft_printf("start; %i  count position; %i\n", start, st->pos);
 	}
-	word = ft_substr(state->input, start, len);
+	if (ft_memchr(st->input + start, '\\', st->pos - start))
+	{
+		//ft_printf("start; %i, len: %i st: %s\n", start, len, (st->input + start));
+		word = clean_scape(word, st->input + start, st->pos - start);
+		//ft_printf("post strchr %s\n", word);
+	}
+	else
+		word = ft_substr(st->input, start, st->pos - start);
 	if (!word)
 		return ;
 	token = createtoken(TK_WORD, word);
@@ -78,47 +102,64 @@ void	extract_word(t_lexer_state *state, t_token **tokens)
 	free(word);
 }
 
-static void	operator_red(t_lexer_state *state, t_token **tokens)
+static void	operator_red(t_lexer_state *st, t_token **tokens)
 {
 	char	c;
 
-	c = state->input[state->pos];
-	if (c == '<' && state->input[state->pos + 1] == '<')
+	c = st->input[st->pos];
+	if (c == '<' && st->input[st->pos + 1] == '<')
 	{
 		add_token(tokens, createtoken(TK_HEREDOC, "<<"));
-		state->pos += 2;
+		st->pos += 2;
 	}
 	else if (c == '<')
 	{
 		add_token(tokens, createtoken(TK_R_IN, "<"));
-		state->pos++;
+		st->pos++;
+
 	}
-	else if (c == '>' && state->input[state->pos + 1] == '>')
+	else if (c == '>' && st->input[st->pos + 1] == '>')
 	{
 		add_token(tokens, createtoken(TK_APPEND, ">>"));
-		state->pos += 2;
+		st->pos += 2;
 	}
 	else if (c == '>')
 	{
 		add_token(tokens, createtoken(TK_R_OUT, ">"));
-		state->pos++;
+		st->pos++;
 	}
 }
 
-void	check_operator(t_lexer_state *state, t_token **tokens)
+
+void check_operator(t_lexer_state *st, t_token **tokens)
 {
 	char	c;
 
-	c = state->input[state->pos];
+	c = st->input[st->pos];
+
 	if (c == '|')
 	{
 		add_token(tokens, createtoken(TK_PIPE, "|"));
-		state->pos++;
+		st->pos++;
 	}
 	else if ((c == '<') || (c == '>'))
-		operator_red(state, tokens);
+		operator_red(st, tokens);
 }
 
+t_token	*init_token(char *line, t_token *tokens)
+{
+	t_lexer_state *st;
+
+	st = malloc(sizeof(t_lexer_state));
+	if (!st)
+		return (NULL);
+	st->input = line;
+	st->pos = 0;
+	st->len = ft_strlen(line);
+	tokens = tokenize(tokens, st);
+	free(st);
+	return (tokens);
+}
 /*
 BACKTRACKING 🎯
 Concepto clave:

@@ -1,10 +1,27 @@
 #include "../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	minishell(char *input)
 {
-	char		*input;
 	t_token		*tokens;
 	t_command	*cmds;
+
+	tokens = NULL;
+	tokens = init_token(input, tokens);
+	//tokens = tokenize(input);
+	print_tokens(tokens);
+	cmds = parse(tokens);
+	if (cmds)
+	{
+		print_commands(cmds);
+		free_commands(cmds);
+	}
+	free(tokens);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char	*input;
+	//t_token	*tokens;
 
 	(void)argc;
 	(void)argv;
@@ -23,18 +40,9 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		add_history(input);
-		tokens = tokenize(input);
-		if (tokens)
-		{
-			print_tokens(tokens);
-			cmds = parse(tokens);
-			if (cmds)
-			{
-				print_commands(cmds);
-				free_commands(cmds);
-			}
-			free_tokens(tokens);
-		}
+		// TODO: Llamar al lexer/parser aquí en lugar de printf
+		minishell(input);
+		//print_tokens(tokens);
 		free(input);
 	}
 	rl_clear_history();
