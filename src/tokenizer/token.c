@@ -1,5 +1,5 @@
-
 #include "../../include/lexer.h"
+
 int	join_quote(t_lexer_state *st, t_token **tokens)
 {
 	t_token	*last;
@@ -44,7 +44,7 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 	{
 		skip_spaces(st);
 		if (st->pos >= st->len)
-			break;
+			break ;
 		if (is_operator(st->input[st->pos]))
 			check_operator(st, &tokens);
 		else if (is_valid_quote(st->input, st->pos) == 1)
@@ -53,7 +53,7 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 			if (join_quote(st, &tokens))
 			{
 				ft_printf("syntax error\n");
-				free(tokens);//hay que cambiar esto por una funcion que libere bien los tokens.
+				free(tokens);//cambiar esto por una funcion que libere bien los tokens.
 				return (NULL);
 			}
 		}
@@ -131,7 +131,7 @@ static void	operator_red(t_lexer_state *st, t_token **tokens)
 }
 
 
-void check_operator(t_lexer_state *st, t_token **tokens)
+void	check_operator(t_lexer_state *st, t_token **tokens)
 {
 	char	c;
 
@@ -148,7 +148,7 @@ void check_operator(t_lexer_state *st, t_token **tokens)
 
 t_token	*init_token(char *line, t_token *tokens)
 {
-	t_lexer_state *st;
+	t_lexer_state	*st;
 
 	st = malloc(sizeof(t_lexer_state));
 	if (!st)

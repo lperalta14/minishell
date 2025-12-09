@@ -30,7 +30,7 @@ EXECUTOR = $(EXE_DIR)/pipes.c
 
 EXPANDER = $(EXP_DIR)/expand.c
 
-PARSER = $(PARS_DIR)/parse.c $(PARS_DIR)/parse_free.c $(PARS_DIR)/parse_utils.c
+PARSER = $(PARS_DIR)/parse.c $(PARS_DIR)/parse_free.c $(PARS_DIR)/parse_utils.c $(PARS_DIR)/parse_redirs.c
 
 TOKENIZER = $(TOK_DIR)/token.c $(TOK_DIR)/quotes.c $(TOK_DIR)/utils_tokens.c
 

@@ -15,7 +15,7 @@ t_command	*parse(t_token *tokens)
 	{
 		tokens = tokens->next;
 		current->next = create_command(&tokens);
-		if (!tokens || !current->next)
+		if (!current->next)
 			return (free_commands(cmds), NULL);
 		current = current->next;
 	}
@@ -69,7 +69,7 @@ static int	count_args(t_token *tokens)
 	return (count);
 }
 
-static void	fill_args_array(t_token **tokens, char **args)
+static int	fill_args_array(t_token **tokens, char **args)
 {
 	int		i;
 
@@ -80,7 +80,7 @@ static void	fill_args_array(t_token **tokens, char **args)
 		{
 			args[i++] = ft_strdup((*tokens)->value);
 			if (!args[i - 1])
-				return ;
+				return (free_args(args), -1);
 		}
 		else if ((*tokens)->type == TK_R_IN || (*tokens)->type == TK_R_OUT
 			|| (*tokens)->type == TK_APPEND || (*tokens)->type == TK_HEREDOC)
@@ -93,6 +93,7 @@ static void	fill_args_array(t_token **tokens, char **args)
 		*tokens = (*tokens)->next;
 	}
 	args[i] = NULL;
+	return (0);
 }
 
 char	**extract_args(t_token **tokens)
@@ -104,6 +105,7 @@ char	**extract_args(t_token **tokens)
 	args = malloc(sizeof(char *) * (count + 1));
 	if (!args)
 		return (NULL);
-	fill_args_array(tokens, args);
+	if (fill_args_array(tokens, args) == -1)
+		return (NULL);
 	return (args);
 }

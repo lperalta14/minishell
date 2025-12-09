@@ -25,13 +25,14 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 	{
 		if (is_valid_quote(st->input, st->pos) == 2)
 		{ //ft_printf("entro is valid; %i\n", i);
-				i ++;
+				i++;
 		}
 		else if (is_closing_quote(st->input, i, quote))
 		{
 			//ft_printf("entro en is closing; %i\n", i);
-			while (st->input[i+1] && st->input[i+1] != ' '
-				&& !is_operator(st->input[i+1]) && is_valid_quote(st->input, st->pos+1) != 1)
+			while (st->input[i + 1] && st->input[i + 1] != ' '
+				&& !is_operator(st->input[i + 1])
+				&& is_valid_quote(st->input, st->pos + 1) != 1)
 			{
 				st->elimquote = i;
 				/*while (st->input[i+1] && !isspace(st->input[i+1])

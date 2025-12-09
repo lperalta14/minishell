@@ -12,7 +12,7 @@ int	is_operator(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-int	 is_word(char c)
+int	is_word(char c)
 {
 	if (!is_operator(c) && !is_quote(c) && !isspace(c))
 		return (1);
@@ -58,7 +58,7 @@ void	add_token(t_token **head, t_token *new)
 	tmp->next = new;
 }
 
-t_token *last_token(t_token *tokens)
+t_token	*last_token(t_token *tokens)
 {
 	if (!tokens)
 		return (NULL);
@@ -96,13 +96,13 @@ char	*join_token_value(char *old, char *add)
 	return (joined);
 }
 
-void count_quote(t_lexer_state *st, char quote, int end)
+void	count_quote(t_lexer_state *st, char quote, int end)
 {
 	int	i;
 
 	i = st->pos +1;
 	st->elimquote = 0;
-	while(st->input[i] && i < end)
+	while (st->input[i] && i < end)
 	{
 		if (st->input[i] == quote)
 			st->elimquote ++;
@@ -115,10 +115,10 @@ void	clean_quote(char *str, t_lexer_state *st, int end, char quote)
 	int	i;
 
 	i = st->pos;
-	while(st->input[i] && i <= end)
+	while (st->input[i] && i <= end)
 	{
 		if (quote == '"' && st->input[i] == '\\')
-		{	
+		{
 			i++;
 			*str++ = st->input[i];
 		}
@@ -129,7 +129,7 @@ void	clean_quote(char *str, t_lexer_state *st, int end, char quote)
 	*str = 0;
 }
 
-char *clean_scape(char *dst, char *src, int len)
+char	*clean_scape(char *dst, char *src, int len)
 {
 	int	del;
 	int	i;
@@ -139,7 +139,7 @@ char *clean_scape(char *dst, char *src, int len)
 	//ft_printf("%i->len\n", len);
 	while (src[i] && i < len)
 	{
-		if (src[i] == '\\' && src[i+1] == '"')
+		if (src[i] == '\\' && src[i + 1] == '"')
 			del ++;
 		i++;
 	}
@@ -151,7 +151,7 @@ char *clean_scape(char *dst, char *src, int len)
 	while (src[i] && i < len)
 	{
 		//ft_printf("src %s i %i len %i dst %s\n", src+i, i, len, dst);
-		if (src[i] == '\\' && src[i+1] == '"')
+		if (src[i] == '\\' && src[i + 1] == '"')
 			i ++;
 		dst[del] = src[i];
 		del++;

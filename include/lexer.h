@@ -66,7 +66,7 @@ int		is_operator(char c);
  * @param c 
  * @return int 
  */
-int	 is_word(char c);
+int		is_word(char c);
 
 /**
  * @brief 
@@ -86,7 +86,7 @@ t_token	*createtoken(t_token_type type, char *value);
 void	add_token(t_token **head, t_token *new);
 
 char	*join_token_value(char *old, char *add);
-t_token *last_token(t_token *tokens);
+t_token	*last_token(t_token *tokens);
 t_token	*init_token(char *line, t_token *tokens);
 
 /********************************************************/
@@ -111,7 +111,7 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st);
  */
 void	check_operator(t_lexer_state *state, t_token **tokens);
 
-void count_quote(t_lexer_state *st, char quote, int end);
+void	count_quote(t_lexer_state *st, char quote, int end);
 
 void	clean_quote(char *str, t_lexer_state *st, int end, char quote);
 
@@ -140,8 +140,8 @@ t_token	*try_extract_quoted(t_lexer_state *st);
  * @param pos The position of the character to check within the string.
  * @return 1 if the character is a valid quote delimiter, 0 otherwise.
  */
-int	is_valid_quote(char *str, int pos);
+int		is_valid_quote(char *str, int pos);
 
-char *clean_scape(char *dst, char *src, int len);
+char	*clean_scape(char *dst, char *src, int len);
 
 #endif
