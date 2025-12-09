@@ -13,7 +13,7 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 	new_token = try_extract_quoted(st);
 	if (!new_token)
 		return (1);
-	if (last && last->type == TOKEN_WORD && st->pos > 0 && prequote != ' ')
+	if (last && last->type == TK_WORD && st->pos > 0 && prequote != ' ')
 	{
 		//ft_printf("17prejoin new; %s  last; %s\n", new_token->value, last->value);
 		last->value = join_token_value(last->value, new_token->value);
@@ -95,7 +95,7 @@ void	extract_word(t_lexer_state *st, t_token **tokens)
 		word = ft_substr(st->input, start, st->pos - start);
 	if (!word)
 		return ;
-	token = createtoken(TOKEN_WORD, word);
+	token = createtoken(TK_WORD, word);
 	if (token)
 		token->quote = QUOTE_NONE;
 	add_token(tokens, token);
@@ -109,22 +109,22 @@ static void	operator_red(t_lexer_state *st, t_token **tokens)
 	c = st->input[st->pos];
 	if (c == '<' && st->input[st->pos + 1] == '<')
 	{
-		add_token(tokens, createtoken(TOKEN_HEREDOC, "<<"));
+		add_token(tokens, createtoken(TK_HEREDOC, "<<"));
 		st->pos += 2;
 	}
 	else if (c == '<')
 	{
-		add_token(tokens, createtoken(TOKEN_REDIR_IN, "<"));
+		add_token(tokens, createtoken(TK_R_IN, "<"));
 		st->pos++;
 	}
 	else if (c == '>' && st->input[st->pos + 1] == '>')
 	{
-		add_token(tokens, createtoken(TOKEN_APPEND, ">>"));
+		add_token(tokens, createtoken(TK_APPEND, ">>"));
 		st->pos += 2;
 	}
 	else if (c == '>')
 	{
-		add_token(tokens, createtoken(TOKEN_REDIR_OUT, ">"));
+		add_token(tokens, createtoken(TK_R_OUT, ">"));
 		st->pos++;
 	}
 }
@@ -138,7 +138,7 @@ void check_operator(t_lexer_state *st, t_token **tokens)
 
 	if (c == '|')
 	{
-		add_token(tokens, createtoken(TOKEN_PIPE, "|"));
+		add_token(tokens, createtoken(TK_PIPE, "|"));
 		st->pos++;
 	}
 	else if ((c == '<') || (c == '>'))

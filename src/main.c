@@ -2,12 +2,19 @@
 
 void	minishell(char *input)
 {
-	t_token	*tokens;
-
+	t_token		*tokens;
+	t_command	*cmds;
+	
 	tokens = NULL;
 	tokens = init_token(input, tokens);
 	//tokens = tokenize(input);
 	print_tokens(tokens);
+	cmds = parse(tokens);
+	if (cmds)
+	{
+		print_commands(cmds);
+		free_commands(cmds);
+	}
 	free(tokens);
 }
 
