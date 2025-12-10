@@ -53,7 +53,7 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 			if (join_quote(st, &tokens))
 			{
 				ft_printf("syntax error\n");
-				free(tokens);//cambiar esto por una funcion que libere bien los tokens.
+				free_tokens(tokens);//cambiar esto por una funcion que libere bien los tokens.
 				return (NULL);
 			}
 		}
@@ -155,6 +155,7 @@ t_token	*init_token(char *line, t_token *tokens)
 		return (NULL);
 	st->input = line;
 	st->pos = 0;
+	st->elimquote = 0;
 	st->len = ft_strlen(line);
 	tokens = tokenize(tokens, st);
 	free(st);

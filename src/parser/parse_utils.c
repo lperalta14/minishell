@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int	validate_syntax( t_token **tokens)
+/*int	validate_syntax( t_token **tokens)
 {
 	t_token	*tmp;
 
@@ -21,7 +21,7 @@ int	validate_syntax( t_token **tokens)
 		if (tmp-)
 	}
 
-}
+}*/
 
 // INPUT: "cat < input.txt > output.txt"
 

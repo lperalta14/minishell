@@ -59,7 +59,7 @@ static char	*extract_quoted_value(t_lexer_state *st, int end, char quote)
 	{
 		count_quote(st, quote, end);
 		len = len - st->elimquote;
-		str = malloc(sizeof(char) * len);
+		str = malloc(sizeof(char) * len + 1);
 		if (!str)
 			return (NULL);
 		//ft_printf("preclean dst: %s/ src: %s/\n", str, st->input+st->pos);
