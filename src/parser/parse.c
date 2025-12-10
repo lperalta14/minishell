@@ -102,7 +102,7 @@ char	**extract_args(t_token **tokens)
 	char	**args;
 
 	count = count_args(*tokens);
-	args = malloc(sizeof(char *) * (count + 1));
+	args = ft_calloc(count + 1, sizeof(char *));
 	if (!args)
 		return (NULL);
 	if (fill_args_array(tokens, args) == -1)

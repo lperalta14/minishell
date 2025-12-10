@@ -22,7 +22,7 @@ int	validate_syntax( t_token **tokens)
 	if (!tmp)
 		return (1);
 	if (tmp->type == TK_PIPE)
-		syntax_error("|");
+		return (syntax_error("|"));
 	while (tmp)
 	{
 		if (tmp->type == TK_PIPE)
@@ -33,8 +33,8 @@ int	validate_syntax( t_token **tokens)
 		else if (is_redir_token (tmp->type))
 		{
 			if (!tmp->next)
-				return (syntax_error("\n"));
-			if (tmp->next->type == TK_WORD)
+				return (syntax_error("newline"));
+			if (tmp->next->type != TK_WORD)
 				return (syntax_error(tmp->next->value));
 		}
 		tmp = tmp->next;
