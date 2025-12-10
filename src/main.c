@@ -15,13 +15,13 @@ void	minishell(char *input)
 		print_commands(cmds);
 		free_commands(cmds);
 	}
-	free(tokens);
+	if (tokens)
+		free_tokens(tokens);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	//t_token	*tokens;
 
 	(void)argc;
 	(void)argv;
@@ -40,9 +40,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		add_history(input);
-		// TODO: Llamar al lexer/parser aquí en lugar de printf
 		minishell(input);
-		//print_tokens(tokens);
 		free(input);
 	}
 	rl_clear_history();

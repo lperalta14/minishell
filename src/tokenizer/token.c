@@ -30,16 +30,16 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 
 t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 {
-	//t_token	*tokens;
-	//t_lexer_state *st;
+	// t_token			*tokens;
+	// t_lexer_state	*st;
 
-	//tokens = NULL;
-	/*st = malloc(sizeof(t_lexer_state));
-	if (!st)
-		return (NULL);
-	st->input = line;
-	st->pos = 0;
-	st->len = ft_strlen(line);*/
+	// tokens = NULL;
+	// st = malloc(sizeof(t_lexer_state));
+	// if (!st)
+	// 	return (NULL);
+	// st->input = line;
+	// st->pos = 0;
+	// st->len = ft_strlen(line);
 	while (st->pos < st->len)
 	{
 		skip_spaces(st);
@@ -53,7 +53,7 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 			if (join_quote(st, &tokens))
 			{
 				ft_printf("syntax error\n");
-				free(tokens);//cambiar esto por una funcion que libere bien los tokens.
+				free_tokens(tokens);
 				return (NULL);
 			}
 		}
@@ -64,7 +64,7 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 			//ft_printf("salgo de extract: %s\n", st->input+st->pos);
 		}
 	}
-	//free(st);
+	// free(st);
 	return (tokens);
 }
 

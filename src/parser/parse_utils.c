@@ -1,5 +1,11 @@
 #include "../../include/minishell.h"
 
+int	is_redir_token(t_token_type type)
+{
+	return (type == TK_R_IN || type == TK_R_OUT
+		|| type == TK_APPEND || type == TK_HEREDOC);
+}
+
 int	validate_syntax( t_token **tokens)
 {
 	t_token	*tmp;
@@ -13,12 +19,18 @@ int	validate_syntax( t_token **tokens)
 	{
 		if (tmp->type == TK_PIPE)
 		{
-			if (tmp->next == NULL || tmp->next == EOF)
-				syntax_error("|");
-			if (tmp->next == TK_PIPE)
-				syntax_error ("|");
+			if (!tmp->next || tmp->next->type == TK_PIPE)
+				return (syntax_error("|"));
 		}
-		if (tmp-)
+		else if (is_redir_token (tmp->type))
+		{
+			if (!tmp->next)
+				return (syntax_error("\n"));
+			if (tmp->next->type == TK_WORD)
+				return (syntax_error(tmp->next->value));
+			tmp = tmp->next;
+		}
+		return (1);
 	}
 
 }
