@@ -5,15 +5,15 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_APPEND,
-	TOKEN_HEREDOC,
-	TOKEN_LPAREN,
-	TOKEN_RPAREN,
-	TOKEN_END,
+	TK_WORD,
+	TK_PIPE,
+	TK_R_IN,
+	TK_R_OUT,
+	TK_APPEND,
+	TK_HEREDOC,
+	TK_LPAREN,
+	TK_RPAREN,
+	TK_END,
 }	t_token_type;
 
 typedef enum e_quote_type

@@ -10,6 +10,7 @@
 # include "../src/my_lib/includes/libft.h"
 # include "utils.h"
 # include "lexer.h"
+# include "parser.h"
 
 #define RED "\033[38;5;196m"
 #define ORANGE "\033[38;5;208m"
