@@ -1,4 +1,4 @@
-#include "../../include/lexer.h"
+#include "../../include/minishell.h"
 
 static int	is_closing_quote(char *str, int i, char quote)
 {

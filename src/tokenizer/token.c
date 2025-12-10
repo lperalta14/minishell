@@ -1,4 +1,4 @@
-#include "../../include/lexer.h"
+#include "../../include/minishell.h"
 
 int	join_quote(t_lexer_state *st, t_token **tokens)
 {

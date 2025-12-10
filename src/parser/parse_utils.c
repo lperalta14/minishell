@@ -6,11 +6,19 @@ int	is_redir_token(t_token_type type)
 		|| type == TK_APPEND || type == TK_HEREDOC);
 }
 
+int	syntax_error(char *token_str)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+	ft_putstr_fd(token_str, 2);
+	ft_putstr_fd("'\n", 2);
+	return (0);
+}
+
 int	validate_syntax( t_token **tokens)
 {
 	t_token	*tmp;
 
-	tmp = tokens;
+	tmp = *tokens;
 	if (!tmp)
 		return (1);
 	if (tmp->type == TK_PIPE)
@@ -28,11 +36,10 @@ int	validate_syntax( t_token **tokens)
 				return (syntax_error("\n"));
 			if (tmp->next->type == TK_WORD)
 				return (syntax_error(tmp->next->value));
-			tmp = tmp->next;
 		}
-		return (1);
+		tmp = tmp->next;
 	}
-
+	return (1);
 }
 
 // INPUT: "cat < input.txt > output.txt"

@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 void	free_args(char **args)
 {
@@ -45,10 +45,3 @@ void	free_commands(t_command *cmds)
 	}
 }
 
-int	syntax_error(char *token_str)
-{
-	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-	ft_putstr_fd(token_str, 2);
-	ft_putstr_fd("'\n", 2);
-	return (0);
-}

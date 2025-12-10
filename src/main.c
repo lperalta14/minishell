@@ -7,7 +7,11 @@ void	minishell(char *input)
 
 	tokens = NULL;
 	tokens = init_token(input, tokens);
-	//tokens = tokenize(input);
+	if (!validate_syntax(&tokens))
+	{
+		free_tokens(tokens);
+		return ;
+	}
 	print_tokens(tokens);
 	cmds = parse(tokens);
 	if (cmds)
@@ -39,7 +43,8 @@ int	main(int argc, char **argv, char **envp)
 				print_banner("banners/bye.txt");
 			break ;
 		}
-		add_history(input);
+		if (input[0] != '\0')
+			add_history(input);
 		minishell(input);
 		free(input);
 	}
