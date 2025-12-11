@@ -41,4 +41,23 @@ t_env	*init_env(char **envp);
 /********************************************************/
 /*					RUTAS DE ENTORNO					*/
 /********************************************************/
+
+/**
+ * @brief find a valid path
+ * 
+ * @param cmd 
+ * @param paths 
+ * @return char* 
+ */
+char	*find_valid_path(char *cmd, char **paths);
+
+/**
+ * @brief Get the path object
+ * 
+ * @param cmd 
+ * @param env 
+ * @return char* 
+ */
+char	*get_path(char *cmd, t_env *env);
+
 #endif

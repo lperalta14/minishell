@@ -63,3 +63,31 @@ t_env	*init_env(char **envp)
 	}
 	return (head);
 }
+
+char	**env_to_array(t_env *env)
+{
+	int		count;
+	char	**l_envs;
+	t_env	*tmp;
+	int		i;
+
+	count = ft_lstsize(env);
+	l_envs = malloc((count + 1) * sizeof(char *));
+	if (!l_envs)
+		return (NULL);
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		l_envs[i] = ft_strjoindelimit(tmp->key, "=", tmp->value);
+		if (!l_envs[i])
+		{
+			ft_freematrix(l_envs);
+			return (NULL);
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	l_envs[i] = NULL;
+	return (l_envs);
+}
