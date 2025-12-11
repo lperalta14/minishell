@@ -112,12 +112,6 @@ void		add_redir(t_redir **head, t_redir *new);
 /*          FUNCIONES DE LIMPIEZA               */
 /* ============================================ */
 
-/**
- * @brief Libera array de strings terminado en NULL
- * 
- * @param args Array de strings a liberar
- */
-void		free_args(char **args);
 
 /**
  * @brief Libera lista enlazada de redirecciones

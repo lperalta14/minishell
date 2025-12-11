@@ -26,12 +26,12 @@ void	minishell(char *input)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	t_env	*env_list;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	env_list = init_env(envp);
 	// TODO: Inicializar señales (signal/sigaction)
-	// TODO: Guardar envp en una estructura global
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/acrobata.txt");
 	while (1)
@@ -49,5 +49,6 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 	}
 	rl_clear_history();
+	free_env_list(env_list);
 	return (0);
 }

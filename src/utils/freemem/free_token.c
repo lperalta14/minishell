@@ -22,7 +22,7 @@ void	free_commands(t_command *cmds)
 	{
 		tmp = cmds;
 		cmds = cmds->next;
-		free_args(tmp->args);
+		freematrix(tmp->args);
 		free_redirs(tmp->redirs);
 		free(tmp);
 	}

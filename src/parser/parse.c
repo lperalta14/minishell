@@ -39,7 +39,7 @@ t_command	*create_command(t_token **tokens)
 		return (free(cmd), (NULL));
 	if (parse_redirections(&start, cmd) == -1)
 	{
-		free_args(cmd->args);
+		ft_freematrix(cmd->args);
 		free_redirs(cmd->redirs);
 		free(cmd);
 		return (NULL);
@@ -80,7 +80,7 @@ static int	fill_args_array(t_token **tokens, char **args)
 		{
 			args[i++] = ft_strdup((*tokens)->value);
 			if (!args[i - 1])
-				return (free_args(args), -1);
+				return (ft_freematrix(args), -1);
 		}
 		else if ((*tokens)->type == TK_R_IN || (*tokens)->type == TK_R_OUT
 			|| (*tokens)->type == TK_APPEND || (*tokens)->type == TK_HEREDOC)

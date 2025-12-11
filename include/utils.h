@@ -29,6 +29,13 @@ void	print_tokens(t_token *tokens);
 /********************************************************/
 
 /**
+ * @brief liberar lista de env
+ * 
+ * @param head 
+ */
+void	free_env_list(t_env *head);
+
+/**
  * @brief libera tokens
  * 
  * @param tokens
@@ -41,5 +48,13 @@ void	free_tokens(t_token *tokens);
  * @param cmds 
  */
 void	free_commands(t_command *cmds);
+
+/**
+ * @brief libera redirecciones
+ * 
+ * @param redirs 
+ */
+void	free_redirs(t_redir *redirs);
+
 
 #endif
