@@ -71,6 +71,8 @@ void	extract_word(t_lexer_state *st, t_token **tokens)
 		word = ft_substr(st->input, start, st->pos - start);
 	if (!word)
 		return ;
+	if (has_dollar(word))
+		expand_variables(&word, QUOTE_NONE, st->env);
 	token = createtoken(TK_WORD, word);
 	if (token)
 		token->quote = QUOTE_NONE;
@@ -122,7 +124,7 @@ void	check_operator(t_lexer_state *st, t_token **tokens)
 		operator_red(st, tokens);
 }
 
-t_token	*init_token(char *line, t_token *tokens, t_env env)
+t_token	*init_token(char *line, t_token *tokens, t_env *env)
 {
 	t_lexer_state	*st;
 
@@ -130,6 +132,7 @@ t_token	*init_token(char *line, t_token *tokens, t_env env)
 	if (!st)
 		return (NULL);
 	st->input = line;
+	st->env = env;
 	st->pos = 0;
 	st->elimquote = 0;
 	st->len = ft_strlen(line);

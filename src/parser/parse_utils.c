@@ -1,8 +1,5 @@
 #include "../../include/minishell.h"
 
-<<<<<<< HEAD
-/*int	validate_syntax( t_token **tokens)
-=======
 int	is_redir_token(t_token_type type)
 {
 	return (type == TK_R_IN || type == TK_R_OUT
@@ -18,7 +15,6 @@ int	syntax_error(char *token_str)
 }
 
 int	validate_syntax( t_token **tokens)
->>>>>>> origin/mariabranch
 {
 	t_token	*tmp;
 
@@ -43,13 +39,8 @@ int	validate_syntax( t_token **tokens)
 		}
 		tmp = tmp->next;
 	}
-<<<<<<< HEAD
-
-}*/
-=======
 	return (1);
 }
->>>>>>> origin/mariabranch
 
 // INPUT: "cat < input.txt > output.txt"
 

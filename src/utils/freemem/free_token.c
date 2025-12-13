@@ -22,13 +22,6 @@ void	free_commands(t_command *cmds)
 	{
 		tmp = cmds;
 		cmds = cmds->next;
-<<<<<<< HEAD
-		free_args(tmp->args);
-		free_redirs(tmp->redirs);
-		free(tmp);
-	}
-}*/
-=======
 		freematrix(tmp->args);
 		free_redirs(tmp->redirs);
 		free(tmp);
@@ -54,4 +47,3 @@ void	free_commands(t_command *cmds)
 // ==2586291== indirectly lost: 102 bytes in 6 blocks
 // pero no estoy segura de si ha sido una rallada y 
 // pasandoselo a la ia me decia esto. lo dejo por aqui por si acaso
->>>>>>> origin/mariabranch

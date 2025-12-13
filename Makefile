@@ -28,7 +28,7 @@ BUILTINS = $(BUIL_DIR)/cdcommand.c
 
 EXECUTOR = $(EXE_DIR)/pipes.c $(EXE_DIR)/execute.c $(EXE_DIR)/env.c
 
-EXPANDER = $(EXP_DIR)/expand.c
+EXPANDER = $(EXP_DIR)/expand.c $(EXP_DIR)/expand_utils.c
 
 PARSER = $(PARS_DIR)/parse.c $(PARS_DIR)/parse_utils.c $(PARS_DIR)/parse_redirs.c
 
