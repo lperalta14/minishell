@@ -10,5 +10,54 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+/********************************************************/
+/*				VARIABLES DE ENTORNO					*/
+/********************************************************/
+
+/**
+ * @brief añadir variables de entorno a la lista
+ * 
+ * @param head 
+ * @param new 
+ */
+void	add_env(t_env **head, t_env *new);
+
+/**
+ * @brief Get the env node object
+ * 
+ * @param str 
+ * @return t_env* 
+ */
+t_env	*get_env_node(char *str);
+
+/**
+ * @brief encontrar variables de entorno
+ * 
+ * @param envp 
+ * @return t_env* 
+ */
+t_env	*init_env(char **envp);
+
+/********************************************************/
+/*					RUTAS DE ENTORNO					*/
+/********************************************************/
+
+/**
+ * @brief find a valid path
+ * 
+ * @param cmd 
+ * @param paths 
+ * @return char* 
+ */
+char	*find_valid_path(char *cmd, char **paths);
+
+/**
+ * @brief Get the path object
+ * 
+ * @param cmd 
+ * @param env 
+ * @return char* 
+ */
+char	*get_path(char *cmd, t_env *env);
 
 #endif

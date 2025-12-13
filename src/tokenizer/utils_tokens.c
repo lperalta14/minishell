@@ -1,4 +1,4 @@
-#include "../../include/lexer.h"
+#include "../../include/minishell.h"
 
 void	skip_spaces(t_lexer_state *state)
 {

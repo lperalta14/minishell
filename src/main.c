@@ -7,7 +7,11 @@ static void	minishell(char *input, t_env *env)
 
 	tokens = NULL;
 	tokens = init_token(input, tokens, env);
-	//tokens = tokenize(input);
+	if (!validate_syntax(&tokens))
+	{
+		free_tokens(tokens);
+		return ;
+	}
 	print_tokens(tokens);
 	cmds = parse(tokens);
 	if (cmds)
@@ -24,7 +28,10 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 	t_env	*env_list;
 
+	(void)argc;
+	(void)argv;
 	env_list = init_env(envp);
+	// TODO: Inicializar señales (signal/sigaction)
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/acrobata.txt");
 	while (1)
@@ -39,7 +46,8 @@ int	main(int argc, char **argv, char **envp)
 				print_banner("banners/bye.txt");
 			break ;
 		}
-		add_history(input);
+		if (input[0] != '\0')
+			add_history(input);
 		minishell(input, env_list);
 		free(input);
 	}
