@@ -6,8 +6,8 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 	t_token	*new_token;
 	char	prequote;
 
-	//if (st->pos > 0)
-	//t_printf("entro en join quote\n");
+	if (st->pos > 0)
+	//ft_printf("entro en join quote\n");
 	prequote = '\0';
 	if(st->pos > 0)
 		prequote = st->input[st->pos - 1];
@@ -15,6 +15,7 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 	new_token = try_extract_quoted(st);
 	if (!new_token)
 		return (1);
+	//ft_printf("newtoken; %s token_type; %i\n", new_token->value, new_token->type);
 	if (last && last->type == TK_WORD && st->pos > 0 && prequote != ' ')
 	{
 		//ft_printf("17prejoin new; %s  last; %s\n", new_token->value, last->value);
@@ -25,7 +26,10 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 		free(new_token);
 	}
 	else
+	{
+		//ft_printf("add token\n");
 		add_token(tokens, new_token);
+	}
 	//ft_printf("salgo aquí\n");
 	return (0);
 }

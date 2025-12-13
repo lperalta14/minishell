@@ -22,12 +22,14 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 	i = st->pos + 1;
 	while (st->input[i])
 	{
+		//printf("prueba1 de i:%i\n", i);
 		if (is_valid_quote(st->input, st->pos) == 2)
 				i++;
 		else if (is_closing_quote(st->input, i, quote))
 		{
-			if (quote == '\'' && st->input[i + 1] != quote)
-			st->quote = QUOTE_DOUBLE;
+			if (quote == '\'' && st->input[i + 1] 
+				&& (st->input[i + 1] != quote) && is_word(st->input[i + 1]))
+				st->quote = QUOTE_DOUBLE;
 			while (st->input[i + 1] && st->input[i + 1] != ' '
 				&& !is_operator(st->input[i + 1])
 				&& is_valid_quote(st->input, st->pos + 1) != 1)
@@ -35,6 +37,7 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 				st->elimquote = i;
 				i++;
 			}
+			//printf("prueba de i:%i\n", i);
 			return (i);
 		}
 		else
