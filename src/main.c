@@ -1,12 +1,12 @@
 #include "../include/minishell.h"
 
-void	minishell(char *input)
+static void	minishell(char *input, t_env *env)
 {
 	t_token		*tokens;
 	t_command	*cmds;
 
 	tokens = NULL;
-	tokens = init_token(input, tokens);
+	tokens = init_token(input, tokens, env);
 	//tokens = tokenize(input);
 	print_tokens(tokens);
 	cmds = parse(tokens);
@@ -22,17 +22,17 @@ void	minishell(char *input)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	t_env	*env_list;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	// TODO: Inicializar señales (signal/sigaction)
-	// TODO: Guardar envp en una estructura global
+	env_list = init_env(envp);
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/acrobata.txt");
 	while (1)
 	{
-		input = readline("minishell> ");
+		if (isatty(STDIN_FILENO))
+			input = readline("minihell> ");
+		else
+			input = readline("");
 		if (!input)
 		{
 			if (isatty(STDIN_FILENO))
@@ -40,12 +40,10 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		add_history(input);
-		minishell(input);
+		minishell(input, env_list);
 		free(input);
 	}
-	/*rl_cleanup_after_signal();
-	rl_deprep_terminal();
-	history_end();*/
 	rl_clear_history();
+	free_env_list(env_list);
 	return (0);
 }

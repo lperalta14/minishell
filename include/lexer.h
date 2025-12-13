@@ -39,6 +39,7 @@ typedef struct s_lexer_state
 	int				len;
 	int				elimquote;
 	t_quote_type	quote;
+	char			**env;
 }	t_lexer_state;
 
 /********************************************************/

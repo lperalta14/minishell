@@ -9,7 +9,7 @@ OBJ_DIR = obj
 INCLUDES = $(INCLUDES_DIR)/minishell.h \
 	$(INCLUDES_DIR)/libft.h \
 	$(INCLUDES_DIR)/builtins.h \
-	$(INCLUDES_DIR)/executor.h \
+	$(INCLUDES_DIR)/executer.h \
 	$(INCLUDES_DIR)/expander.h \
 	$(INCLUDES_DIR)/parser.h \
 	$(INCLUDES_DIR)/lexer.h \
