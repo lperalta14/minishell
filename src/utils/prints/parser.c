@@ -32,7 +32,7 @@ void	print_commands(t_command *cmds)
 		cmds = cmds->next;
 		count++;
 	}
-
+	printf("\n");
 }
 
 void	print_redirs(t_redir *redirs)

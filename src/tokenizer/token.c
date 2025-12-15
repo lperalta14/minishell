@@ -6,31 +6,23 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 	t_token	*new_token;
 	char	prequote;
 
-	if (st->pos > 0)
-	//ft_printf("entro en join quote\n");
 	prequote = '\0';
 	if(st->pos > 0)
 		prequote = st->input[st->pos - 1];
 	last = last_token(*tokens);
-	new_token = try_extract_quoted(st);
+	if (is_valid_quote(st->input, st->pos) == 1)
+		new_token = try_extract_quoted(st);
+	else 
+		new_token = extract_word(st);
 	if (!new_token)
 		return (1);
-	//ft_printf("newtoken; %s token_type; %i\n", new_token->value, new_token->type);
 	if (last && last->type == TK_WORD && st->pos > 0 && prequote != ' ')
 	{
-		//ft_printf("17prejoin new; %s  last; %s\n", new_token->value, last->value);
 		last->value = join_token_value(last->value, new_token->value);
-		//ft_printf("19postjoin; %s\n", last->value);
-		//free(new_token->value);
-		//if (last->quote == QUOTE_NONE )
 		free(new_token);
 	}
 	else
-	{
-		//ft_printf("add token\n");
 		add_token(tokens, new_token);
-	}
-	//ft_printf("salgo aquí\n");
 	return (0);
 }
 
@@ -43,7 +35,7 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 			break ;
 		if (is_operator(st->input[st->pos]))
 			check_operator(st, &tokens);
-		else if (is_valid_quote(st->input, st->pos) == 1)
+		else
 		{
 			if (join_quote(st, &tokens))
 			{
@@ -52,13 +44,11 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 				return (NULL);
 			}
 		}
-		else
-			extract_word(st, &tokens);
 	}
 	return (tokens);
 }
 
-void	extract_word(t_lexer_state *st, t_token **tokens)
+t_token	*extract_word(t_lexer_state *st)
 {
 	int		start;
 	char	*word;
@@ -74,14 +64,14 @@ void	extract_word(t_lexer_state *st, t_token **tokens)
 	else
 		word = ft_substr(st->input, start, st->pos - start);
 	if (!word)
-		return ;
+		return (NULL);
 	if (has_dollar(word))
 		expand_variables(&word, QUOTE_NONE, st->env);
 	token = createtoken(TK_WORD, word);
 	if (token)
 		token->quote = QUOTE_NONE;
-	add_token(tokens, token);
 	free(word);
+	return (token);
 }
 
 static void	operator_red(t_lexer_state *st, t_token **tokens)

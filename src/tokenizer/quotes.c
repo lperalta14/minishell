@@ -27,7 +27,7 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 				i++;
 		else if (is_closing_quote(st->input, i, quote))
 		{
-			if (quote == '\'' && st->input[i + 1] 
+			/*if (quote == '\'' && st->input[i + 1] 
 				&& (st->input[i + 1] != quote) && is_word(st->input[i + 1]))
 				st->quote = QUOTE_DOUBLE;
 			while (st->input[i + 1] && st->input[i + 1] != ' '
@@ -37,7 +37,7 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 				st->elimquote = i;
 				i++;
 			}
-			//printf("prueba de i:%i\n", i);
+			//printf("prueba de i:%i\n", i);*/
 			return (i);
 		}
 		else
@@ -53,7 +53,8 @@ static char	*extract_quoted_value(t_lexer_state *st, int end, char quote)
 
 	str = NULL;
 	len = end - st->pos;
-	if (st->elimquote)
+	if (quote)
+	/*if (st->elimquote)
 	{
 		count_quote(st, quote, end);
 		len = len - st->elimquote;
@@ -62,7 +63,7 @@ static char	*extract_quoted_value(t_lexer_state *st, int end, char quote)
 			return (NULL);
 		clean_quote(str, st, end, quote);
 	}
-	else
+	else*/
 		str = clean_scape(str, st->input + st->pos + 1, len - 1);
 	if (st->quote == QUOTE_DOUBLE && has_dollar(str))
 		expand_variables(&str, QUOTE_DOUBLE, st->env);
