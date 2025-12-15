@@ -38,6 +38,8 @@ t_env	*get_env_node(char *str)
 		env->key = ft_strdup(str);
 		env->value = NULL;
 	}
+	if (!env->key || pos_eq && !env->value)
+		free_env_list(env);
 	env->next = NULL;
 	return (env);
 }
