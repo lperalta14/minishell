@@ -39,6 +39,7 @@ typedef struct s_lexer_state
 	int				len;
 	int				elimquote;
 	t_quote_type	quote;
+	t_env			*env;
 }	t_lexer_state;
 
 /********************************************************/
@@ -87,7 +88,7 @@ void	add_token(t_token **head, t_token *new);
 
 char	*join_token_value(char *old, char *add);
 t_token	*last_token(t_token *tokens);
-t_token	*init_token(char *line, t_token *tokens);
+t_token	*init_token(char *line, t_token *tokens, t_env *env);
 
 /********************************************************/
 /*						TOKEN.C							*/

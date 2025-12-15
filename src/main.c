@@ -1,12 +1,12 @@
 #include "../include/minishell.h"
 
-void	minishell(char *input)
+static void	minishell(char *input, t_env *env)
 {
 	t_token		*tokens;
 	t_command	*cmds;
 
 	tokens = NULL;
-	tokens = init_token(input, tokens);
+	tokens = init_token(input, tokens, env);
 	if (!validate_syntax(&tokens))
 	{
 		free_tokens(tokens);
@@ -36,7 +36,10 @@ int	main(int argc, char **argv, char **envp)
 		print_banner("banners/acrobata.txt");
 	while (1)
 	{
-		input = readline("minishell> ");
+		if (isatty(STDIN_FILENO))
+			input = readline("minihell> ");
+		else
+			input = readline("");
 		if (!input)
 		{
 			if (isatty(STDIN_FILENO))
@@ -45,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (input[0] != '\0')
 			add_history(input);
-		minishell(input);
+		minishell(input, env_list);
 		free(input);
 	}
 	rl_clear_history();

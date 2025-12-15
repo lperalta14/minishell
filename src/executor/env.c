@@ -66,6 +66,19 @@ t_env	*init_env(char **envp)
 	return (head);
 }
 
+int env_size(t_env *env)
+{
+	int count;
+
+	count = 0;
+	while (env)
+	{
+		count++;
+		env = env->next;
+	}
+	return (count);
+}
+
 char	**env_to_array(t_env *env)
 {
 	int		count;
@@ -73,7 +86,7 @@ char	**env_to_array(t_env *env)
 	t_env	*tmp;
 	int		i;
 
-	count = ft_lstsize(env);
+	count = env_size(env);
 	l_envs = malloc((count + 1) * sizeof(char *));
 	if (!l_envs)
 		return (NULL);
@@ -93,3 +106,4 @@ char	**env_to_array(t_env *env)
 	l_envs[i] = NULL;
 	return (l_envs);
 }
+

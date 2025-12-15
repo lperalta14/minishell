@@ -6,13 +6,16 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 	t_token	*new_token;
 	char	prequote;
 
-	//if (st->pos > 0)
-	//t_printf("entro en join quote\n");
-	prequote = st->input[st->pos - 1];
+	if (st->pos > 0)
+	//ft_printf("entro en join quote\n");
+	prequote = '\0';
+	if(st->pos > 0)
+		prequote = st->input[st->pos - 1];
 	last = last_token(*tokens);
 	new_token = try_extract_quoted(st);
 	if (!new_token)
 		return (1);
+	//ft_printf("newtoken; %s token_type; %i\n", new_token->value, new_token->type);
 	if (last && last->type == TK_WORD && st->pos > 0 && prequote != ' ')
 	{
 		//ft_printf("17prejoin new; %s  last; %s\n", new_token->value, last->value);
@@ -23,23 +26,16 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 		free(new_token);
 	}
 	else
+	{
+		//ft_printf("add token\n");
 		add_token(tokens, new_token);
+	}
 	//ft_printf("salgo aquí\n");
 	return (0);
 }
 
 t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 {
-	// t_token			*tokens;
-	// t_lexer_state	*st;
-
-	// tokens = NULL;
-	// st = malloc(sizeof(t_lexer_state));
-	// if (!st)
-	// 	return (NULL);
-	// st->input = line;
-	// st->pos = 0;
-	// st->len = ft_strlen(line);
 	while (st->pos < st->len)
 	{
 		skip_spaces(st);
@@ -49,7 +45,6 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 			check_operator(st, &tokens);
 		else if (is_valid_quote(st->input, st->pos) == 1)
 		{
-			//ft_printf("char; %c pos;%i\n", st->input[st->pos], st->pos);
 			if (join_quote(st, &tokens))
 			{
 				ft_printf("syntax error\n");
@@ -58,43 +53,30 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st)
 			}
 		}
 		else
-		{
-			//ft_printf("entro en extract_word\n");
 			extract_word(st, &tokens);
-			//ft_printf("salgo de extract: %s\n", st->input+st->pos);
-		}
 	}
-	// free(st);
 	return (tokens);
 }
 
 void	extract_word(t_lexer_state *st, t_token **tokens)
 {
 	int		start;
-	//int		len;
 	char	*word;
 	t_token	*token;
 
 	start = st->pos;
-	//len = 0;
 	word = NULL;
 	while (st->pos < st->len && (is_valid_quote(st->input, st->pos) != 1)
 		&& !is_operator(st->input[st->pos]) && !isspace(st->input[st->pos]))
-	{
-		//len++;
 		st->pos++;
-		//ft_printf("start; %i  count position; %i\n", start, st->pos);
-	}
 	if (ft_memchr(st->input + start, '\\', st->pos - start))
-	{
-		//ft_printf("start; %i, len: %i st: %s\n", start, len, (st->input + start));
 		word = clean_scape(word, st->input + start, st->pos - start);
-		//ft_printf("post strchr %s\n", word);
-	}
 	else
 		word = ft_substr(st->input, start, st->pos - start);
 	if (!word)
 		return ;
+	if (has_dollar(word))
+		expand_variables(&word, QUOTE_NONE, st->env);
 	token = createtoken(TK_WORD, word);
 	if (token)
 		token->quote = QUOTE_NONE;
@@ -146,7 +128,7 @@ void	check_operator(t_lexer_state *st, t_token **tokens)
 		operator_red(st, tokens);
 }
 
-t_token	*init_token(char *line, t_token *tokens)
+t_token	*init_token(char *line, t_token *tokens, t_env *env)
 {
 	t_lexer_state	*st;
 
@@ -154,7 +136,9 @@ t_token	*init_token(char *line, t_token *tokens)
 	if (!st)
 		return (NULL);
 	st->input = line;
+	st->env = env;
 	st->pos = 0;
+	st->elimquote = 0;
 	st->len = ft_strlen(line);
 	tokens = tokenize(tokens, st);
 	free(st);

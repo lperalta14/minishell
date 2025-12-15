@@ -5,10 +5,16 @@
 
 typedef struct s_token		t_token;
 typedef struct s_command	t_command;
+typedef struct s_env		t_env;
+typedef struct s_redir		t_redir;
 
-/********************************************************/
+/*******************************************************/
 /*							PRINTS						*/
 /********************************************************/
+
+void	free_tokens(t_token *tokens);
+
+/*void	free_commands(t_command *cmds);*/
 
 /**
  * @brief 
