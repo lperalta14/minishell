@@ -100,7 +100,7 @@ t_token	*init_token(char *line, t_token *tokens, t_env *env);
  * @param state
  * @param tokens Puntero a la lista de tokens
  */
-void	extract_word(t_lexer_state *state, t_token **tokens);
+t_token	*extract_word(t_lexer_state *state);
 
 t_token	*tokenize(t_token *tokens, t_lexer_state *st);
 
