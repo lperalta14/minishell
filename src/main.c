@@ -7,11 +7,6 @@ static void	minishell(char *input, t_env *env)
 
 	tokens = NULL;
 	tokens = init_token(input, tokens, env);
-	if (!validate_syntax(&tokens))
-	{
-		free_tokens(tokens);
-		return ;
-	}
 	print_tokens(tokens);
 	cmds = parse(tokens);
 	if (cmds)

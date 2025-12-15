@@ -1,29 +1,20 @@
 #include "../../include/minishell.h"
 
-int	join_quote(t_lexer_state *st, t_token **tokens)
+t_token	*init_token(char *line, t_token *tokens, t_env *env)
 {
-	t_token	*last;
-	t_token	*new_token;
-	char	prequote;
+	t_lexer_state	*st;
 
-	prequote = '\0';
-	if(st->pos > 0)
-		prequote = st->input[st->pos - 1];
-	last = last_token(*tokens);
-	if (is_valid_quote(st->input, st->pos) == 1)
-		new_token = try_extract_quoted(st);
-	else 
-		new_token = extract_word(st);
-	if (!new_token)
-		return (1);
-	if (last && last->type == TK_WORD && st->pos > 0 && prequote != ' ')
-	{
-		last->value = join_token_value(last->value, new_token->value);
-		free(new_token);
-	}
-	else
-		add_token(tokens, new_token);
-	return (0);
+	st = malloc(sizeof(t_lexer_state));
+	if (!st)
+		return (NULL);
+	st->input = line;
+	st->env = env;
+	st->pos = 0;
+	st->elimquote = 0;
+	st->len = ft_strlen(line);
+	tokens = tokenize(tokens, st);
+	free(st);
+	return (tokens);
 }
 
 t_token	*tokenize(t_token *tokens, t_lexer_state *st)
@@ -88,7 +79,6 @@ static void	operator_red(t_lexer_state *st, t_token **tokens)
 	{
 		add_token(tokens, createtoken(TK_R_IN, "<"));
 		st->pos++;
-
 	}
 	else if (c == '>' && st->input[st->pos + 1] == '>')
 	{
@@ -102,13 +92,11 @@ static void	operator_red(t_lexer_state *st, t_token **tokens)
 	}
 }
 
-
 void	check_operator(t_lexer_state *st, t_token **tokens)
 {
 	char	c;
 
 	c = st->input[st->pos];
-
 	if (c == '|')
 	{
 		add_token(tokens, createtoken(TK_PIPE, "|"));
@@ -118,22 +106,6 @@ void	check_operator(t_lexer_state *st, t_token **tokens)
 		operator_red(st, tokens);
 }
 
-t_token	*init_token(char *line, t_token *tokens, t_env *env)
-{
-	t_lexer_state	*st;
-
-	st = malloc(sizeof(t_lexer_state));
-	if (!st)
-		return (NULL);
-	st->input = line;
-	st->env = env;
-	st->pos = 0;
-	st->elimquote = 0;
-	st->len = ft_strlen(line);
-	tokens = tokenize(tokens, st);
-	free(st);
-	return (tokens);
-}
 /*
 BACKTRACKING 🎯
 Concepto clave:

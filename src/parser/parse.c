@@ -7,6 +7,8 @@ t_command	*parse(t_token *tokens)
 
 	if (!tokens || tokens->type == TK_END)
 		return (NULL);
+	if (!validate_syntax(&tokens))
+		return (NULL);
 	cmds = create_command(&tokens);
 	if (!cmds)
 		return (NULL);

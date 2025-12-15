@@ -87,6 +87,7 @@ t_token	*createtoken(t_token_type type, char *value);
 void	add_token(t_token **head, t_token *new);
 
 char	*join_token_value(char *old, char *add);
+int	join_quote(t_lexer_state *st, t_token **tokens);
 t_token	*last_token(t_token *tokens);
 t_token	*init_token(char *line, t_token *tokens, t_env *env);
 

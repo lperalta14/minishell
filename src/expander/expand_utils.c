@@ -66,6 +66,5 @@ void	copy_expanded_content(char *dst, char *src, t_env *env)
 		else
 			dst[j++] = src[i++];
 	}
-	//printf("copy_expanded_content str:%s, dst:%s\n", src, dst);
 	dst[j] = '\0';
 }
