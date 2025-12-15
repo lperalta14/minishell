@@ -24,7 +24,7 @@ static int	find_closing_quote(t_lexer_state *st, char quote)
 	{
 		//printf("prueba1 de i:%i\n", i);
 		if (is_valid_quote(st->input, st->pos) == 2)
-				i++;
+			i++;
 		else if (is_closing_quote(st->input, i, quote))
 		{
 			/*if (quote == '\'' && st->input[i + 1] 

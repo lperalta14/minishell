@@ -7,12 +7,12 @@ int	join_quote(t_lexer_state *st, t_token **tokens)
 	char	prequote;
 
 	prequote = '\0';
-	if(st->pos > 0)
+	if (st->pos > 0)
 		prequote = st->input[st->pos - 1];
 	last = last_token(*tokens);
 	if (is_valid_quote(st->input, st->pos) == 1)
 		new_token = try_extract_quoted(st);
-	else 
+	else
 		new_token = extract_word(st);
 	if (!new_token)
 		return (1);

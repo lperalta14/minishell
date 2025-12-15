@@ -66,9 +66,9 @@ t_env	*init_env(char **envp)
 	return (head);
 }
 
-int env_size(t_env *env)
+int	env_size(t_env *env)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (env)
