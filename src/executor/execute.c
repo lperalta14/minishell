@@ -36,3 +36,22 @@ void	execute_simple_cmd(t_command *cmd, t_env *env)
 	// if (WIFEXITED(status))
 	// 		g_exit_status = WEXITSTATUS(status);
 }
+
+void	check_redirs(t_command *cmd)
+{
+	t_command	*tmp;
+	int			fd;
+
+	while (tmp)
+	{
+		if (tmp->redirs->type == REDIR_IN)
+		{
+			open(fd, O_RDONLY);
+			if (fd < 0)
+			{
+				perror ("open failure");
+				exit (1);
+			}
+		}
+	}
+}
