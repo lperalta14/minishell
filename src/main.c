@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	env_list = init_env(envp);
-	// TODO: Inicializar señales (signal/sigaction)
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/acrobata.txt");
 	while (1)

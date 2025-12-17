@@ -54,7 +54,6 @@ void	print_redirs(t_redir *redirs)
 	}
 }
 
-
 // --- Command 0 ---
 // Args: [ls] [-la]
 // Redirections: (ninguna)

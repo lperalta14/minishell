@@ -1,6 +1,6 @@
 #include "../../include/lexer.h"
 
-char *get_env_value(t_env *env, char *key)
+char	*get_env_value(t_env *env, char *key)
 {
 	while (env)
 	{
@@ -16,7 +16,7 @@ int	has_dollar(char *str)
 	int	i;
 
 	i = 0;
-	while(str && str[i])
+	while (str && str[i])
 	{
 		if (str[i] == '$')
 			return (1);
@@ -24,6 +24,7 @@ int	has_dollar(char *str)
 	}
 	return (0);
 }
+
 char	*extract_special_var(char c, int *i)
 {
 	(i)++;

@@ -37,7 +37,6 @@ typedef struct s_lexer_state
 	char			*input;
 	int				pos;
 	int				len;
-	int				elimquote;
 	t_quote_type	quote;
 	t_env			*env;
 }	t_lexer_state;
@@ -87,7 +86,7 @@ t_token	*createtoken(t_token_type type, char *value);
 void	add_token(t_token **head, t_token *new);
 
 char	*join_token_value(char *old, char *add);
-int	join_quote(t_lexer_state *st, t_token **tokens);
+int		join_quote(t_lexer_state *st, t_token **tokens);
 t_token	*last_token(t_token *tokens);
 t_token	*init_token(char *line, t_token *tokens, t_env *env);
 
@@ -113,7 +112,7 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st);
  */
 void	check_operator(t_lexer_state *state, t_token **tokens);
 
-void	count_quote(t_lexer_state *st, char quote, int end);
+//void	count_quote(t_lexer_state *st, char quote, int end);
 
 void	clean_quote(char *str, t_lexer_state *st, int end, char quote);
 

@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-void	count_quote(t_lexer_state *st, char quote, int end)
+/*void	count_quote(t_lexer_state *st, char quote, int end)
 {
 	int	i;
 
@@ -12,7 +12,7 @@ void	count_quote(t_lexer_state *st, char quote, int end)
 			st->elimquote ++;
 		i++;
 	}
-}
+}*/
 
 void	clean_quote(char *str, t_lexer_state *st, int end, char quote)
 {

@@ -106,4 +106,3 @@ char	**env_to_array(t_env *env)
 	l_envs[i] = NULL;
 	return (l_envs);
 }
-

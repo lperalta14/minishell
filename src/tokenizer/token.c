@@ -10,7 +10,6 @@ t_token	*init_token(char *line, t_token *tokens, t_env *env)
 	st->input = line;
 	st->env = env;
 	st->pos = 0;
-	st->elimquote = 0;
 	st->len = ft_strlen(line);
 	tokens = tokenize(tokens, st);
 	free(st);

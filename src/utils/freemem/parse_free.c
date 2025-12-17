@@ -29,4 +29,3 @@ void	free_commands(t_command *cmds)
 		free(tmp);
 	}
 }
-
