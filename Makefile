@@ -9,7 +9,7 @@ OBJ_DIR = obj
 INCLUDES = $(INCLUDES_DIR)/minishell.h \
 	$(INCLUDES_DIR)/libft.h \
 	$(INCLUDES_DIR)/builtins.h \
-	$(INCLUDES_DIR)/executor.h \
+	$(INCLUDES_DIR)/executer.h \
 	$(INCLUDES_DIR)/expander.h \
 	$(INCLUDES_DIR)/parser.h \
 	$(INCLUDES_DIR)/lexer.h \
@@ -26,15 +26,15 @@ UTILS_DIR = src/utils
 # Source files
 BUILTINS = $(BUIL_DIR)/cdcommand.c
 
-EXECUTOR = $(EXE_DIR)/pipes.c
+EXECUTOR = $(EXE_DIR)/pipes.c $(EXE_DIR)/execute.c $(EXE_DIR)/env.c $(EXE_DIR)/path.c
 
-EXPANDER = $(EXP_DIR)/expand.c
+EXPANDER = $(EXP_DIR)/expand.c $(EXP_DIR)/expand_utils.c
 
-PARSER = $(PARS_DIR)/parse.c $(PARS_DIR)/parse_free.c $(PARS_DIR)/parse_utils.c
+PARSER = $(PARS_DIR)/parse.c $(PARS_DIR)/parse_utils.c $(PARS_DIR)/parse_redirs.c
 
-TOKENIZER = $(TOK_DIR)/token.c $(TOK_DIR)/quotes.c $(TOK_DIR)/utils_tokens.c
+TOKENIZER = $(TOK_DIR)/token.c $(TOK_DIR)/quotes.c $(TOK_DIR)/utils_tokens.c $(TOK_DIR)/utils_quotes.c
 
-UTILS = $(UTILS_DIR)/prints/banner.c $(UTILS_DIR)/prints/tokens.c $(UTILS_DIR)/prints/parser.c
+UTILS = $(UTILS_DIR)/utils_random.c $(UTILS_DIR)/freemem/parse_free.c $(UTILS_DIR)/freemem/free_token.c $(UTILS_DIR)/freemem/builtin_free.c $(UTILS_DIR)/prints/banner.c $(UTILS_DIR)/prints/tokens.c $(UTILS_DIR)/prints/parser.c
 
 SRCS = src/main.c $(BUILTINS) $(EXECUTOR) $(EXPANDER) $(PARSER) \
 	$(TOKENIZER) $(UTILS)

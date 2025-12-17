@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:44:54 by lperalta          #+#    #+#             */
-/*   Updated: 2025/12/01 12:54:51 by lperalta         ###   ########.fr       */
+/*   Updated: 2025/12/15 18:05:28 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 # include <stdarg.h>
 # include <limits.h>
 
-
 # include "ft_list.h"
-# include "ft_printsft.h"
+# include "ft_printf.h"
 # include "GNL.h"
 # include "ft_utils.h"
 
@@ -43,7 +42,8 @@ int		ft_isspace(int c);
  * @brief Comprueba si un carácter es una letra mayúscula.
  *
  * @param c Carácter a evaluar (representado como un entero).
- * @return 1 si el carácter es una letra mayúscula ('A'–'Z'), 0 en caso contrario.
+ * @return 1 si el carácter es una letra mayúscula ('A'–'Z'),
+ * 0 en caso contrario.
  */
 int		ft_isupper(int c);
 
@@ -51,7 +51,8 @@ int		ft_isupper(int c);
  * @brief Comprueba si un carácter es una letra minúscula.
  *
  * @param c Carácter a evaluar (representado como un entero).
- * @return 1 si el carácter es una letra minúscula ('a'–'z'), 0 en caso contrario.
+ * @return 1 si el carácter es una letra minúscula ('a'–'z'),
+ * 0 en caso contrario.
  */
 int		ft_islower(int c);
 
@@ -59,7 +60,8 @@ int		ft_islower(int c);
  * @brief Comprueba si un carácter es alfabético.
  *
  * @param c Carácter a evaluar (representado como un entero).
- * @return 1 si el carácter es una letra (mayúscula o minúscula), 0 en caso contrario.
+ * @return 1 si el carácter es una letra (mayúscula o minúscula),
+ * 0 en caso contrario.
  */
 int		ft_isalpha(int c);
 
@@ -71,7 +73,6 @@ int		ft_isalpha(int c);
  */
 int		ft_isdigit(int c);
 
-
 /**
  * @brief Comprueba si un carácter es alfanumérico.
  *
@@ -81,18 +82,20 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 
 /**
- * @brief Comprueba si el carácter que se le pasa es un comilla simple o una doble.
+ * @brief Comprueba si el carácter que se le pasa es un
+ * comilla simple o una doble.
  * 
  * @param c Carácter a evaluar (representado como un carácter).
  * @return int valor diferente de 0 si es una comilla.
  */
-int	is_quote(char c);
+int		is_quote(char c);
 
 /**
  * @brief Comprueba si un carácter pertenece al conjunto ASCII.
  *
  * @param c Carácter a evaluar (representado como un entero).
- * @return 1 si el carácter está dentro del rango ASCII (0–127), 0 en caso contrario.
+ * @return 1 si el carácter está dentro del rango ASCII (0–127),
+ * 0 en caso contrario.
  */
 int		ft_isascii(int c);
 
@@ -100,7 +103,8 @@ int		ft_isascii(int c);
  * @brief Comprueba si un carácter es imprimible.
  *
  * @param c Carácter a evaluar (representado como un entero).
- * @return 1 si el carácter tiene una representación visible, 0 en caso contrario.
+ * @return 1 si el carácter tiene una representación visible,
+ * 0 en caso contrario.
  */
 int		ft_isprint(int c);
 
@@ -228,7 +232,8 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
  * @param dst Puntero al buffer de destino donde se copiará la cadena.
  * @param src Puntero a la cadena de origen.
  * @param size Tamaño total del buffer de destino.
- * @return La longitud total de la cadena que se intentó copiar (longitud de `src`).
+ * @return La longitud total de la cadena que se intentó copiar
+ * (longitud de `src`).
  *         Esto permite detectar truncamientos si el valor devuelto >= size.
  */
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
@@ -300,7 +305,8 @@ char	*ft_strdup(const char *s);
 /**
  * @brief Une dos cadenas en una nueva.
  *
- * Reserva memoria para una cadena que concatene `s1` y `s2` y devuelve el puntero.
+ * Reserva memoria para una cadena que concatene `s1` y `s2`
+ * y devuelve el puntero.
  *
  * @param s1 Puntero a la primera cadena.
  * @param s2 Puntero a la segunda cadena.
@@ -325,7 +331,8 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 
 /**
- * @brief Escribe una cadena seguida de un salto de línea en un descriptor de archivo.
+ * @brief Escribe una cadena seguida de un salto de línea
+ * en un descriptor de archivo.
  *
  * @param s Puntero a la cadena a escribir.
  * @param fd Descriptor de archivo.
@@ -377,10 +384,12 @@ int		ft_lendigit(int n);
 char	*ft_itoa(int n);
 
 /**
- * @brief Aplica una función a cada carácter de una cadena y devuelve una nueva cadena.
+ * @brief Aplica una función a cada carácter de una cadena
+ * y devuelve una nueva cadena.
  *
  * @param s Puntero a la cadena original.
- * @param f Función que recibe el índice y el carácter, y devuelve el nuevo carácter.
+ * @param f Función que recibe el índice y el carácter, 
+ *y devuelve el nuevo carácter.
  * @return Puntero a la nueva cadena modificada.
  */
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -406,7 +415,8 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 
 /**
- * @brief Elimina los caracteres especificados al inicio y al final de una cadena.
+ * @brief Elimina los caracteres especificados al inicio
+ * y al final de una cadena.
  *
  * @param s1 Cadena original.
  * @param set Conjunto de caracteres a eliminar.

@@ -20,7 +20,7 @@ typedef enum e_quote_type
 {
 	QUOTE_NONE,
 	QUOTE_DOUBLE,
-	QUOTE_SINGLE
+	QUOTE_SINGLE,
 }	t_quote_type;
 
 typedef struct s_token
@@ -37,8 +37,8 @@ typedef struct s_lexer_state
 	char			*input;
 	int				pos;
 	int				len;
-	int				elimquote;
 	t_quote_type	quote;
+	t_env			*env;
 }	t_lexer_state;
 
 /********************************************************/
@@ -58,7 +58,7 @@ void	skip_spaces(t_lexer_state *state);
  * @param c 
  * @return int 
  */
-int	is_operator(char c);
+int		is_operator(char c);
 
 /**
  * @brief 
@@ -66,7 +66,7 @@ int	is_operator(char c);
  * @param c 
  * @return int 
  */
-int	 is_word(char c);
+int		is_word(char c);
 
 /**
  * @brief 
@@ -86,8 +86,9 @@ t_token	*createtoken(t_token_type type, char *value);
 void	add_token(t_token **head, t_token *new);
 
 char	*join_token_value(char *old, char *add);
-t_token *last_token(t_token *tokens);
-t_token	*init_token(char *line, t_token *tokens);
+int		join_quote(t_lexer_state *st, t_token **tokens);
+t_token	*last_token(t_token *tokens);
+t_token	*init_token(char *line, t_token *tokens, t_env *env);
 
 /********************************************************/
 /*						TOKEN.C							*/
@@ -99,7 +100,7 @@ t_token	*init_token(char *line, t_token *tokens);
  * @param state
  * @param tokens Puntero a la lista de tokens
  */
-void	extract_word(t_lexer_state *state, t_token **tokens);
+t_token	*extract_word(t_lexer_state *state);
 
 t_token	*tokenize(t_token *tokens, t_lexer_state *st);
 
@@ -109,9 +110,9 @@ t_token	*tokenize(t_token *tokens, t_lexer_state *st);
  * @param state 
  * @param tokens 
  */
-void check_operator(t_lexer_state *state, t_token **tokens);
+void	check_operator(t_lexer_state *state, t_token **tokens);
 
-void count_quote(t_lexer_state *st, char quote, int end);
+//void	count_quote(t_lexer_state *st, char quote, int end);
 
 void	clean_quote(char *str, t_lexer_state *st, int end, char quote);
 
@@ -140,8 +141,8 @@ t_token	*try_extract_quoted(t_lexer_state *st);
  * @param pos The position of the character to check within the string.
  * @return 1 if the character is a valid quote delimiter, 0 otherwise.
  */
-int	is_valid_quote(char *str, int pos);
+int		is_valid_quote(char *str, int pos);
 
-char *clean_scape(char *dst, char *src, int len);
+char	*clean_scape(char *dst, char *src, int len);
 
 #endif

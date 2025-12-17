@@ -7,6 +7,8 @@ t_command	*parse(t_token *tokens)
 
 	if (!tokens || tokens->type == TK_END)
 		return (NULL);
+	if (!validate_syntax(&tokens))
+		return (NULL);
 	cmds = create_command(&tokens);
 	if (!cmds)
 		return (NULL);
@@ -15,7 +17,7 @@ t_command	*parse(t_token *tokens)
 	{
 		tokens = tokens->next;
 		current->next = create_command(&tokens);
-		if (!tokens || !current->next)
+		if (!current->next)
 			return (free_commands(cmds), NULL);
 		current = current->next;
 	}
@@ -39,7 +41,7 @@ t_command	*create_command(t_token **tokens)
 		return (free(cmd), (NULL));
 	if (parse_redirections(&start, cmd) == -1)
 	{
-		free_args(cmd->args);
+		ft_freematrix(cmd->args);
 		free_redirs(cmd->redirs);
 		free(cmd);
 		return (NULL);
@@ -69,7 +71,7 @@ static int	count_args(t_token *tokens)
 	return (count);
 }
 
-static void	fill_args_array(t_token **tokens, char **args)
+static int	fill_args_array(t_token **tokens, char **args)
 {
 	int		i;
 
@@ -80,7 +82,7 @@ static void	fill_args_array(t_token **tokens, char **args)
 		{
 			args[i++] = ft_strdup((*tokens)->value);
 			if (!args[i - 1])
-				return ;
+				return (ft_freematrix(args), -1);
 		}
 		else if ((*tokens)->type == TK_R_IN || (*tokens)->type == TK_R_OUT
 			|| (*tokens)->type == TK_APPEND || (*tokens)->type == TK_HEREDOC)
@@ -93,6 +95,7 @@ static void	fill_args_array(t_token **tokens, char **args)
 		*tokens = (*tokens)->next;
 	}
 	args[i] = NULL;
+	return (0);
 }
 
 char	**extract_args(t_token **tokens)
@@ -101,9 +104,10 @@ char	**extract_args(t_token **tokens)
 	char	**args;
 
 	count = count_args(*tokens);
-	args = malloc(sizeof(char *) * (count + 1));
+	args = ft_calloc(count + 1, sizeof(char *));
 	if (!args)
 		return (NULL);
-	fill_args_array(tokens, args);
+	if (fill_args_array(tokens, args) == -1)
+		return (NULL);
 	return (args);
 }

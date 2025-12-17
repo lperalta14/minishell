@@ -1,0 +1,10 @@
+banners
+docs
+include
+Makefile
+minishell
+obj
+output.txt
+README.md
+src
+tests

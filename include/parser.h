@@ -1,9 +1,11 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "lexer.h"
+//# include "lexer.h"
+# include "minishell.h"
 
 // Target: Convertir lista plana tokens en estructura de comandos ejecutable.
+// struct	s_token;
 
 typedef enum e_redir_type
 {
@@ -59,6 +61,27 @@ t_command	*create_command(t_token **tokens);
 char		**extract_args(t_token **tokens);
 
 /**
+ * @brief cribar entre argumentos validos y errores de sintaxis
+ * 
+ * @param tokens 
+ * @return int 
+ */
+int			validate_syntax( t_token **tokens);
+
+
+/* ============================================ */
+/*          FUNCIONES DE REDIRECCIONES          */
+/* ============================================ */
+/**
+ * @brief Create a redir object
+ * 
+ * @param type tipo de token
+ * @param file 
+ * @return t_redir* 
+ */
+t_redir		*create_redir(t_redir_type type, char *file);
+
+/**
  * @brief Asigna tipo de redirección según token
  * 
  * @param token_type Tipo de token
@@ -84,16 +107,11 @@ int			parse_redirections(t_token **tokens, t_command *cmd);
  */
 void		add_redir(t_redir **head, t_redir *new);
 
+
 /* ============================================ */
 /*          FUNCIONES DE LIMPIEZA               */
 /* ============================================ */
 
-/**
- * @brief Libera array de strings terminado en NULL
- * 
- * @param args Array de strings a liberar
- */
-void		free_args(char **args);
 
 /**
  * @brief Libera lista enlazada de redirecciones
@@ -108,6 +126,15 @@ void		free_redirs(t_redir *redirs);
  * @param cmds Lista de comandos a liberar
  */
 void		free_commands(t_command *cmds);
+
+/**
+ * @brief imprime error cerca de un token
+ * 
+ * @param token_str 
+ * @return int 
+ */
+int			syntax_error(char *token_str);
+
 
 /* ============================================ */
 /*          FUNCIONES DE DEBUG                  */

@@ -5,12 +5,15 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../src/my_lib/includes/libft.h"
 # include "utils.h"
 # include "lexer.h"
 # include "parser.h"
+# include "executer.h"
+# include "expander.h"
 
 #define RED "\033[38;5;196m"
 #define ORANGE "\033[38;5;208m"

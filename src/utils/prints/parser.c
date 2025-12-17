@@ -32,7 +32,7 @@ void	print_commands(t_command *cmds)
 		cmds = cmds->next;
 		count++;
 	}
-
+	printf("\n");
 }
 
 void	print_redirs(t_redir *redirs)
@@ -53,7 +53,6 @@ void	print_redirs(t_redir *redirs)
 		redirs = redirs->next;
 	}
 }
-
 
 // --- Command 0 ---
 // Args: [ls] [-la]

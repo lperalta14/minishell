@@ -30,7 +30,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 
 /**
- * @brief Deletes and frees the given element and every successor of that element,
+ * @brief Deletes and frees the given element and
+ *every successor of that element,
  * using the function 'del' and free().
  *
  * @param lst The address of a pointer to an element.
@@ -48,7 +49,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 
 /**
- * @brief Iterates the list 'lst' and applies the function 'f' to the content of each element.
+ * @brief Iterates the list 'lst' and applies the function 'f'
+ * to the content of each element.
  *
  * @param lst The address of a pointer to an element.
  * @param f The address of the function used to iterate on the list.
@@ -64,9 +66,10 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstlast(t_list *lst);
 
 /**
- * @brief Iterates the list 'lst' and applies the function 'f' to the content of each element.
- * Creates a new list resulting from the successive applications of 'f'. The 'del' function
- * is used to delete the content of an element if needed.
+ * @brief Iterates the list 'lst' and applies the function 'f'
+ * to the content of each element.
+ * Creates a new list resulting from the successive applications of 'f'.
+ *  The 'del' function is used to delete the content of an element if needed.
  *
  * @param lst The address of a pointer to an element.
  * @param f The address of the function used to iterate on the list.
@@ -76,8 +79,10 @@ t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /**
- * @brief Allocates (with malloc) and returns a new element. The variable 'content'
- * is initialized with the value of the parameter 'content'. The variable 'next' is initialized to NULL.
+ * @brief Allocates (with malloc) and returns a new element.
+ * The variable 'content' is initialized with the value 
+ * of the parameter 'content'.
+ *  The variable 'next' is initialized to NULL.
  *
  * @param content The content to create the new element with.
  * @return t_list* The new element.
