@@ -24,7 +24,7 @@ TOK_DIR = src/tokenizer
 UTILS_DIR = src/utils
 
 # Source files
-BUILTINS = $(BUIL_DIR)/cdcommand.c
+BUILTINS = $(BUIL_DIR)/builtins.c $(BUIL_DIR)/cd.c $(BUIL_DIR)/echo.c $(BUIL_DIR)/env.c $(BUIL_DIR)/exit.c $(BUIL_DIR)/export.c $(BUIL_DIR)/pwd.c $(BUIL_DIR)/unset.c 
 
 EXECUTOR = $(EXE_DIR)/pipes.c $(EXE_DIR)/execute.c $(EXE_DIR)/env.c $(EXE_DIR)/path.c
 
@@ -49,7 +49,7 @@ LIBFT_INC = -I$(LIBFT_DIR)/includes
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I$(INCLUDES_DIR) $(LIBFT_INC)
+CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC)
 LDFLAGS = -lreadline
 
 # Utils

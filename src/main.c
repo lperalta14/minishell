@@ -4,6 +4,7 @@ static void	minishell(char *input, t_env *env)
 {
 	t_token		*tokens;
 	t_command	*cmds;
+	//int			g_exit_status;
 
 	tokens = NULL;
 	tokens = init_token(input, tokens, env);

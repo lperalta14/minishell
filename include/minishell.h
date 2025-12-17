@@ -14,6 +14,7 @@
 # include "parser.h"
 # include "executer.h"
 # include "expander.h"
+# include "builtins.h"
 
 #define RED "\033[38;5;196m"
 #define ORANGE "\033[38;5;208m"

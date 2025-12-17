@@ -9,6 +9,11 @@ void	execute_simple_cmd(t_command *cmd, t_env *env)
 
 	if (!cmd-> args || cmd->args[0] == NULL)
 		return ;
+	if (is_builtin(cmd->args[0]))
+	{
+		status = execute_builtin(cmd, &env);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -31,7 +36,14 @@ void	execute_simple_cmd(t_command *cmd, t_env *env)
 		perror("execve");
 		exit(126); // no ejecutable.
 	}
-	waitpid(pid, &status, 0);
+	else
+	{
+		waitpid(pid, &status, 0);
+		/*if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			g_exit_status = 128 + WTERMSIG(status);*/
+	}
 	// (Opcional) Aquí guardaremos el exit status en el futuro
 	// if (WIFEXITED(status))
 	// 		g_exit_status = WEXITSTATUS(status);
