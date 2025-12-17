@@ -12,6 +12,7 @@ static void	minishell(char *input, t_env *env)
 	if (cmds)
 	{
 		print_commands(cmds);
+		execute_simple_cmd(cmds, env);
 		free_commands(cmds);
 	}
 	if (tokens)

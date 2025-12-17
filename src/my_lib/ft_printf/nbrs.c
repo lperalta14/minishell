@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   nbrs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:41:45 by lperalta          #+#    #+#             */
-/*   Updated: 2025/05/22 12:39:20 by lperalta         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:35:41 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printsft.h"
+#include "../includes/ft_printf.h"
 
 int	ft_putnbrcnt(int n)
 {

@@ -1,5 +1,5 @@
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GNL_H
+# define GNL_H
 
 # include "libft.h"
 
@@ -13,7 +13,8 @@
 
 /**
  * @file get_next_line.h
- * @brief A function to read a line from a file descriptor, including helper utilities.
+ * @brief A function to read a line from a file descriptor,
+ * including helper utilities.
  */
 
 /**
@@ -25,7 +26,8 @@
 char	*get_next_line(int fd);
 
 /**
- * @brief Extracts a single line (up to and including the newline) from the buffer.
+ * @brief Extracts a single line (up to and including the newline) 
+ * from the buffer.
  *
  * @param res The string buffer containing the current read data.
  * @return char* The extracted line, or NULL if no line is found.
@@ -49,7 +51,8 @@ char	*ft_save_remainder(char *res);
 char	*ft_strchr_gnl(char *s);
 
 /**
- * @brief Joins two strings, freeing the first one, and returns the concatenated result.
+ * @brief Joins two strings, freeing the first one,
+ * and returns the concatenated result.
  *
  * @param s1 The first string (freed after concatenation).
  * @param s2 The second string to append.

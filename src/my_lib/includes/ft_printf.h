@@ -41,7 +41,8 @@ int		ft_putstr(char *s);
 int		ft_putnbrcnt(int n);
 
 /**
- * @brief Prints an unsigned integer and returns the number of characters printed.
+ * @brief Prints an unsigned integer and returns
+ * the number of characters printed.
  *
  * @param n The unsigned integer to print.
  * @return int The number of characters printed.
@@ -73,6 +74,5 @@ int		ft_putptr(unsigned long n);
  * @return int The total number of characters printed.
  */
 int		ft_printf(const char *nbr, ...);
-
 
 #endif

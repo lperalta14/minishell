@@ -38,6 +38,8 @@ t_env	*get_env_node(char *str)
 		env->key = ft_strdup(str);
 		env->value = NULL;
 	}
+	if (!env->key || (pos_eq && !env->value))
+		free_env_list(env);
 	env->next = NULL;
 	return (env);
 }
@@ -64,9 +66,9 @@ t_env	*init_env(char **envp)
 	return (head);
 }
 
-int env_size(t_env *env)
+int	env_size(t_env *env)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (env)

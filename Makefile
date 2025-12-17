@@ -26,7 +26,7 @@ UTILS_DIR = src/utils
 # Source files
 BUILTINS = $(BUIL_DIR)/cdcommand.c
 
-EXECUTOR = $(EXE_DIR)/pipes.c $(EXE_DIR)/execute.c $(EXE_DIR)/env.c
+EXECUTOR = $(EXE_DIR)/pipes.c $(EXE_DIR)/execute.c $(EXE_DIR)/env.c $(EXE_DIR)/path.c
 
 EXPANDER = $(EXP_DIR)/expand.c $(EXP_DIR)/expand_utils.c
 
