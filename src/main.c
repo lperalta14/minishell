@@ -20,16 +20,10 @@ static void	minishell(char *input, t_env *env)
 		free_tokens(tokens);
 }
 
-int	main(int argc, char **argv, char **envp)
+static void	main_loop(t_env *env_list)
 {
 	char	*input;
-	t_env	*env_list;
 
-	(void)argc;
-	(void)argv;
-	env_list = init_env(envp);
-	if (isatty(STDIN_FILENO))
-		print_banner("banners/acrobata.txt");
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -37,16 +31,40 @@ int	main(int argc, char **argv, char **envp)
 		else
 			input = readline("");
 		if (!input)
-		{
-			if (isatty(STDIN_FILENO))
-				print_banner("banners/bye.txt");
 			break ;
-		}
 		if (input[0] != '\0')
 			add_history(input);
 		minishell(input, env_list);
 		free(input);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	//char	*input;
+	t_env	*env_list;
+
+	(void)argc;
+	(void)argv;
+	env_list = init_env(envp);
+	if (isatty(STDIN_FILENO))
+		print_banner("banners/acrobata.txt");
+	main_loop(env_list);
+	/*while (1)
+	{
+		if (isatty(STDIN_FILENO))
+			input = readline("minihell> ");
+		else
+			input = readline("");
+		if (!input)
+			break ;
+		if (input[0] != '\0')
+			add_history(input);
+		minishell(input, env_list);
+		free(input);
+	}*/
+	if (isatty(STDIN_FILENO))
+		print_banner("banners/bye.txt");
 	rl_clear_history();
 	free_env_list(env_list);
 	return (0);
