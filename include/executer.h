@@ -88,6 +88,13 @@ char	*get_path(char *cmd, t_env *env);
  * @param cmd 
  * @param env 
  */
-void	execute_simple_cmd(t_command *cmd, t_env *env);
+void	execute_simple_cmd(t_command *cmd, t_env **env);
+
+/**
+ * @brief Revisar si hay redirecciones
+ * @param cmd 
+ */
+int		check_redirs(t_command *cmd);
+
 
 #endif

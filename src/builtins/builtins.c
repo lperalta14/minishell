@@ -21,9 +21,9 @@ int	is_builtin(char *cmd)
 
 int	execute_builtin(t_command *cmd, t_env **env)
 {
-	int built;
+	int	built;
 
-	built =	is_builtin(cmd->args[0]);
+	built = is_builtin(cmd->args[0]);
 	if (!built || !env)
 		return (0);
 	/*if (built == 1)
@@ -36,7 +36,8 @@ int	execute_builtin(t_command *cmd, t_env **env)
 		return (ft_exit(cmd->args));
 	else if (built == 5)
 		return (ft_export(cmd->args));
-	else */if (built == 6)
+	else */
+	if (built == 6)
 		return (ft_pwd());
 	//else if (built == 7)
 	//	return (ft_unset(cmd->args));

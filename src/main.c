@@ -1,13 +1,13 @@
 #include "../include/minishell.h"
 
-static void	minishell(char *input, t_env *env)
+static void	minishell(char *input, t_env **env)
 {
 	t_token		*tokens;
 	t_command	*cmds;
 	//int			g_exit_status;
 
 	tokens = NULL;
-	tokens = init_token(input, tokens, env);
+	tokens = init_token(input, tokens, *env);
 	print_tokens(tokens);
 	cmds = parse(tokens);
 	if (cmds)
@@ -20,7 +20,7 @@ static void	minishell(char *input, t_env *env)
 		free_tokens(tokens);
 }
 
-static void	main_loop(t_env *env_list)
+static void	main_loop(t_env **env_list)
 {
 	char	*input;
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 	env_list = init_env(envp);
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/acrobata.txt");
-	main_loop(env_list);
+	main_loop(&env_list);
 	/*while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -65,7 +65,8 @@ int	main(int argc, char **argv, char **envp)
 	}*/
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/bye.txt");
-	rl_clear_history();
+	//rl_clear_history();
+	clear_history(); //esto es porq en mac funciona especial rl_clear_history
 	free_env_list(env_list);
 	return (0);
 }
