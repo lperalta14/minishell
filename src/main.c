@@ -1,5 +1,7 @@
 #include "../include/minishell.h"
 
+volatile sig_atomic_t g_exit_status = 0;
+
 static void	minishell(char *input, t_env *env)
 {
 	t_token		*tokens;
@@ -47,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	env_list = init_env(envp);
+	setup_signals_interactive();
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/acrobata.txt");
 	main_loop(env_list);
