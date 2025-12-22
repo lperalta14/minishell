@@ -6,6 +6,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../src/my_lib/includes/libft.h"
@@ -23,5 +24,8 @@
 #define BLUE "\033[38;5;21m"
 #define PURPLE "\033[38;5;129m"
 #define NC "\033[0m"
+
+extern volatile sig_atomic_t	g_exit_status;
+void	setup_signals_interactive(void);
 
 #endif

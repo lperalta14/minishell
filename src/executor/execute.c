@@ -20,14 +20,12 @@ static void	handle_builtin(t_command *cmd, t_env **env)
 	if (check_redirs(cmd) == 0)
 		status = execute_builtin(cmd, env);
 	restore_fds(or_stdin, or_stdout);
-	(void)status; // Evitar warning de variable no usada por ahora
+	(void)status;
 }
 
 void	execute_simple_cmd(t_command *cmd, t_env **env)
 {
 	pid_t	pid;
-	char	*path;
-	char	**f_path;
 	int		status;
 
 	if (!cmd-> args || cmd->args[0] == NULL)
@@ -45,10 +43,10 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 	else
 	{
 		waitpid(pid, &status, 0);
-		/*if (WIFEXITED(status))
+		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-			g_exit_status = 128 + WTERMSIG(status);*/
+			g_exit_status = 128 + WTERMSIG(status);
 	}
 	// (Opcional) Aquí guardaremos el exit status en el futuro
 	// if (WIFEXITED(status))
@@ -57,37 +55,32 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 
 void	execute_child(t_command *cmd, t_env **env)
 {
-	pid_t	pid;
 	char	*path;
 	char	**f_path;
 	int		status;
 
 	if (check_redirs(cmd) != 0)
 		exit(1);
-	if (is_builtin(cmd) != 0)
+	if (is_builtin(cmd->args[0]))
 	{
-		execute_builtin(cmd, env);
+		status = execute_builtin(cmd, env);
 		exit(status);
 	}
-	if ()
+	path = get_path(cmd->args[0], *env);
+	if (!path)
 	{
-		if (check_redirs(cmd) != 0)
-			exit(1);
-		path = get_path(cmd->args[0], *env);
-		if (!path)
-		{
-			ft_putstr_fd("minishell: command not found: ", 2);
-			ft_putendl_fd(cmd->args[0], 2);
-			exit(127);
-		}
-		f_path = env_to_array(*env);
-		if (!f_path)
-			exit(1);
-		execve(path, cmd->args, f_path);
-		perror("execve");
-		exit(126);
+		ft_putstr_fd("minishell: command not found: ", 2);
+		ft_putendl_fd(cmd->args[0], 2);
+		exit(127);
 	}
+	f_path = env_to_array(*env);
+	if (!f_path)
+		exit(1);
+	execve(path, cmd->args, f_path);
+	perror("minishell: execve");
+	exit(126);
 }
+
 
 int	check_redirs(t_command *cmd)
 {

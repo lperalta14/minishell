@@ -1,5 +1,7 @@
 #include "../include/minishell.h"
 
+volatile	sig_atomic_t	g_exit_status = 0;
+
 static void	minishell(char *input, t_env **env)
 {
 	t_token		*tokens;
@@ -13,7 +15,10 @@ static void	minishell(char *input, t_env **env)
 	if (cmds)
 	{
 		print_commands(cmds);
-		execute_simple_cmd(cmds, env);
+		if (cmds->next)
+			execute_pipeline(cmds, env);
+		else
+			execute_simple_cmd(cmds, env);
 		free_commands(cmds);
 	}
 	if (tokens)

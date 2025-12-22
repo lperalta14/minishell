@@ -15,14 +15,19 @@ void	execute_pipeline(t_command *cmd, t_env **env)
 		{
 			if (pipe(fd) == -1)
 			{
-				perror("pipe");
-				exit(1);
+				perror("minishell: pipe");
+				return ;
 			}
 		}
 		pid = fork();
+		if (pid == -1)
+		{
+			perror("minishell: fork");
+			return ;
+		}
 		if (pid == 0)
 		{
-			if (prev_pipe_read != -1)
+			if (prev_pipe_read != -1) // vengo de un pipe anterior?
 			{
 				dup2(prev_pipe_read, STDIN_FILENO);
 				close(prev_pipe_read);
@@ -37,6 +42,8 @@ void	execute_pipeline(t_command *cmd, t_env **env)
 		}
 		else
 		{
+			if (prev_pipe_read != -1)
+				close(prev_pipe_read);
 			if (tmp->next)
 			{
 				close(fd[1]);
@@ -46,5 +53,5 @@ void	execute_pipeline(t_command *cmd, t_env **env)
 		}
 	}
 	while (wait(NULL) > 0)
-	;
+		;
 }

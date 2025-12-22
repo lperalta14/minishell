@@ -53,8 +53,6 @@ int		env_size(t_env *env);
  */
 char	**env_to_array(t_env *env);
 
-
-
 /********************************************************/
 /*					RUTAS DE ENTORNO					*/
 /********************************************************/
@@ -77,7 +75,6 @@ char	*find_valid_path(char *cmd, char **paths);
  */
 char	*get_path(char *cmd, t_env *env);
 
-
 /********************************************************/
 /*						EXECUTER						*/
 /********************************************************/
@@ -96,5 +93,24 @@ void	execute_simple_cmd(t_command *cmd, t_env **env);
  */
 int		check_redirs(t_command *cmd);
 
+/**
+ * @brief 
+ * 
+ * @param cmd 
+ * @param env 
+ */
+void	execute_child(t_command *cmd, t_env **env);
+
+/********************************************************/
+/*						PIPES							*/
+/********************************************************/
+
+/**
+ * @brief buscar si hay pipes
+ * 
+ * @param cmd 
+ * @param env 
+ */
+void	execute_pipeline(t_command *cmd, t_env **env);
 
 #endif
