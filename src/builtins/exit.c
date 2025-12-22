@@ -18,19 +18,19 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
-void	ft_exit(char **args)
+int	ft_exit(char **args)
 {
 	ft_putendl_fd("exit", 2);
-	if (!args)
-		return ;
+	if (!args || !args[1])
+		exit(g_exit_status);
 	if (args[1])
 	{
 		if (!is_numeric(args[1]))
 		{
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(args[1], 2);
-			ft_putendl_fd("numeric argument required", 2);
-			return (255);
+			ft_putendl_fd(": numeric argument required", 2);
+			exit(255);
 		}
 		if (args[2])
 		{
