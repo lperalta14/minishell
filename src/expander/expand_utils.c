@@ -2,6 +2,8 @@
 
 char	*get_env_value(t_env *env, char *key)
 {
+	 if (ft_strcmp(key, "?") == 0)
+        return (ft_itoa(g_exit_status));
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)

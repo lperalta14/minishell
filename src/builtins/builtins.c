@@ -26,9 +26,9 @@ int	execute_builtin(t_command *cmd, t_env **env)
 	built =	is_builtin(cmd->args[0]);
 	if (!built || !env)
 		return (0);
-	/*if (built == 1)
+	if (built == 1)
 		return (ft_echo(cmd->args));
-	else if (built == 2)
+	/*else if (built == 2)
 		return (ft_cd(cmd->args));
 	else if (built == 3)
 		return (ft_env(cmd->args));

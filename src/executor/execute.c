@@ -39,10 +39,10 @@ void	execute_simple_cmd(t_command *cmd, t_env *env)
 	else
 	{
 		waitpid(pid, &status, 0);
-		/*if (WIFEXITED(status))
+		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-			g_exit_status = 128 + WTERMSIG(status);*/
+			g_exit_status = 128 + WTERMSIG(status);
 	}
 	// (Opcional) Aquí guardaremos el exit status en el futuro
 	// if (WIFEXITED(status))
