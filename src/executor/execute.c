@@ -48,9 +48,6 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 		else if (WIFSIGNALED(status))
 			g_exit_status = 128 + WTERMSIG(status);
 	}
-	// (Opcional) Aquí guardaremos el exit status en el futuro
-	// if (WIFEXITED(status))
-	// 		g_exit_status = WEXITSTATUS(status);
 }
 
 void	execute_child(t_command *cmd, t_env **env)

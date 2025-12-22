@@ -3,7 +3,7 @@
 char	*get_env_value(t_env *env, char *key)
 {
 	if (ft_strcmp(key, "?") == 0)
-	return (ft_itoa(g_exit_status));
+		return (ft_itoa(g_exit_status));
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)
@@ -31,7 +31,7 @@ char	*extract_special_var(char c, int *i)
 {
 	(i)++;
 	if (c == '?')
-		return (ft_strdup("?")); //esto debería cambiarse por el valor de la señal? mirarlo muy bien, de momento funciona porque devuelve'?'.
+		return (ft_strdup("?")); //esto debería cambiarse por valor de? mirar bien, de momento funciona porque devuelve'?'.
 	if (c == '$')
 		return (ft_strdup("$"));
 	return (NULL);
