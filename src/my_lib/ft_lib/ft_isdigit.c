@@ -12,6 +12,13 @@
 
 #include "../includes/libft.h"
 
+int ft_issign(int c)
+{
+	if (c != 43 && c != 45)
+		return (0);
+	return (1);
+}
+
 int	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)

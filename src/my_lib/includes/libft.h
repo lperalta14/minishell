@@ -66,6 +66,14 @@ int		ft_islower(int c);
 int		ft_isalpha(int c);
 
 /**
+ * @brief comprueba si un carácter es '+' o '-'.
+ * 
+ * @param c Carácter a evaluar (representado como un entero).
+ * @return 1 si el carácter es entre '+' o '-', 0 en caso contrario. 
+ */
+int ft_issign(int c);
+
+/**
  * @brief Comprueba si un carácter es un dígito decimal.
  *
  * @param c Carácter a evaluar (representado como un entero).

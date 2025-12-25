@@ -7,15 +7,11 @@ int	ft_echo(char **args)
 	
 	i = 1;
 	newline = 1;
-	
-	// Detectar flags -n
-	while (args[i] && ft_strcmp(args[i], "-n") == 0)
+	while (args[i] && !ft_strcmp(args[i], "-n"))
 	{
 		newline = 0;
 		i++;
 	}
-	
-	// Imprimir argumentos
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);
@@ -23,10 +19,7 @@ int	ft_echo(char **args)
 			ft_putchar_fd(' ', 1);
 		i++;
 	}
-	
-	// Imprimir salto de línea si corresponde
 	if (newline)
 		ft_putchar_fd('\n', 1);
-	
 	return (0);
 }
