@@ -338,7 +338,7 @@ int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)
 | **Salida**      | 0 si éxito, -1 si error                                               |
 
 **💡 Uso en Minishell:**  
-Configurar manejo de señales de forma más confiable que signal. Usar flag SA_RESTART para reiniciar syscalls interrumpidas como readline. Preferible a signal en implementaciones modernas.
+Configurar manejo de señales de forma más confiable que signal. Usar flag  para reiniciar syscalls interrumpidas como readline. Preferible a signal en implementaciones modernas.
 
 ---
 
