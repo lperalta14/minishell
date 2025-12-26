@@ -15,3 +15,12 @@ void	free_env_list(t_env *head)
 		head = tmp;
 	}
 }
+
+void	free_node(t_env *node)
+{
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
+	free(node);
+}
