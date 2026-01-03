@@ -68,5 +68,4 @@ void	free_commands(t_command *cmds);
  */
 void	free_redirs(t_redir *redirs);
 
-
 #endif
