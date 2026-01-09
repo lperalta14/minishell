@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int	is_valid_env_name(char *str)
+static int	is_valid_env_name(char *str)
 {
 	int		i;
 	char	c;
@@ -10,38 +10,72 @@ int	is_valid_env_name(char *str)
 	{
 		c = str[i];
 		if (c == '=')
+		{
+			if (i == 0)
+				return (0);
 			return (1);
+		}
 		if (i == 0 && ft_isdigit(c))
 			return (0);
 		if (!ft_isalnum(c) && c != '_')
 			return (0);
 		i++;
 	}
+	return (1);
 }
 
-int	ft_export(char **args, t_env **env)
+t_env	*find_env(t_env *env, char *key)
+{
+	while (env)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+			return (env);
+		env = env->next;
+	}
+	return (NULL);
+}
+
+
+int	ft_export(t_command *cmd, t_env **env)
 {
 	int		i;
 	int		status;
 	t_env	*tmp;
+	t_env	*current;
 
-	if (args[1] == NULL)
-	{
-		ft_env(*env); //para nota tiene que ser alfabetico.
-		return (0);
-	}
+	status = 0;
+	if (!cmd->args[1])
+		return (ft_env(*env)); //buscar nota:ordenar alfabeticamente
 	i = 1;
-	while (args[i])
+	while (cmd->args[i])
 	{
-		tmp = get_env_node(args[i]);
-		if (!is_valid_env_name(args[i]))
+		if (!is_valid_env_name(cmd->args[i]))
 		{
-			ft_putstr_fd("minishell: export: `args[i]`:
-				not a valid identifier", 1);
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(cmd->args[i], 2);
+			ft_putendl_fd("': not a valid identifier", 2);
 			status = 1;
-			i++;
 		}
-
-
+		else
+		{
+			tmp = get_env_node(cmd->args[i]);
+			if (!tmp)
+				return (1);
+			current = find_env(*env, tmp->key);
+			if (current)
+			{
+				if (tmp->value)
+				{
+					free(current->value);
+					current->value = tmp->value;
+					tmp->value = NULL;
+				}
+				free_node(tmp);
+			}
+			else
+				add_env(env, tmp);
+		}
+		i++;
 	}
+	return (status);
 }
