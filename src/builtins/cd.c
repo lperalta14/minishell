@@ -59,7 +59,7 @@ int	ft_cd(t_command *cmd, t_env *env)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(dest, 2);
-		ft_putendl_fd(": No such file or directory", 2);	
+		ft_putendl_fd(": No such file or directory", 2);
 		return (1);
 	}
 	update_wds(env);
