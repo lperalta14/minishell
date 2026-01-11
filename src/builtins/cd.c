@@ -38,19 +38,13 @@ int	ft_cd(t_command *cmd, t_env *env)
 	{
 		dest = get_env_value(env, "HOME");
 		if (!dest)
-		{
-			ft_putendl_fd("minishell: HOME not set", 2);
-			return (1);
-		}
+			return (ft_putendl_fd("minishell: HOME not set", 2), 1);
 	}
 	else if (ft_strncmp(cmd->args[1], "-", 2) == 0)
 	{
 		dest = get_env_value(env, "OLDPWD");
 		if (!dest)
-		{
-			ft_putendl_fd("minishell: OLDPWD not set", 2);
-			return (1);
-		}
+			return (ft_putendl_fd("minishell: OLDPWD not set", 2), 1);
 		ft_putendl_fd(dest, 1);
 	}
 	else
@@ -59,8 +53,7 @@ int	ft_cd(t_command *cmd, t_env *env)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(dest, 2);
-		ft_putendl_fd(": No such file or directory", 2);
-		return (1);
+		return (ft_putendl_fd(": No such file or directory", 2), 1);
 	}
 	update_wds(env);
 	return (0);

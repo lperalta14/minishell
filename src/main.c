@@ -70,8 +70,8 @@ int	main(int argc, char **argv, char **envp)
 	}*/
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/bye.txt");
-	//rl_clear_history();
-	clear_history(); //esto es porq en mac funciona especial rl_clear_history
+	rl_clear_history();
+	//clear_history(); //esto es porq en mac funciona especial rl_clear_history
 	free_env_list(env_list);
 	return (0);
 }
