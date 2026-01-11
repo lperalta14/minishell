@@ -18,5 +18,8 @@ int		ft_exit(char **args);
 
 //utils
 t_env	*find_env(t_env *env, char *key);
+void	sort_env_tab(t_env **tab, int size);
+t_env	**get_sorted_tab(t_env *env, int count);
+int		print_sorted_env(t_env *env);
 
 #endif

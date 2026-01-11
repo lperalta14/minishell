@@ -45,7 +45,7 @@ int	ft_export(t_command *cmd, t_env **env)
 
 	status = 0;
 	if (!cmd->args[1])
-		return (ft_env(*env)); //buscar nota:ordenar alfabeticamente
+		return (print_sorted_env(env));
 	i = 1;
 	while (cmd->args[i])
 	{
