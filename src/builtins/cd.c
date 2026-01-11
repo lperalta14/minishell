@@ -1,60 +1,100 @@
 #include "../../include/minishell.h"
 
-static char	*get_env_value(t_env *env, char *key)
+static char	*get_env_path(t_env *env, char *var, size_t len)
 {
 	t_env	*aux;
 
-	aux = find_env(env, key);
-	if (aux)
-		return (aux->value);
-	else
-		return (NULL);
+	aux = env;
+	while (aux)
+	{
+		if (ft_strncmp(aux->key, var, len) == 0)
+			return (aux->value);
+		aux = aux->next;
+	}
+	return (NULL);
 }
 
-static void	update_wds(t_env *env)
+static void	update_env_var(t_env **env, char *key, char *value)
 {
-	t_env	*pwd;
-	t_env	*old;
+	t_env	*tmp;
+	t_env	*n_node;
+	char	*full_str;
 
-	pwd = find_env(env, "PWD");
-	old = find_env(env, "OLDPWD");
-	if (old && pwd && pwd->value)
+	tmp = find_env(*env, key);
+	if (tmp)
 	{
-		free(old->value);
-		old->value = ft_strdup(pwd->value);
+		if (tmp->value)
+			free(tmp->value);
+		tmp->value = ft_strdup(value);
 	}
-	if (pwd)
+	else
 	{
-		free(pwd->value);
-		pwd->value = getcwd(NULL, 0);
+		full_str = ft_strjoindelimit(key, "=", value);
+		if (!full_str)
+			return ;
+		n_node = get_env_node(full_str);
+		add_env(env, n_node);
+		free(full_str);
 	}
 }
 
-int	ft_cd(t_command *cmd, t_env *env)
+static char	*get_target_path(char **args, t_env *env)
 {
-	char	*dest;
+	char	*path;
 
-	if (!cmd->args[1])
+	if (!args[1])
 	{
-		dest = get_env_value(env, "HOME");
-		if (!dest)
-			return (ft_putendl_fd("minishell: HOME not set", 2), 1);
+		path = get_env_path(env, "HOME", 5);
+		if (!path)
+			ft_putendl_fd("minishell: cd: HOME not set", 2);
 	}
-	else if (ft_strncmp(cmd->args[1], "-", 2) == 0)
+	else if (ft_strncmp(args[1], "-", 2) == 0)
 	{
-		dest = get_env_value(env, "OLDPWD");
-		if (!dest)
-			return (ft_putendl_fd("minishell: OLDPWD not set", 2), 1);
-		ft_putendl_fd(dest, 1);
+		path = get_env_path(env, "OLDPWD", 7);
+		if (!path)
+			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+		else
+			ft_putendl_fd(path, 1);
 	}
 	else
-		dest = cmd->args[1];
-	if (chdir(dest) == -1)
+		path = args[1];
+	return (path);
+}
+
+static void	update_pwds(t_env **env, char *cur_dir)
+{
+	char	*n_dir;
+
+	if (cur_dir)
+	{
+		update_env_var(env, "OLDPWD", cur_dir);
+		free(cur_dir);
+	}
+	n_dir = getcwd(NULL, 0);
+	if (n_dir)
+	{
+		update_env_var(env, "PWD", n_dir);
+		free(n_dir);
+	}
+}
+
+int	ft_cd(t_command *cmd, t_env **env)
+{
+	char	*cur_dir;
+	char	*path;
+
+	path = get_target_path(cmd->args, *env);
+	if (!path)
+		return (1);
+	cur_dir = getcwd(NULL, 0);
+	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(dest, 2);
-		return (ft_putendl_fd(": No such file or directory", 2), 1);
+		perror(path);
+		if (cur_dir)
+			free(cur_dir);
+		return (1);
 	}
-	update_wds(env);
+	update_pwds(env, cur_dir);
 	return (0);
 }

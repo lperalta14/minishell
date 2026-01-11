@@ -28,52 +28,64 @@ t_env	*find_env(t_env *env, char *key)
 {
 	while (env)
 	{
-		if (ft_strcmp(env->key, key) == 0)
+		if (ft_strncmp(env->key, key, ft_strlen(key) + 1) == 0)
 			return (env);
 		env = env->next;
 	}
 	return (NULL);
 }
 
+static void	print_export_error(char *arg)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+}
+
+static int	export_var(char *arg, t_env **env)
+{
+	t_env	*tmp;
+	t_env	*current;
+
+	tmp = get_env_node(arg);
+	if (!tmp)
+		return (1);
+	current = find_env(*env, tmp->key);
+	if (current)
+	{
+		if (tmp->value)
+		{
+			free(current->value);
+			current->value = tmp->value;
+			tmp->value = NULL;
+		}
+		free_node(tmp);
+	}
+	else
+		add_env(env, tmp);
+	return (0);
+}
 
 int	ft_export(t_command *cmd, t_env **env)
 {
 	int		i;
 	int		status;
-	t_env	*tmp;
-	t_env	*current;
 
 	status = 0;
 	if (!cmd->args[1])
-		return (print_sorted_env(env));
+		return (print_sorted_env(*env));
 	i = 1;
 	while (cmd->args[i])
 	{
 		if (!is_valid_env_name(cmd->args[i]))
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(cmd->args[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
+			print_export_error(cmd->args[i]);
 			status = 1;
 		}
 		else
 		{
-			tmp = get_env_node(cmd->args[i]);
-			if (!tmp)
+			if (export_var(cmd->args[i], env))
 				return (1);
-			current = find_env(*env, tmp->key);
-			if (current)
-			{
-				if (tmp->value)
-				{
-					free(current->value);
-					current->value = tmp->value;
-					tmp->value = NULL;
-				}
-				free_node(tmp);
-			}
-			else
-				add_env(env, tmp);
 		}
 		i++;
 	}
