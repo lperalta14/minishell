@@ -66,8 +66,9 @@ void	execute_child(t_command *cmd, t_env **env)
 	path = get_path(cmd->args[0], *env);
 	if (!path)
 	{
-		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putendl_fd(cmd->args[0], 2);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putendl_fd(": command not found", 2);
 		exit(127);
 	}
 	f_path = env_to_array(*env);

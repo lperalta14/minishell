@@ -29,11 +29,16 @@ int	has_dollar(char *str)
 
 char	*extract_special_var(char c, int *i)
 {
-	(*i)++;
 	if (c == '?')
+	{
+		(*i)++;
 		return (ft_strdup("?"));
+	}
 	if (c == '$')
+	{
+		(*i)++;
 		return (ft_strdup("$"));
+	}
 	return (NULL);
 }
 

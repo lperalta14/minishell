@@ -5,6 +5,8 @@ static int	is_valid_env_name(char *str)
 	int		i;
 	char	c;
 
+	if (!str || !*str)
+		return (0);
 	i = 0;
 	while (str[i])
 	{

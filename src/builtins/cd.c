@@ -83,6 +83,11 @@ int	ft_cd(t_command *cmd, t_env **env)
 	char	*cur_dir;
 	char	*path;
 
+	if (cmd->args[1] && cmd->args[2])
+	{
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		return (1);
+	}
 	path = get_target_path(cmd->args, *env);
 	if (!path)
 		return (1);

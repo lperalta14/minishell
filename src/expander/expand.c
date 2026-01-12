@@ -44,6 +44,7 @@ int	copy_var_value(char *dst, char *src, int *i, t_env *env)
 
 	(*i)++;
 	var_name = extract_var_name(src, i);
+	//ft_printf("DEBUG: var_name='%s'\n", var_name);
 	if (!var_name)
 	{
 		dst[0] = '$';
