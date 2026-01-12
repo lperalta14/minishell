@@ -31,7 +31,7 @@ t_env	**get_sorted_tab(t_env *env, int count)
 
 	tab = malloc(sizeof(t_env *) * count);
 	if (!tab)
-		return (1);
+		return (NULL);
 	i = 0;
 	while (env)
 	{
@@ -70,4 +70,3 @@ int	print_sorted_env(t_env *env)
 	}
 	return (free(tab), 0);
 }
-

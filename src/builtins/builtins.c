@@ -29,7 +29,7 @@ int	execute_builtin(t_command *cmd, t_env **env)
 	if (built == 1)
 		return (ft_echo(cmd->args));
 	else if (built == 2)
-		return (ft_cd(cmd, *env));
+		return (ft_cd(cmd, env));
 	else if (built == 3)
 		return (ft_env(*env));
 	else if (built == 4)

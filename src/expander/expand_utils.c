@@ -29,9 +29,9 @@ int	has_dollar(char *str)
 
 char	*extract_special_var(char c, int *i)
 {
-	(i)++;
+	(*i)++;
 	if (c == '?')
-		return (ft_strdup("?")); //esto debería cambiarse por valor de? mirar bien, de momento funciona porque devuelve'?'.
+		return (ft_strdup("?"));
 	if (c == '$')
 		return (ft_strdup("$"));
 	return (NULL);
