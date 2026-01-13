@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	*cwd;
 
@@ -8,7 +8,7 @@ int ft_pwd(void)
 	if (!cwd)
 	{
 		perror("pwd");
-		return(1);
+		return (1);
 	}
 	ft_printf("%s\n", cwd);
 	free (cwd);

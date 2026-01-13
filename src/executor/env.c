@@ -31,7 +31,7 @@ t_env	*get_env_node(char *str)
 	{ // Caso: CLAVE=VALOR
 		key_len = pos_eq - str; //aritmetica de punteros
 		env->key = ft_substr(str, 0, key_len);
-		env->value = ft_strdup(pos_eq + 1); //copiar desde el = por eso el +1
+		env->value = ft_strdup(pos_eq + 1); //cpy dsd = por eso el +1
 	}
 	else
 	{ //caso CLAVE sin valor.

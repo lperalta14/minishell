@@ -47,7 +47,7 @@ t_token	*extract_word(t_lexer_state *st)
 	start = st->pos;
 	word = NULL;
 	while (st->pos < st->len && (is_valid_quote(st->input, st->pos) != 1)
-		&& !is_operator(st->input[st->pos]) && !isspace(st->input[st->pos]))
+		&& !is_operator(st->input[st->pos]) && !ft_isspace(st->input[st->pos]))
 		st->pos++;
 	if (ft_memchr(st->input + start, '\\', st->pos - start))
 		word = clean_scape(word, st->input + start, st->pos - start);

@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-/*void	delete_env_var(t_env **env, char *key)
+void	delete_env_var(t_env **env, char *key)
 {
 	t_env	*current;
 	t_env	*prev;
@@ -9,7 +9,7 @@
 	prev = NULL;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (ft_strncmp(current->key, key, ft_strlen(key) + 1) == 0)
 		{
 			if (prev == NULL)
 				*env = current->next;
@@ -37,4 +37,3 @@ int	ft_unset(char **args, t_env **env)
 	}
 	return (0);
 }
-*/

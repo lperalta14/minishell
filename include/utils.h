@@ -40,6 +40,12 @@ void	print_tokens(t_token *tokens);
  * @param head 
  */
 void	free_env_list(t_env *head);
+/**
+ * @brief
+ * 
+ * @param
+ */
+void	free_node(t_env *node);
 
 /**
  * @brief libera tokens
@@ -61,6 +67,5 @@ void	free_commands(t_command *cmds);
  * @param redirs 
  */
 void	free_redirs(t_redir *redirs);
-
 
 #endif
