@@ -1,25 +1,5 @@
 #include "../../include/minishell.h"
 
-<<<<<<< HEAD
-void	execute_pipeline(t_command *cmd, t_env **env)
-{
-	int			prev_pipe_read;
-	t_command	*tmp;
-	int			fd[2];
-	pid_t		pid;
-
-	prev_pipe_read = -1;
-	tmp = cmd;
-	while (tmp)
-	{
-		if (tmp->next)
-		{
-			if (pipe(fd) == -1)
-			{
-				perror("minishell: pipe");
-				return ;
-			}
-=======
 static void	wait_children(pid_t last_pid)
 {
 	pid_t	pid;
@@ -82,7 +62,6 @@ void	execute_pipeline(t_command *cmd, t_env **env)
 		{
 			perror("minishell: pipe");
 			return ;
->>>>>>> origin/mariabranch
 		}
 		pid = fork();
 		if (pid == -1)
@@ -91,40 +70,9 @@ void	execute_pipeline(t_command *cmd, t_env **env)
 			return ;
 		}
 		if (pid == 0)
-<<<<<<< HEAD
-		{
-			if (prev_pipe_read != -1) // vengo de un pipe anterior?
-			{
-				dup2(prev_pipe_read, STDIN_FILENO);
-				close(prev_pipe_read);
-			}
-			if (tmp->next)
-			{
-				close(fd[0]);
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-			}
-			execute_child(tmp, env);
-		}
-		else
-		{
-			if (prev_pipe_read != -1)
-				close(prev_pipe_read);
-			if (tmp->next)
-			{
-				close(fd[1]);
-				prev_pipe_read = fd[0];
-			}
-			tmp = tmp->next;
-		}
-	}
-	while (wait(NULL) > 0)
-		;
-=======
 			child_process(cmd, prev_read, fd, env);
 		parent_process(cmd, &prev_read, fd);
 		cmd = cmd->next;
 	}
 	wait_children(pid);
->>>>>>> origin/mariabranch
 }
