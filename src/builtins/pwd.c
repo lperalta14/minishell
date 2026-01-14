@@ -14,6 +14,9 @@ int	ft_pwd(void)
 	free (cwd);
 	return (0);
 }
+//OJO!! QUE NO HE PROBADO ESTE BICHARRACO, 
+//PERO POR SI QUIERES REFACTORIZAR Y DECIR QUE LA TENEMOS ENORME. SI NO SE BORRA
+
 
 // static void	update_pwds(t_env **env, char *cur_dir, char *arg_path)
 // {

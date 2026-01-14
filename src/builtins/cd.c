@@ -100,7 +100,7 @@ int	ft_cd(t_command *cmd, t_env **env)
 			free(cur_dir);
 		return (1);
 	}
-	update_pwds(env, cur_dir);//añadir path si usams la funcion de update_pwd chetada de pwd.c.
+	update_pwds(env, cur_dir); //añadir path si usams la chetada
 	return (0);
 }
 
