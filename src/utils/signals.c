@@ -28,3 +28,10 @@ void setup_signals_interactive(void)
 	sigemptyset(&sa_quit.sa_mask);
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
+
+/*void	handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	exit(130);
+}*/

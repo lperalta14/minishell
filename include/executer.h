@@ -101,6 +101,22 @@ int		check_redirs(t_command *cmd);
  */
 void	execute_child(t_command *cmd, t_env **env);
 
+/**
+ * @brief 
+ * 
+ * @param redir 
+ * @param is_last 
+ * @return int 
+ */
+int handle_heredoc(t_redir *redir, int is_last);
+
+/**
+ * @brief 
+ * 
+ * @param sig 
+ */
+void	handle_sigint_heredoc(int sig);
+
 /********************************************************/
 /*						PIPES							*/
 /********************************************************/
