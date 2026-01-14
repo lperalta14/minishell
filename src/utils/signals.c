@@ -1,8 +1,7 @@
 #include "../../include/minishell.h"
-#include <signal.h>
 
 //Ctrl+C = SIGINT
-void handle_sigint_interactive(int sig)
+void	handle_sigint_interactive(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
@@ -11,7 +10,8 @@ void handle_sigint_interactive(int sig)
 	rl_redisplay();
 	g_exit_status = 128 + SIGINT;
 }
-void setup_signals_interactive(void)
+
+void	setup_signals_interactive(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
@@ -28,10 +28,3 @@ void setup_signals_interactive(void)
 	sigemptyset(&sa_quit.sa_mask);
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
-
-/*void	handle_sigint_heredoc(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	exit(130);
-}*/
