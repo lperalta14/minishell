@@ -61,7 +61,7 @@ static char	*get_target_path(char **args, t_env *env)
 	return (path);
 }
 
-static void	update_pwds(t_env **env, char *cur_dir, char *arg_path)
+static void	update_pwds(t_env **env, char *cur_dir) //char *args_path si chetada
 {
 	char	*n_dir;
 
