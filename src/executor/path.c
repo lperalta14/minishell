@@ -6,6 +6,8 @@ char	*find_valid_path(char *cmd, char **paths)
 	char	*path_part;
 	char	*full_path;
 
+	if (!cmd || !*cmd)
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
