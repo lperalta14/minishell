@@ -42,11 +42,25 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 		execute_child(cmd, env);
 	else
 	{
+		setup_signals_execution();
 		waitpid(pid, &status, 0);
+		setup_signals_interactive();
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			g_exit_status = 128 + WTERMSIG(status);
+		/*
+              g_exit_status = 128 + WTERMSIG(status);
+            
+            // AQUI ES DONDE VA EL NEWLINE:
+            // Si el hijo murió por SIGINT (Ctrl+C), imprimimos \n
+            if (WTERMSIG(status) == SIGINT)
+                write(1, "\n", 1);
+            
+            // Opcional: Para SIGQUIT (Ctrl+\) bash imprime esto:
+            else if (WTERMSIG(status) == SIGQUIT)
+                ft_putendl_fd("Quit (core dumped)", 1);
+		*/
 	}
 }
 

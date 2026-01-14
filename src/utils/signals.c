@@ -11,6 +11,19 @@ void	handle_sigint_interactive(int sig)
 	g_exit_status = 128 + SIGINT;
 }
 
+void	setup_signals_execution(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = SIG_IGN; // El padre ignora la señal
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	// Ignoramos SIGINT (Ctrl+C) y SIGQUIT (Ctrl+\) en el padre
+	// El hijo las recibirá por defecto y morirá
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
 void	setup_signals_interactive(void)
 {
 	struct sigaction	sa_int;

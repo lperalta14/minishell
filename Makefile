@@ -26,7 +26,7 @@ UTILS_DIR = src/utils
 # Source files
 BUILTINS = $(BUIL_DIR)/builtins.c $(BUIL_DIR)/cd.c $(BUIL_DIR)/echo.c $(BUIL_DIR)/env.c $(BUIL_DIR)/exit.c $(BUIL_DIR)/export.c $(BUIL_DIR)/export_utils.c $(BUIL_DIR)/pwd.c $(BUIL_DIR)/unset.c 
 
-EXECUTOR = $(EXE_DIR)/pipes.c $(EXE_DIR)/execute.c $(EXE_DIR)/execute_utils.c $(EXE_DIR)/env.c $(EXE_DIR)/path.c $(EXE_DIR)/heredoc.c
+EXECUTOR = $(EXE_DIR)/pipes.c $(EXE_DIR)/execute.c $(EXE_DIR)/execute_utils.c $(EXE_DIR)/env.c $(EXE_DIR)/env_utils.c $(EXE_DIR)/path.c $(EXE_DIR)/heredoc.c
 
 EXPANDER = $(EXP_DIR)/expand.c $(EXP_DIR)/expand_utils.c
 

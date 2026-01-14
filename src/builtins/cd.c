@@ -61,7 +61,7 @@ static char	*get_target_path(char **args, t_env *env)
 	return (path);
 }
 
-static void	update_pwds(t_env **env, char *cur_dir)
+static void	update_pwds(t_env **env, char *cur_dir, char *arg_path)
 {
 	char	*n_dir;
 
@@ -100,6 +100,7 @@ int	ft_cd(t_command *cmd, t_env **env)
 			free(cur_dir);
 		return (1);
 	}
-	update_pwds(env, cur_dir);
+	update_pwds(env, cur_dir);//añadir path si usams la funcion de update_pwd chetada de pwd.c.
 	return (0);
 }
+
