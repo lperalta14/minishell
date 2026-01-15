@@ -6,7 +6,10 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
+# include <string.h> // <--- NUEVO: Para strerror
+# include <errno.h>  // <--- NUEVO: Para errno
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../src/my_lib/includes/libft.h"
@@ -17,13 +20,13 @@
 # include "expander.h"
 # include "builtins.h"
 
-#define RED "\033[38;5;196m"
-#define ORANGE "\033[38;5;208m"
-#define YELLOW "\033[38;5;226m"
-#define GREEN "\033[38;5;46m"
-#define BLUE "\033[38;5;21m"
-#define PURPLE "\033[38;5;129m"
-#define NC "\033[0m"
+# define RED "\033[38;5;196m"
+# define ORANGE "\033[38;5;208m"
+# define YELLOW "\033[38;5;226m"
+# define GREEN "\033[38;5;46m"
+# define BLUE "\033[38;5;21m"
+# define PURPLE "\033[38;5;129m"
+# define NC "\033[0m"
 
 extern volatile sig_atomic_t	g_exit_status;
 void	setup_signals_interactive(void);

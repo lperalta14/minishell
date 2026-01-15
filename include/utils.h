@@ -30,6 +30,8 @@ void	print_banner(char *text);
  */
 void	print_tokens(t_token *tokens);
 
+void	print_error(char *cmd, char *msg);
+
 /********************************************************/
 /*					GESTION DE MEMORIA					*/
 /********************************************************/
