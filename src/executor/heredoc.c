@@ -1,15 +1,15 @@
 #include "../../include/minishell.h"
 
-static void heredoc_sigint(int sig)
+static void	heredoc_sigint(int sig)
 {
 	(void)sig;
 	printf("\n");
 	exit(130);
 }
 
-static void heredoc_child(t_redir *redir, int *pipefd)
+static void	heredoc_child(t_redir *redir, int *pipefd)
 {
-	char *line;
+	char	*line;
 
 	signal(SIGINT, heredoc_sigint);
 	close(pipefd[0]);
@@ -29,11 +29,11 @@ static void heredoc_child(t_redir *redir, int *pipefd)
 	exit(0);
 }
 
-int handle_heredoc(t_redir *redir, int is_last)
+int	handle_heredoc(t_redir *redir, int is_last)
 {
-	int	 pipefd[2];
-	pid_t   pid;
-	int	 status;
+	int		pipefd[2];
+	pid_t	pid;
+	int		status;
 
 	if (pipe(pipefd) == -1)
 		return (perror("minishell"), 1);

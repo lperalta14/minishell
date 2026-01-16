@@ -16,7 +16,13 @@ static void	wait_children(pid_t last_pid)
 			if (WIFEXITED(status))
 				g_exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
+			{
 				g_exit_status = 128 + WTERMSIG(status);
+				if (WTERMSIG(status) == SIGINT)
+					write(1, "\n", 1);
+				else if (WTERMSIG(status) == SIGQUIT)
+					ft_putendl_fd("Quit (core dumped)", 1);
+			}
 		}
 	}
 }

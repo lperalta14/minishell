@@ -10,11 +10,11 @@ static void	minishell(char *input, t_env **env)
 
 	tokens = NULL;
 	tokens = init_token(input, tokens, *env);
-	print_tokens(tokens);
+	// print_tokens(tokens);
 	cmds = parse(tokens);
 	if (cmds)
 	{
-		print_commands(cmds);
+		// print_commands(cmds);
 		if (cmds->next)
 			execute_pipeline(cmds, env);
 		else
