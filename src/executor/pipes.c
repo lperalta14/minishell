@@ -60,8 +60,16 @@ void	execute_pipeline(t_command *cmd, t_env **env)
 	int			prev_read;
 	int			fd[2];
 	pid_t		pid;
+	t_command	*tmp;
 
 	prev_read = -1;
+	tmp = cmd;
+	while (tmp)
+	{
+		if (handle_heredocs_before_pipeline(tmp) != 0)
+			return ;
+		tmp = tmp->next;
+	}
 	while (cmd)
 	{
 		if (cmd->next && pipe(fd) == -1)

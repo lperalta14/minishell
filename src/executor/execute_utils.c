@@ -49,7 +49,7 @@ static int	is_last_heredoc(t_redir *redir)
 	return (1);
 }
 
-static int	handle_all_heredocs(t_command *cmd)
+int	handle_heredocs_before_pipeline(t_command *cmd)
 {
 	t_redir	*tmp;
 
@@ -85,8 +85,6 @@ static int	handle_other_redirs(t_command *cmd)
 
 int	check_redirs(t_command *cmd)
 {
-	if (handle_all_heredocs(cmd))
-		return (1);
 	if (handle_other_redirs(cmd))
 		return (1);
 	return (0);

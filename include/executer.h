@@ -111,6 +111,14 @@ void	execute_child(t_command *cmd, t_env **env);
 int handle_heredoc(t_redir *redir, int is_last);
 
 /**
+ * @brief Procesa heredocs antes de la pipeline
+ * 
+ * @param cmd 
+ * @return int 
+ */
+int	handle_heredocs_before_pipeline(t_command *cmd);
+
+/**
  * @brief 
  * 
  * @param sig 
