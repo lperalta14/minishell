@@ -1,25 +1,5 @@
 #include "../../include/minishell.h"
 
-static void	handle_redirs_only(t_command *cmd)
-{
-	pid_t	pid;
-	int		status;
-
-	if (cmd->redirs)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (check_redirs(cmd))
-				exit(1);
-			exit(0);
-		}
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
-	}
-}
-
 static void	handle_parent_wait(pid_t pid)
 {
 	int	status;
@@ -57,27 +37,44 @@ static void	handle_builtin(t_command *cmd, t_env **env)
 	g_exit_status = status;
 }
 
-void	execute_simple_cmd(t_command *cmd, t_env **env)
+static void	handle_external(t_command *cmd, t_env **env, int stdin_bk)
 {
 	pid_t	pid;
 
-	if (!cmd->args || cmd->args[0] == NULL)
-	{
-		handle_redirs_only(cmd);
-		return ;
-	}
-	if (is_builtin(cmd->args[0]))
-	{
-		handle_builtin(cmd, env);
-		return ;
-	}
 	pid = fork();
 	if (pid == -1)
 		return (perror("minishell: fork"));
 	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		close(stdin_bk);
 		execute_child(cmd, env);
+	}
 	else
 		handle_parent_wait(pid);
+}
+
+void	execute_simple_cmd(t_command *cmd, t_env **env)
+{
+	int		std_in;
+
+	std_in = dup(STDIN_FILENO);
+
+	if (handle_heredocs_before_pipeline(cmd) != 0)
+	{
+		dup2(std_in, STDIN_FILENO); // Restaurar si se cancela con Ctrl+C
+		close(std_in);
+		return ;
+	}
+	if (!cmd->args || cmd->args[0] == NULL)
+		handle_redirs_only(cmd);
+	else if (is_builtin(cmd->args[0]))
+		handle_builtin(cmd, env);
+	else
+		handle_external(cmd, env, std_in);
+	dup2(std_in, STDIN_FILENO);
+	close(std_in);
 }
 
 void	execute_child(t_command *cmd, t_env **env)

@@ -87,11 +87,6 @@ char	*get_path(char *cmd, t_env *env);
  */
 void	execute_simple_cmd(t_command *cmd, t_env **env);
 
-/**
- * @brief Revisar si hay redirecciones
- * @param cmd 
- */
-int		check_redirs(t_command *cmd);
 
 /**
  * @brief 
@@ -108,7 +103,7 @@ void	execute_child(t_command *cmd, t_env **env);
  * @param is_last 
  * @return int 
  */
-int handle_heredoc(t_redir *redir, int is_last);
+int		handle_heredoc(t_redir *redir, int is_last);
 
 /**
  * @brief Procesa heredocs antes de la pipeline
@@ -116,7 +111,7 @@ int handle_heredoc(t_redir *redir, int is_last);
  * @param cmd 
  * @return int 
  */
-int	handle_heredocs_before_pipeline(t_command *cmd);
+int		handle_heredocs_before_pipeline(t_command *cmd);
 
 /**
  * @brief 
@@ -124,6 +119,31 @@ int	handle_heredocs_before_pipeline(t_command *cmd);
  * @param sig 
  */
 void	handle_sigint_heredoc(int sig);
+
+/**
+ * @brief 
+ * 
+ * @param redir 
+ * @return int 
+ */
+int		is_last_heredoc(t_redir *redir);
+
+/**
+ * @brief 
+ * 
+ * @param cmd 
+ * @return int 
+ */
+int		handle_heredocs_before_pipeline(t_command *cmd);
+
+/**
+ * @brief Get the flags object
+ * 
+ * @param type 
+ * @return int 
+ */
+int		get_flags(int type);
+
 
 /********************************************************/
 /*						PIPES							*/
@@ -137,4 +157,19 @@ void	handle_sigint_heredoc(int sig);
  */
 void	execute_pipeline(t_command *cmd, t_env **env);
 
+
+/********************************************************/
+/*					REDIRECCIONES						*/
+/********************************************************/
+/**
+ * @brief
+ * @param cmd
+ */
+void	handle_redirs_only(t_command *cmd);
+
+/**
+ * @brief Revisar si hay redirecciones
+ * @param cmd 
+ */
+int		check_redirs(t_command *cmd);
 #endif

@@ -55,38 +55,42 @@ static void	parent_process(t_command *cmd, int *prev_read, int *fd)
 	}
 }
 
+static int	prepare_heredocs(t_command *cmd)
+{
+	t_command	*tmp;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		if (handle_heredocs_before_pipeline(tmp) != 0)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void	execute_pipeline(t_command *cmd, t_env **env)
 {
 	int			prev_read;
 	int			fd[2];
 	pid_t		pid;
-	t_command	*tmp;
 
+	if (prepare_heredocs(cmd))
+		return ;
 	prev_read = -1;
-	tmp = cmd;
-	while (tmp)
-	{
-		if (handle_heredocs_before_pipeline(tmp) != 0)
-			return ;
-		tmp = tmp->next;
-	}
+	setup_signals_execution();
 	while (cmd)
 	{
 		if (cmd->next && pipe(fd) == -1)
-		{
-			perror("minishell: pipe");
-			return ;
-		}
+			return (perror("minishell: pipe"));
 		pid = fork();
 		if (pid == -1)
-		{
-			perror("minishell: fork");
-			return ;
-		}
+			return (perror("minishell: fork"));
 		if (pid == 0)
 			child_process(cmd, prev_read, fd, env);
 		parent_process(cmd, &prev_read, fd);
 		cmd = cmd->next;
 	}
 	wait_children(pid);
+	setup_signals_interactive();
 }

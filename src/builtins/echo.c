@@ -1,23 +1,34 @@
 #include "../../include/minishell.h"
 
+static void	ft_print_echo(char **args, int i)
+{
+	ft_putstr_fd(args[i], 1);
+	if (args[i + 1])
+		ft_putchar_fd(' ', 1);
+}
+
 int	ft_echo(char **args)
 {
-	int	i;
-	int	newline;
+	int		i;
+	size_t	j;
+	int		newline;
 
 	i = 1;
 	newline = 1;
-	// Detectar flags -n
-	while (args[i] && ft_strcmp(args[i], "-n") == 0)
+	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0)
 	{
-		newline = 0;
+		j = 2;
+		while (args[i][j] && args[i][j] == 'n')
+			j++;
+		if (ft_strlen(args[i]) == j)
+			newline = 0;
+		else
+			break ;
 		i++;
 	} // Imprimir argumentos
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
-		if (args[i + 1])
-			ft_putchar_fd(' ', 1);
+		ft_print_echo(args, i);
 		i++;
 	} // Imprimir salto de línea si corresponde
 	if (newline)
