@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 20:13:14 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/22 20:13:15 by msedeno-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 int	get_flags(int type)
@@ -37,6 +49,5 @@ int	handle_heredocs_before_pipeline(t_command *cmd)
 		}
 		tmp = tmp->next;
 	}
-	//printf("salgo por aqu'i \n");
 	return (0);
 }
