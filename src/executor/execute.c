@@ -77,20 +77,16 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 	close(std_in);
 }
 
-void	execute_child(t_command *cmd, t_env **env)
+// ...existing code...
+
+// Función auxiliar para cumplir Norminette en execute_child
+static void	validate_cmd_path(char *path, char *cmd_name)
 {
-	char		*path;
-	char		**f_path;
 	struct stat	st;
 
-	if (check_redirs(cmd) != 0)
-		exit(1);
-	if (is_builtin(cmd->args[0]))
-		exit(execute_builtin(cmd, env));
-	path = get_path(cmd->args[0], *env);
 	if (!path)
 	{
-		print_error(cmd->args[0], "command not found");
+		print_error(cmd_name, "command not found");
 		exit(127);
 	}
 	if (stat(path, &st) == 0 && S_ISDIR(st.st_mode))
@@ -98,6 +94,22 @@ void	execute_child(t_command *cmd, t_env **env)
 		print_error(path, "Is a directory");
 		exit(126);
 	}
+}
+
+// Ahora execute_child es corta y protege contra comandos vacíos
+void	execute_child(t_command *cmd, t_env **env)
+{
+	char	*path;
+	char	**f_path;
+
+	if (check_redirs(cmd) != 0)
+		exit(1);
+	if (!cmd->args || !cmd->args[0])
+		exit(0);
+	if (is_builtin(cmd->args[0]))
+		exit(execute_builtin(cmd, env));
+	path = get_path(cmd->args[0], *env);
+	validate_cmd_path(path, cmd->args[0]);
 	f_path = env_to_array(*env);
 	if (!f_path)
 		exit(1);

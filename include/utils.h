@@ -12,9 +12,18 @@ typedef struct s_redir		t_redir;
 /*							PRINTS						*/
 /********************************************************/
 
+/**
+ * @brief liberar tokens
+ * @param tokens
+ */
 void	free_tokens(t_token *tokens);
 
-/*void	free_commands(t_command *cmds);*/
+/**
+ * @brief liberar comandos
+ * 
+ * @param cmds 
+ */
+void	free_commands(t_command *cmds);
 
 /**
  * @brief 
@@ -42,6 +51,7 @@ void	print_error(char *cmd, char *msg);
  * @param head 
  */
 void	free_env_list(t_env *head);
+
 /**
  * @brief
  * 

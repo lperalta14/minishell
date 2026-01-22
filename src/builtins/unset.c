@@ -32,7 +32,8 @@ int	ft_unset(char **args, t_env **env)
 	i = 1;
 	while (args[i])
 	{
-		delete_env_var(env, args[i]);
+		if (args[i][0] != '_')
+			delete_env_var(env, args[i]);
 		i++;
 	}
 	return (0);

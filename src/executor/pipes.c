@@ -29,6 +29,8 @@ static void	wait_children(pid_t last_pid)
 
 static void	child_process(t_command *cmd, int prev_read, int *fd, t_env **env)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (prev_read != -1)
 	{
 		dup2(prev_read, STDIN_FILENO);
@@ -43,8 +45,33 @@ static void	child_process(t_command *cmd, int prev_read, int *fd, t_env **env)
 	execute_child(cmd, env);
 	exit(g_exit_status);
 }
+static void	run_pipe_loop(t_command *cmd, t_env **env, pid_t *pid)
+{
+    int	prev_read;
+    int	fd[2];
 
-static void	parent_process(t_command *cmd, int *prev_read, int *fd)
+    prev_read = -1;
+    while (cmd)
+    {
+        if (cmd->next && pipe(fd) == -1)
+            return (perror("minishell: pipe"));
+        *pid = fork();
+        if (*pid == -1)
+            return (perror("minishell: fork"));
+        if (*pid == 0)
+            child_process(cmd, prev_read, fd, env);
+        if (prev_read != -1)
+            close(prev_read);
+        if (cmd->next)
+        {
+            close(fd[1]);
+            prev_read = fd[0];
+        }
+        cmd = cmd->next;
+    }
+}
+
+/*static void	parent_process(t_command *cmd, int *prev_read, int *fd)
 {
 	if (*prev_read != -1)
 		close(*prev_read);
@@ -53,7 +80,7 @@ static void	parent_process(t_command *cmd, int *prev_read, int *fd)
 		close(fd[1]);
 		*prev_read = fd[0];
 	}
-}
+}*/
 
 static int	prepare_heredocs(t_command *cmd)
 {
@@ -71,26 +98,22 @@ static int	prepare_heredocs(t_command *cmd)
 
 void	execute_pipeline(t_command *cmd, t_env **env)
 {
-	int			prev_read;
-	int			fd[2];
-	pid_t		pid;
+    pid_t	pid;
+    int		stdin_bk;
 
-	if (prepare_heredocs(cmd))
-		return ;
-	prev_read = -1;
-	setup_signals_execution();
-	while (cmd)
-	{
-		if (cmd->next && pipe(fd) == -1)
-			return (perror("minishell: pipe"));
-		pid = fork();
-		if (pid == -1)
-			return (perror("minishell: fork"));
-		if (pid == 0)
-			child_process(cmd, prev_read, fd, env);
-		parent_process(cmd, &prev_read, fd);
-		cmd = cmd->next;
-	}
-	wait_children(pid);
-	setup_signals_interactive();
+    // 2. Guardar teclado antes de tocar nada
+    stdin_bk = dup(STDIN_FILENO);
+    if (prepare_heredocs(cmd))
+    {
+        dup2(stdin_bk, STDIN_FILENO);
+        close(stdin_bk);
+        return ;
+    }
+    // 3. Restaurar teclado INMEDIATAMENTE para que el padre quede limpio
+    dup2(stdin_bk, STDIN_FILENO);
+    close(stdin_bk);
+    setup_signals_execution();
+    run_pipe_loop(cmd, env, &pid);
+    wait_children(pid);
+    setup_signals_interactive();
 }

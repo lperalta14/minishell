@@ -42,7 +42,7 @@ static char	*get_target_path(char **args, t_env *env)
 {
 	char	*path;
 
-	if (!args[1])
+	if (!args[1] || ft_strncmp(args[1], "~", 2) == 0)
 	{
 		path = get_env_path(env, "HOME", 5);
 		if (!path)
@@ -84,7 +84,8 @@ int	ft_cd(t_command *cmd, t_env **env)
 		return (1);
 	}
 	update_pwds(env, cur_dir, path);
-	free(cur_dir);
+	if (cur_dir)
+		free(cur_dir);
 	return (0);
 }
 

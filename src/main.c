@@ -28,13 +28,27 @@ static void	minishell(char *input, t_env **env)
 static void	main_loop(t_env **env_list)
 {
 	char	*input;
+	char	*line;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			input = readline("minihell> ");
 		else
-			input = readline("");
+		{
+			line = get_next_line(STDIN_FILENO);
+			if (line)
+			{
+				// GNL devuelve con '\n' al final, readline no.
+				// Debemos quitar el \n para que el parser funcione igual.
+				input = ft_strtrim(line, "\n");
+				free(line);
+			}
+			else
+				input = NULL;
+		}
+			//input = readline("");// Aquí
+		//printf("%s\n",input);
 		if (!input)
 			break ;
 		if (input[0] != '\0')
@@ -46,7 +60,6 @@ static void	main_loop(t_env **env_list)
 
 int	main(int argc, char **argv, char **envp)
 {
-	//char	*input;
 	t_env	*env_list;
 
 	(void)argc;
@@ -56,23 +69,10 @@ int	main(int argc, char **argv, char **envp)
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/acrobata.txt");
 	main_loop(&env_list);
-	/*while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			input = readline("minihell> ");
-		else
-			input = readline("");
-		if (!input)
-			break ;
-		if (input[0] != '\0')
-			add_history(input);
-		minishell(input, env_list);
-		free(input);
-	}*/
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/bye.txt");
 	rl_clear_history();
-	//clear_history(); //esto es porq en mac funciona especial rl_clear_history
 	free_env_list(env_list);
 	return (0);
 }
+

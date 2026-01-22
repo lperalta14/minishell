@@ -37,5 +37,6 @@ int	handle_heredocs_before_pipeline(t_command *cmd)
 		}
 		tmp = tmp->next;
 	}
+	//printf("salgo por aqu'i \n");
 	return (0);
 }
