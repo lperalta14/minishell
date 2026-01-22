@@ -37,7 +37,7 @@ int	execute_builtin(t_command *cmd, t_env **env)
 	else if (built == 5)
 		return (ft_export(cmd, env));
 	else if (built == 6)
-		return (ft_pwd());
+		return (ft_pwd(cmd, env));
 	else if (built == 7)
 		return (ft_unset(cmd->args, env));
 	return (0);
