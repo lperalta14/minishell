@@ -23,5 +23,7 @@ void	sort_env_tab(t_env **tab, int size);
 t_env	**get_sorted_tab(t_env *env, int count);
 int		print_sorted_env(t_env *env);
 char	*get_env_path(t_env *env, char *var, size_t len);
+void	update_pwds(t_env **env, char *cur_dir, char *arg_path);
+void	update_env_var(t_env **env, char *key, char *value);
 
 #endif

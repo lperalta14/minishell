@@ -14,7 +14,7 @@ char	*get_env_path(t_env *env, char *var, size_t len)
 	return (NULL);
 }
 
-static void	update_env_var(t_env **env, char *key, char *value)
+void	update_env_var(t_env **env, char *key, char *value)
 {
 	t_env	*tmp;
 	t_env	*n_node;
@@ -61,58 +61,6 @@ static char	*get_target_path(char **args, t_env *env)
 	return (path);
 }
 
-/* static void	update_pwds(t_env **env, char *cur_dir) //char *args_path si chetada
-{
-	char	*n_dir;
-
-	if (cur_dir)
-	{
-		update_env_var(env, "OLDPWD", cur_dir);
-		free(cur_dir);
-	}
-	n_dir = getcwd(NULL, 0);
-	if (n_dir)
-	{
-		update_env_var(env, "PWD", n_dir);
-		free(n_dir);
-	}
-} */
-
-static void	update_pwds(t_env **env, char *cur_dir, char *arg_path)
-{
-	char	*n_dir;
-	char	*tmp_pwd;
-
-	if (cur_dir)
-	{
-		update_env_var(env, "OLDPWD", cur_dir);
-		free(cur_dir);
-	}
-	else // Si getcwd falló antes (carpborrada), intentamos usar el PWD del env
-	{
-		tmp_pwd = get_env_path(*env, "PWD", 3);
-		if (tmp_pwd)
-			update_env_var(env, "OLDPWD", tmp_pwd);
-	}
-	n_dir = getcwd(NULL, 0);
-	if (n_dir)
-	{
-		update_env_var(env, "PWD", n_dir);
-		free(n_dir);
-	}
-	else
-	{ // 3. FALLO GETCWD (Carpeta borrada): Comportamiento Bash
-		ft_putendl_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", 2);
-		tmp_pwd = get_env_path(*env, "PWD", 3); //Const PWD lógic: oldPWD+/+ Arg
-		if (tmp_pwd && arg_path)
-		{
-			n_dir = ft_strjoindelimit(tmp_pwd, "/", arg_path);
-			update_env_var(env, "PWD", n_dir);
-			free(n_dir);
-		}
-	}
-}
-
 int	ft_cd(t_command *cmd, t_env **env)
 {
 	char	*cur_dir;
@@ -135,7 +83,8 @@ int	ft_cd(t_command *cmd, t_env **env)
 			free(cur_dir);
 		return (1);
 	}
-	update_pwds(env, cur_dir, path); //añadir path si usams la chetada
+	update_pwds(env, cur_dir, path);
+	free(cur_dir);
 	return (0);
 }
 
