@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:11:32 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 18:19:53 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:58:39 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		ft_env(t_env *env, char **args);
  * @param args Command arguments (optional exit code).
  * @return Exit code.
  */
-int		ft_exit(char **args);
+int		ft_exit(char **args, t_env **env);
 
 /********************************************************/
 /*						UTILS							*/

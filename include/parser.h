@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:04 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 14:15:53 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/23 21:03:01 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_command
 {
 	char				**args;
 	t_redir				*redirs;
+	int					fd_in;
+	int					fd_out;
 	struct s_command	*next;
 }	t_command;
 

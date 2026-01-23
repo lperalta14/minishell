@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:16:24 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:16:25 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 21:13:00 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_command	*create_command(t_token **tokens)
 		return (NULL);
 	cmd->args = NULL;
 	cmd->redirs = NULL;
+	cmd->fd_in = -1;
+	cmd->fd_out = -1;
 	cmd->next = NULL;
 	start = *tokens;
 	cmd->args = extract_args(tokens);

@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:10 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:15:11 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 20:57:45 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	execute_builtin(t_command *cmd, t_env **env)
 	else if (built == 3)
 		return (ft_env(*env, cmd->args));
 	else if (built == 4)
-		return (ft_exit(cmd->args));
+		return (ft_exit(cmd->args, env));
 	else if (built == 5)
 		return (ft_export(cmd, env));
 	else if (built == 6)

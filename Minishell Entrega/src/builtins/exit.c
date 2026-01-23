@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:21 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 17:13:00 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 19:00:05 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,14 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
-int	ft_exit(char **args)
+static void	clean_and_exit(int status, t_env **env)
+{
+	free_env_list(*env);
+	rl_clear_history();
+	exit(status);
+}
+
+int	ft_exit(char **args, t_env **env)
 {
 	ft_putendl_fd("exit", 2);
 	if (!args || !args[1])
@@ -47,6 +54,6 @@ int	ft_exit(char **args)
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		return (1);
 	}
-	exit(ft_atoi(args[1]));
+	clean_and_exit(ft_atoi(args[1]), env);
 	return (0);
 }

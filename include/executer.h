@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:43 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 14:14:27 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/23 21:21:31 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	execute_child(t_command *cmd, t_env **env);
  * @param is_last 
  * @return int 
  */
-int		handle_heredoc(t_redir *redir, int is_last);
+int		handle_heredoc(t_redir *redir, int *io_fd);
 
 /**
  * @brief Procesa heredocs antes de la pipeline

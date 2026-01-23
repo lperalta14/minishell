@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:21 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:15:22 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 20:59:12 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,30 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
-int	ft_exit(char **args)
+static void	clean_and_exit(int status, t_env **env)
+{
+	free_env_list(*env);
+	rl_clear_history();
+	exit(status);
+}
+
+int	ft_exit(char **args, t_env **env)
 {
 	ft_putendl_fd("exit", 2);
 	if (!args || !args[1])
-		exit(g_exit_status);
+		clean_and_exit(g_exit_status, env);
 	if (!is_numeric(args[1]))
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putendl_fd(": numeric argument required", 2);
-		exit(255);
+		clean_and_exit(255, env);
 	}
 	if (args[2])
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		return (1);
 	}
-	exit(ft_atoi(args[1]));
+	clean_and_exit(ft_atoi(args[1]), env);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:11:32 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:11:33 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 20:58:18 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_pwd(t_command *cmd, t_env **env);
 int		ft_export(t_command *cmd, t_env **env);
 int		ft_unset(char **args, t_env **env);
 int		ft_env(t_env *env, char **args);
-int		ft_exit(char **args);
+int		ft_exit(char **args, t_env **env);
 
 //utils
 t_env	*find_env(t_env *env, char *key);

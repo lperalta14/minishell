@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:48 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:13:49 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 21:09:14 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	heredoc_child(t_redir *redir, int *pipefd)
 	exit(0);
 }
 
-int	handle_heredoc(t_redir *redir, int is_last)
+int	handle_heredoc(t_redir *redir, int *io_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -58,7 +58,11 @@ int	handle_heredoc(t_redir *redir, int is_last)
 		return (perror("minishell: pipe"), 1);
 	pid = fork();
 	if (pid == -1)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
 		return (perror("minishell: fork"), 1);
+	}
 	if (pid == 0)
 		heredoc_child(redir, pipefd);
 	setup_signals_execution();
@@ -71,8 +75,8 @@ int	handle_heredoc(t_redir *redir, int is_last)
 		g_exit_status = 130;
 		return (1);
 	}
-	if (is_last)
-		dup2(pipefd[0], STDIN_FILENO);
-	close(pipefd[0]);
+	if (*io_fd > 2)
+		close(*io_fd);
+	*io_fd = pipefd[0];
 	return (0);
 }

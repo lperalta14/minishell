@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:14 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:13:15 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 21:14:38 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,17 @@ int	handle_heredocs_before_pipeline(t_command *cmd)
 {
 	t_redir	*tmp;
 
+	if (cmd->fd_in != -1)
+	{
+		close(cmd->fd_in);
+		cmd->fd_in = -1;
+	}
 	tmp = cmd->redirs;
 	while (tmp)
 	{
 		if (tmp->type == REDIR_HEREDOC)
 		{
-			if (handle_heredoc(tmp, is_last_heredoc(tmp)))
+			if (handle_heredoc(tmp, &cmd->fd_in))
 				return (1);
 		}
 		tmp = tmp->next;

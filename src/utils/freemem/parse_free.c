@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:17:05 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:17:06 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 21:19:20 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void	free_commands(t_command *cmds)
 	{
 		tmp = cmds;
 		cmds = cmds->next;
+		if (tmp->fd_in > 2)
+			close(tmp->fd_in);
+		if (tmp->fd_out > 2)
+			close(tmp->fd_out);
 		ft_freematrix(tmp->args);
 		free_redirs(tmp->redirs);
 		free(tmp);

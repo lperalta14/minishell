@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:43 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 18:19:05 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 19:08:17 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int		get_flags(int type);
 void	execute_pipeline(t_command *cmd, t_env **env);
 
 /** 
-/* @brief executes a pipeline of commands.
+ * @brief executes a pipeline of commands.
  * 
  * @param cmd Command structure.
  * @param env Double pointer to environment list.
