@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:16 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 14:35:50 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/23 16:31:28 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_pwd(t_command *cmd, t_env **env)
 	perror("minishell: pwd");
 	return (1);
 }
+
 // Auxiliar 1: Actualiza OLDPWD basándose en el estado anterior
 static void	set_oldpwd_env(t_env **env, char *cur_dir)
 {

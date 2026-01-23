@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:06 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 14:22:35 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/23 16:30:39 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 	dup2(std_in, STDIN_FILENO);
 	close(std_in);
 }
-
 
 // 		/*
 //               g_exit_status = 128 + WTERMSIG(status);
