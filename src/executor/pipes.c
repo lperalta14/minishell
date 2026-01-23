@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:42 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:13:43 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:26:44 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,31 @@ static void	child_process(t_command *cmd, int prev_read, int *fd, t_env **env)
 	execute_child(cmd, env);
 	exit(g_exit_status);
 }
+
 static void	run_pipe_loop(t_command *cmd, t_env **env, pid_t *pid)
 {
-    int	prev_read;
-    int	fd[2];
+	int	prev_read;
+	int	fd[2];
 
-    prev_read = -1;
-    while (cmd)
-    {
-        if (cmd->next && pipe(fd) == -1)
-            return (perror("minishell: pipe"));
-        *pid = fork();
-        if (*pid == -1)
-            return (perror("minishell: fork"));
-        if (*pid == 0)
-            child_process(cmd, prev_read, fd, env);
-        if (prev_read != -1)
-            close(prev_read);
-        if (cmd->next)
-        {
-            close(fd[1]);
-            prev_read = fd[0];
-        }
-        cmd = cmd->next;
-    }
+	prev_read = -1;
+	while (cmd)
+	{
+		if (cmd->next && pipe(fd) == -1)
+			return (perror("minishell: pipe"));
+		*pid = fork();
+		if (*pid == -1)
+			return (perror("minishell: fork"));
+		if (*pid == 0)
+			child_process(cmd, prev_read, fd, env);
+		if (prev_read != -1)
+			close(prev_read);
+		if (cmd->next)
+		{
+			close(fd[1]);
+			prev_read = fd[0];
+		}
+		cmd = cmd->next;
+	}
 }
 
 /*static void	parent_process(t_command *cmd, int *prev_read, int *fd)
@@ -110,22 +111,22 @@ static int	prepare_heredocs(t_command *cmd)
 
 void	execute_pipeline(t_command *cmd, t_env **env)
 {
-    pid_t	pid;
-    int		stdin_bk;
+	pid_t	pid;
+	int		stdin_bk;
 
-    // 2. Guardar teclado antes de tocar nada
-    stdin_bk = dup(STDIN_FILENO);
-    if (prepare_heredocs(cmd))
-    {
-        dup2(stdin_bk, STDIN_FILENO);
-        close(stdin_bk);
-        return ;
-    }
-    // 3. Restaurar teclado INMEDIATAMENTE para que el padre quede limpio
-    dup2(stdin_bk, STDIN_FILENO);
-    close(stdin_bk);
-    setup_signals_execution();
-    run_pipe_loop(cmd, env, &pid);
-    wait_children(pid);
-    setup_signals_interactive();
+	// 2. Guardar teclado antes de tocar nada
+	stdin_bk = dup(STDIN_FILENO);
+	if (prepare_heredocs(cmd))
+	{
+		dup2(stdin_bk, STDIN_FILENO);
+		close(stdin_bk);
+		return ;
+	}
+	// 3. Restaurar teclado INMEDIATAMENTE para que el padre quede limpio
+	dup2(stdin_bk, STDIN_FILENO);
+	close(stdin_bk);
+	setup_signals_execution();
+	run_pipe_loop(cmd, env, &pid);
+	wait_children(pid);
+	setup_signals_interactive();
 }

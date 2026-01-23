@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:11 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:14:12 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:18:42 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-volatile	sig_atomic_t	g_exit_status = 0;
+volatile sig_atomic_t	g_exit_status = 0;
 
 static void	minishell(char *input, t_env **env)
 {
 	t_token		*tokens;
 	t_command	*cmds;
-	//int			g_exit_status;
 
 	tokens = NULL;
 	tokens = init_token(input, tokens, *env);
@@ -87,4 +86,3 @@ int	main(int argc, char **argv, char **envp)
 	free_env_list(env_list);
 	return (0);
 }
-

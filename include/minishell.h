@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:57 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:14:58 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:14:48 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,5 @@
 extern volatile sig_atomic_t	g_exit_status;
 void	setup_signals_interactive(void);
 void	setup_signals_execution(void);
-
 
 #endif

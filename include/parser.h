@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:04 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:15:05 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:15:53 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char		**extract_args(t_token **tokens);
  */
 int			validate_syntax( t_token **tokens);
 
-
 /* ============================================ */
 /*          FUNCIONES DE REDIRECCIONES          */
 /* ============================================ */
@@ -119,11 +118,9 @@ int			parse_redirections(t_token **tokens, t_command *cmd);
  */
 void		add_redir(t_redir **head, t_redir *new);
 
-
 /* ============================================ */
 /*          FUNCIONES DE LIMPIEZA               */
 /* ============================================ */
-
 
 /**
  * @brief Libera lista enlazada de redirecciones
@@ -146,7 +143,6 @@ void		free_commands(t_command *cmds);
  * @return int 
  */
 int			syntax_error(char *token_str);
-
 
 /* ============================================ */
 /*          FUNCIONES DE DEBUG                  */

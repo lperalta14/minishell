@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:06 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:14:07 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:22:35 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 	int		std_in;
 
 	std_in = dup(STDIN_FILENO);
-
 	if (handle_heredocs_before_pipeline(cmd) != 0)
 	{
 		dup2(std_in, STDIN_FILENO); // Restaurar si se cancela con Ctrl+C

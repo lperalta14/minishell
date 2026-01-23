@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:10:26 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:10:27 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:40:04 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,3 @@ int	ft_cd(t_command *cmd, t_env **env)
 		free(cur_dir);
 	return (0);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:43 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:14:44 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:14:27 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_env
 {
-	char			*key;   // Ej: "PATH"
+	char			*key; // Ej: "PATH"
 	char			*value; // Ej: "/bin:/usr/bin"
 	struct s_env	*next;
 }	t_env;
@@ -99,7 +99,6 @@ char	*get_path(char *cmd, t_env *env);
  */
 void	execute_simple_cmd(t_command *cmd, t_env **env);
 
-
 /**
  * @brief 
  * 
@@ -156,7 +155,6 @@ int		handle_heredocs_before_pipeline(t_command *cmd);
  */
 int		get_flags(int type);
 
-
 /********************************************************/
 /*						PIPES							*/
 /********************************************************/
@@ -168,7 +166,6 @@ int		get_flags(int type);
  * @param env 
  */
 void	execute_pipeline(t_command *cmd, t_env **env);
-
 
 /********************************************************/
 /*					REDIRECCIONES						*/
@@ -184,4 +181,5 @@ void	handle_redirs_only(t_command *cmd);
  * @param cmd 
  */
 int		check_redirs(t_command *cmd);
+
 #endif
