@@ -6,7 +6,7 @@
 /*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:04 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 20:28:04 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/25 20:37:05 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int			parse_redirections(t_token **tokens, t_command *cmd);
  * @param head Pointer to the list head pointer.
  * @param new The new node to add.
  */
-void		add_redir(t_redir **head, t_redir *new);
+void		add_redir(t_redir **head, t_redir *new_node);
 
 /* ************************************************************************** */
 /*                              MEMORY CLEANUP                                */

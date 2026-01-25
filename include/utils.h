@@ -94,4 +94,10 @@ void	free_node(t_env *node);
  */
 void	free_redirs(t_redir *redirs);
 
+/**
+ * @brief 
+ * 
+ */
+void	clean_child_exit(int status, t_env **env, char *path, char **mat);
+
 #endif

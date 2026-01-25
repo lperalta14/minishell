@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:14 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 21:14:38 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:11:49 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,21 @@ int	handle_heredocs_before_pipeline(t_command *cmd)
 
 // ...existing code...
 // Función auxiliar para cumplir Norminette en execute_child
-static void	validate_cmd_path(char *path, char *cmd_name)
+static int	validate_cmd_path(char *path, char *cmd_name)
 {
 	struct stat	st;
 
 	if (!path)
 	{
 		print_error(cmd_name, "command not found");
-		exit(127);
+		return (127);
 	}
 	if (stat(path, &st) == 0 && S_ISDIR(st.st_mode))
 	{
 		print_error(path, "Is a directory");
-		exit(126);
+		return (126);
 	}
+	return (0);
 }
 
 // Ahora execute_child es corta y protege contra comandos vacíos
@@ -80,19 +81,39 @@ void	execute_child(t_command *cmd, t_env **env)
 {
 	char	*path;
 	char	**f_path;
+	int		ret_status;
+
 
 	if (check_redirs(cmd) != 0)
-		exit(1);
+		clean_child_exit(1, env, NULL, NULL);
 	if (!cmd->args || !cmd->args[0])
-		exit(0);
+		clean_child_exit(0, env, NULL, NULL);
 	if (is_builtin(cmd->args[0]))
-		exit(execute_builtin(cmd, env));
+	{
+		ret_status = execute_builtin(cmd, env);
+		clean_child_exit(ret_status, env, NULL, NULL);
+	}
 	path = get_path(cmd->args[0], *env);
-	validate_cmd_path(path, cmd->args[0]);
+	ret_status = validate_cmd_path(path, cmd->args[0]);
+	if (ret_status != 0)
+		clean_child_exit(ret_status, env, path, NULL);
 	f_path = env_to_array(*env);
 	if (!f_path)
-		exit(1);
+		clean_child_exit(1, env, NULL, NULL);
 	execve(path, cmd->args, f_path);
 	print_error(cmd->args[0], strerror(errno));
-	exit(126);
+	clean_child_exit(126, env, path, f_path);
 }
+
+/*Cambios Clave:
+1. clean_child_exit: Actúa como un embudo único de salida. 
+No importa dónde falles, llamas a esta función pasando lo que tengas asignado
+hasta el momento (path o f_path), o NULL si aún no los tenías. Siempre limpia
+env y history.
+
+2. validate_cmd_path: Ya no mata el proceso. Devuelve 127 o 126. Esto permite que
+execute_child reciba el control de vuelta y llame a la limpieza antes de salir.
+
+3. Orden de ejecución: Se asigna f_path (la matriz pesada) después de validar que
+el comando existe y es ejecutable, ahorrando recursos si el comando no es
+válido.*/
