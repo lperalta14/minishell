@@ -6,7 +6,7 @@
 /*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:43 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 20:18:16 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/25 22:03:22 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
  */
 typedef struct s_env
 {
-    char			*key;
-    char			*value;
-    struct s_env	*next;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
 }	t_env;
 
 /* ************************************************************************** */

@@ -6,7 +6,7 @@
 /*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:53 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 20:23:32 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/25 22:02:50 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ typedef enum e_token_type
 	TK_R_OUT,
 	TK_APPEND,
 	TK_HEREDOC,
-	TK_LPAREN, 
+	TK_LPAREN,
 	TK_RPAREN,
-	TK_END, 
+	TK_END,
 }	t_token_type;
 
 /**
