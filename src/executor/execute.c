@@ -6,7 +6,7 @@
 /*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:06 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 20:41:21 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/25 21:51:31 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,16 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 	if (!cmd->args || cmd->args[0] == NULL)
 		handle_redirs_only(cmd);
 	else if (is_builtin(cmd->args[0]))
+	{
+		if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
+			ft_putendl_fd("exit", 2);
 		handle_builtin(cmd, env);
+	}
 	else
 		handle_external(cmd, env, std_in);
 	dup2(std_in, STDIN_FILENO);
 	close(std_in);
 }
-
 
 // 		/*
 //               g_exit_status = 128 + WTERMSIG(status);

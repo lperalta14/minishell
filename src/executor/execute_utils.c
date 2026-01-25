@@ -6,7 +6,7 @@
 /*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:14 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 21:11:49 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/25 21:51:04 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	execute_child(t_command *cmd, t_env **env)
 	char	*path;
 	char	**f_path;
 	int		ret_status;
-
 
 	if (check_redirs(cmd) != 0)
 		clean_child_exit(1, env, NULL, NULL);

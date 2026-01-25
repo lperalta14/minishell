@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:16:13 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:16:14 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:38:03 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ t_redir	*create_redir(t_redir_type type, char *file)
 	return (redir);
 }
 
-void	add_redir(t_redir **head, t_redir *new)
+void	add_redir(t_redir **head, t_redir *n_node)
 {
 	t_redir	*current;
 
-	if (!new)
+	if (!n_node)
 		return ;
 	if (!*head)
 	{
-		*head = new;
+		*head = n_node;
 		return ;
 	}
 	current = *head;
 	while (current->next)
 		current = current->next;
-	current->next = new;
+	current->next = n_node;
 }
 
 int	assign_redirections(t_token **token, t_redir_type *type)

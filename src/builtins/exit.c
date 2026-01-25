@@ -6,7 +6,7 @@
 /*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:21 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 20:53:05 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/25 21:19:28 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	clean_and_exit(int status, t_env **env)
 
 int	ft_exit(char **args, t_env **env)
 {
-	ft_putendl_fd("exit", 2);
+	//ft_putendl_fd("exit", 2);
 	if (!args || !args[1])
 		clean_and_exit(g_exit_status, env);
 	if (!is_numeric(args[1]))

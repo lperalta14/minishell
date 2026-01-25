@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:48 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 21:09:14 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:58:25 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,30 @@ static void	heredoc_child(t_redir *redir, int *pipefd)
 	exit(0);
 }
 
+// Nueva función auxiliar: Gestiona la espera del padre y actualiza el FD
+static int	wait_heredoc_child(pid_t pid, int pipe_read, int *io_fd)
+{
+	int	status;
+
+	setup_signals_execution();
+	waitpid(pid, &status, 0);
+	setup_signals_interactive();
+	if (WIFSIGNALED(status) || WEXITSTATUS(status) == 130)
+	{
+		close(pipe_read);
+		g_exit_status = 130;
+		return (1);
+	}
+	if (*io_fd > 2)
+		close(*io_fd);
+	*io_fd = pipe_read;
+	return (0);
+}
+
 int	handle_heredoc(t_redir *redir, int *io_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
-	int		status;
 
 	if (pipe(pipefd) == -1)
 		return (perror("minishell: pipe"), 1);
@@ -65,18 +84,6 @@ int	handle_heredoc(t_redir *redir, int *io_fd)
 	}
 	if (pid == 0)
 		heredoc_child(redir, pipefd);
-	setup_signals_execution();
 	close(pipefd[1]);
-	waitpid(pid, &status, 0);
-	setup_signals_interactive();
-	if (WIFSIGNALED(status) || WEXITSTATUS(status) == 130)
-	{
-		close(pipefd[0]);
-		g_exit_status = 130;
-		return (1);
-	}
-	if (*io_fd > 2)
-		close(*io_fd);
-	*io_fd = pipefd[0];
-	return (0);
+	return (wait_heredoc_child(pid, pipefd[0], io_fd));
 }
