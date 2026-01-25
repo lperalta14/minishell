@@ -48,9 +48,27 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 LIBFT_INC = -I$(LIBFT_DIR)/includes
 
 # Compiler and flags
+#CC = cc
+#CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC) -I/opt/homebrew/opt/readline/include #a partir del -I es de mac
+#LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory #a partir del -lreadline es de mac
+#LDFLAGS = -lreadline
+
+# Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC)
-LDFLAGS = -lreadline
+
+# Detectar el Sistema Operativo
+UNAME_S := $(shell uname -s)
+
+# Banderas de compilación condicionales
+ifeq ($(UNAME_S),Darwin)
+	# MAC
+	CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC) -I/opt/homebrew/opt/readline/include
+	LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory
+else
+	# LINUX (Escuela y GitHub)
+	CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC)
+	LDFLAGS = -lreadline -lhistory
+endif
 
 # Utils
 RM = rm -rf

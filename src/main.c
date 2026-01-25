@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:11 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 14:18:42 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/26 00:14:42 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	main(int argc, char **argv, char **envp)
 	main_loop(&env_list);
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/bye.txt");
-	rl_clear_history();
+	//rl_clear_history();
+	clear_history();
 	free_env_list(env_list);
 	return (0);
 }

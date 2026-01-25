@@ -6,7 +6,7 @@
 /*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:21 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 21:19:28 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/26 00:15:21 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int	is_numeric(char *str)
 static void	clean_and_exit(int status, t_env **env)
 {
 	free_env_list(*env);
-	rl_clear_history();
+	//rl_clear_history();
+	clear_history();
 	exit(status);
 }
 
