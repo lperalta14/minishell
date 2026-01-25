@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   by casimarasn- <casimarasn@student.42.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:54 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:13:55 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:00:00 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,80 +15,82 @@
 
 # include "minishell.h"
 
+/* 
+** Forward declarations to avoid circular dependency issues 
+** since utils.h is often included before module headers.
+*/
 typedef struct s_token		t_token;
 typedef struct s_command	t_command;
 typedef struct s_env		t_env;
 typedef struct s_redir		t_redir;
 
-/*******************************************************/
-/*							PRINTS						*/
-/********************************************************/
+/* ************************************************************************** */
+/*                              PRINTS & DEBUG                                */
+/* ************************************************************************** */
 
 /**
- * @brief liberar tokens
- * @param tokens
+ * @brief Displays the startup ASCII art banner.
+ * Reads the file specified by path and prints valid lines.
+ * 
+ * @param path Relative path to the banner file (e.g., "banners/acrobata.txt").
+ */
+void	print_banner(char *path);
+
+/**
+ * @brief Debug helper: Prints the content of the token list.
+ * Format: TYPE: [ID] | VALUE: [STR]
+ * 
+ * @param tokens The head of the token list.
+ */
+void	print_tokens(t_token *tokens);
+
+/**
+ * @brief Standardized error printing function.
+ * Prints to STDERR: "minishell: [cmd]: [msg]".
+ * 
+ * @param cmd The command name generating the error.
+ * @param msg The error message description.
+ */
+void	print_error(char *cmd, char *msg);
+
+/* ************************************************************************** */
+/*                          MEMORY MANAGEMENT                                 */
+/* ************************************************************************** */
+
+/**
+ * @brief Frees the entire linked list of tokens.
+ * 
+ * @param tokens The head of the token list.
  */
 void	free_tokens(t_token *tokens);
 
 /**
- * @brief liberar comandos
+ * @brief Frees the entire command pipeline structure.
+ * Recursively frees arguments arrays and nested redirection lists.
  * 
- * @param cmds 
+ * @param cmds The head of the command list.
  */
 void	free_commands(t_command *cmds);
 
 /**
- * @brief 
+ * @brief Frees the entire environment variable list.
  * 
- * @param text 
- */
-void	print_banner(char *text);
-
-/**
- * @brief 
- * 
- * @param tokens 
- */
-void	print_tokens(t_token *tokens);
-
-void	print_error(char *cmd, char *msg);
-
-/********************************************************/
-/*					GESTION DE MEMORIA					*/
-/********************************************************/
-
-/**
- * @brief liberar lista de env
- * 
- * @param head 
+ * @param head The head of the environment list.
  */
 void	free_env_list(t_env *head);
 
 /**
- * @brief
+ * @brief Frees a single environment node.
+ * Frees the key, the value, and the node pointer itself.
  * 
- * @param
+ * @param node The node to free.
  */
 void	free_node(t_env *node);
 
 /**
- * @brief libera tokens
+ * @brief Frees the list of redirections associated with a command.
  * 
- * @param tokens
- */
-void	free_tokens(t_token *tokens);
-
-/**
- * @brief libera comandos
- * 
- * @param cmds 
- */
-void	free_commands(t_command *cmds);
-
-/**
- * @brief libera redirecciones
- * 
- * @param redirs 
+ * @param redirs The head of the redirection list.
  */
 void	free_redirs(t_redir *redirs);
 
