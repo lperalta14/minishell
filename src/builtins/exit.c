@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:21 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/26 00:15:21 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/26 19:18:24 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ static int	is_numeric(char *str)
 static void	clean_and_exit(int status, t_env **env)
 {
 	free_env_list(*env);
-	//rl_clear_history();
-	clear_history();
+	rl_clear_history();
 	exit(status);
 }
 

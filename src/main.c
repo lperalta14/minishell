@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:11 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/26 00:14:42 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/26 21:45:55 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ static void	minishell(char *input, t_env **env)
 	tokens = init_token(input, tokens, *env);
 	// print_tokens(tokens);
 	cmds = parse(tokens);
+	if (tokens)
+	{
+		free_tokens(tokens);
+		tokens = NULL;
+	}
 	if (cmds)
 	{
 		// print_commands(cmds);
@@ -32,10 +37,14 @@ static void	minishell(char *input, t_env **env)
 			execute_simple_cmd(cmds, env);
 		free_commands(cmds);
 	}
-	if (tokens)
-		free_tokens(tokens);
 }
 
+/**
+ * @brief 
+  * GNL returns the line with a trailing '\n', unlike readline.
+  * We must strip the '\n' to ensure consistest parsing behavior.
+ * @param env_list 
+ */
 static void	main_loop(t_env **env_list)
 {
 	char	*input;
@@ -50,8 +59,6 @@ static void	main_loop(t_env **env_list)
 			line = get_next_line(STDIN_FILENO);
 			if (line)
 			{
-				// GNL devuelve con '\n' al final, readline no.
-				// Debemos quitar el \n para que el parser funcione igual.
 				input = ft_strtrim(line, "\n");
 				free(line);
 			}
@@ -82,8 +89,7 @@ int	main(int argc, char **argv, char **envp)
 	main_loop(&env_list);
 	if (isatty(STDIN_FILENO))
 		print_banner("banners/bye.txt");
-	//rl_clear_history();
-	clear_history();
+	rl_clear_history();
 	free_env_list(env_list);
 	return (0);
 }

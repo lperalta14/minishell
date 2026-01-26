@@ -56,16 +56,16 @@ LIBFT_INC = -I$(LIBFT_DIR)/includes
 # Compiler and flags
 CC = cc
 
-# Detectar el Sistema Operativo
+# Detect Operating Sysem (OS Detection)
 UNAME_S := $(shell uname -s)
 
-# Banderas de compilación condicionales
+# Conditional compilation flags
 ifeq ($(UNAME_S),Darwin)
 	# MAC
 	CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC) -I/opt/homebrew/opt/readline/include
 	LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory
 else
-	# LINUX (Escuela y GitHub)
+	# LINUX (School & GitHub)
 	CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC)
 	LDFLAGS = -lreadline -lhistory
 endif
@@ -113,3 +113,18 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+# valgrind \
+    --leak-check=full \
+    --show-leak-kinds=all \
+    --track-fds=yes \
+    --trace-children=yes \
+    --suppressions=tests/level0/readline.supp \
+    ./minishell
+
+#Explicación de las banderas:
+#--leak-check=full: Análisis completo de memoria.
+#--show-leak-kinds=all: Muestra todos los tipos de fugas (incluso "still reachable" que no suprimas).
+#--track-fds=yes: Lo que pediste. Te dirá al final si dejaste algún file descriptor abierto (pipes, archivos, etc.).
+#--trace-children=yes: Analiza también los comandos que ejecutas dentro (forks), no solo el proceso padre.
+#--suppressions=...: Indica el archivo con reglas para ignorar errores conocidos.

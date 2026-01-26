@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:48 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/26 00:15:53 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/26 19:17:44 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void	heredoc_child(t_redir *redir, int *pipefd)
 
 	signal(SIGINT, heredoc_sigint);
 	signal(SIGQUIT, SIG_IGN);
-	//rl_clear_history();
-	clear_history();
+	rl_clear_history();
 	close(pipefd[0]);
 	while (1)
 	{
