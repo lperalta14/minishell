@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:42 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 14:26:44 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:38:18 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	wait_children(pid_t last_pid)
 	}
 }
 
-static void	child_process(t_command *cmd, int prev_read, int *fd, t_env **env)
+static void	child_process(t_command *cmd, int prev_read, int *fd, t_env **env, t_command *head)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -54,11 +54,11 @@ static void	child_process(t_command *cmd, int prev_read, int *fd, t_env **env)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-	execute_child(cmd, env);
+	execute_child(cmd, env, head);
 	exit(g_exit_status);
 }
 
-static void	run_pipe_loop(t_command *cmd, t_env **env, pid_t *pid)
+static void	run_pipe_loop(t_command *cmd, t_env **env, pid_t *pid, t_command *head)
 {
 	int	prev_read;
 	int	fd[2];
@@ -72,7 +72,7 @@ static void	run_pipe_loop(t_command *cmd, t_env **env, pid_t *pid)
 		if (*pid == -1)
 			return (perror("minishell: fork"));
 		if (*pid == 0)
-			child_process(cmd, prev_read, fd, env);
+			child_process(cmd, prev_read, fd, env, head);
 		if (prev_read != -1)
 			close(prev_read);
 		if (cmd->next)
@@ -95,14 +95,14 @@ static void	run_pipe_loop(t_command *cmd, t_env **env, pid_t *pid)
 	}
 }*/
 
-static int	prepare_heredocs(t_command *cmd)
+static int	prepare_heredocs(t_command *cmd, t_env **env, t_command *head)
 {
 	t_command	*tmp;
 
 	tmp = cmd;
 	while (tmp)
 	{
-		if (handle_heredocs_before_pipeline(tmp) != 0)
+		if (handle_heredocs_before_pipeline(tmp, env, head) != 0)
 			return (1);
 		tmp = tmp->next;
 	}
@@ -113,10 +113,12 @@ void	execute_pipeline(t_command *cmd, t_env **env)
 {
 	pid_t	pid;
 	int		stdin_bk;
+	t_command	*head;
 
+	head = cmd;
 	// 2. Guardar teclado antes de tocar nada
 	stdin_bk = dup(STDIN_FILENO);
-	if (prepare_heredocs(cmd))
+	if (prepare_heredocs(cmd, env, head))
 	{
 		dup2(stdin_bk, STDIN_FILENO);
 		close(stdin_bk);
@@ -126,7 +128,7 @@ void	execute_pipeline(t_command *cmd, t_env **env)
 	dup2(stdin_bk, STDIN_FILENO);
 	close(stdin_bk);
 	setup_signals_execution();
-	run_pipe_loop(cmd, env, &pid);
+	run_pipe_loop(cmd, env, &pid, head);
 	wait_children(pid);
 	setup_signals_interactive();
 }

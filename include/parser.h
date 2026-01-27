@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:04 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 21:46:05 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/27 18:10:00 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_command
 	int					fd_in;
 	int					fd_out;
 	struct s_command	*next;
+	struct s_command	*head;
 }	t_command;
 
 /* ************************************************************************** */

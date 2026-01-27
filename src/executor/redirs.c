@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:25 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 21:17:48 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/27 20:04:55 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ static int	open_redir_file(t_redir *tmp)
 }
 
 // Procesa una única redirección (sea archivo o heredoc)
-static int	process_one_redir(t_redir *tmp, t_command *cmd)
+static int	process_one_redir(t_redir *tmp)
 {
 	int	fd;
 
-	if (tmp->type == REDIR_HEREDOC)
+	/*if (tmp->type == REDIR_HEREDOC)
 	{
 		if (cmd->fd_in != -1)
 			dup2(cmd->fd_in, STDIN_FILENO);
 		return (0);
-	}
+	}*/
 	fd = open_redir_file(tmp);
 	if (fd < 0)
 		return (1);
@@ -54,11 +54,21 @@ int	check_redirs(t_command *cmd)
 {
 	t_redir	*tmp;
 
+	if (cmd->fd_in != -1)
+	{
+		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
+			return (perror("dup2"), 1);
+		close(cmd->fd_in); // Importante cerrar el original tras dup2
+		cmd->fd_in = -1; // Marcar como cerrado/usado
+	}
 	tmp = cmd->redirs;
 	while (tmp)
 	{
-		if (process_one_redir(tmp, cmd))
-			return (1);
+		if (tmp->type != REDIR_HEREDOC) // IGNORAR HEREDOCS AQUI
+		{
+			if (process_one_redir(tmp))
+				return (1);
+		}
 		tmp = tmp->next;
 	}
 	return (0);

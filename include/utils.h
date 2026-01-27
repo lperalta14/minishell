@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:54 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 22:04:52 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/27 19:40:26 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ void	free_redirs(t_redir *redirs);
  * @brief 
  * 
  */
-void	clean_child_exit(int status, t_env **env, char *path, char **mat);
+void	clean_child_exit(int status, t_env **env, char *path, char **mat, t_command *cmds);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:16:06 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:16:07 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/27 17:03:01 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*extract_var_name(char *str, int *i)
 	if (!ft_isalpha(str[*i]) && str[*i] != '_')
 		return (NULL);
 	start = *i;
-	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_' || str[*i] == ' '))
 		(*i)++;
 	return (ft_substr(str, start, *i - start));
 }

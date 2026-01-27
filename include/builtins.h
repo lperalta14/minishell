@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:11:32 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 20:52:52 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/27 19:39:42 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		is_builtin(char *cmd);
  * @param env Pointer to the environment list pointer (for modification).
  * @return int The exit status of the builtin function.
  */
-int		execute_builtin(t_command *cmd, t_env **env);
+int		execute_builtin(t_command *cmd, t_env **env, t_command *cmds_head);
 
 /* ************************************************************************** */
 /*                          BUILTIN COMMANDS                                  */
@@ -103,11 +103,11 @@ int		ft_env(t_env *env, char **args);
  * Validates if the first argument is numeric to set the specific exit code.
  * Fails if there are too many arguments.
  * 
- * @param args Array of arguments.
+ * @param cmd Pointer to the cmd struct.
  * @param env Pointer to the environment list pointer (for cleanup).
  * @return int Does not return on success; 1 on failure (e.g., too many args).
  */
-int		ft_exit(char **args, t_env **env);
+int		ft_exit(t_command *cmd, t_env **env, t_command *cmds_head);
 
 /* ************************************************************************** */
 /*                                UTILS                                       */

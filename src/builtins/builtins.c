@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:10 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 20:57:45 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:46:09 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int	execute_builtin(t_command *cmd, t_env **env)
+int	execute_builtin(t_command *cmd, t_env **env, t_command *cmds_head)
 {
 	int	built;
 
@@ -45,7 +45,7 @@ int	execute_builtin(t_command *cmd, t_env **env)
 	else if (built == 3)
 		return (ft_env(*env, cmd->args));
 	else if (built == 4)
-		return (ft_exit(cmd->args, env));
+		return (ft_exit(cmd, env, cmds_head));
 	else if (built == 5)
 		return (ft_export(cmd, env));
 	else if (built == 6)

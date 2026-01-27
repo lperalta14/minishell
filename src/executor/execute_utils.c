@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:13:14 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 21:51:04 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/27 19:42:20 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_last_heredoc(t_redir *redir)
 	return (1);
 }
 
-int	handle_heredocs_before_pipeline(t_command *cmd)
+int	handle_heredocs_before_pipeline(t_command *cmd, t_env **env, t_command *cmds_head)
 {
 	t_redir	*tmp;
 
@@ -49,7 +49,7 @@ int	handle_heredocs_before_pipeline(t_command *cmd)
 	{
 		if (tmp->type == REDIR_HEREDOC)
 		{
-			if (handle_heredoc(tmp, &cmd->fd_in))
+			if (handle_heredoc(tmp, cmd, env, cmds_head))
 				return (1);
 		}
 		tmp = tmp->next;
@@ -77,31 +77,31 @@ static int	validate_cmd_path(char *path, char *cmd_name)
 }
 
 // Ahora execute_child es corta y protege contra comandos vacíos
-void	execute_child(t_command *cmd, t_env **env)
+void	execute_child(t_command *cmd, t_env **env, t_command *cmds_head)
 {
 	char	*path;
 	char	**f_path;
 	int		ret_status;
 
 	if (check_redirs(cmd) != 0)
-		clean_child_exit(1, env, NULL, NULL);
+		clean_child_exit(1, env, NULL, NULL, cmds_head);
 	if (!cmd->args || !cmd->args[0])
-		clean_child_exit(0, env, NULL, NULL);
+		clean_child_exit(0, env, NULL, NULL, cmds_head);
 	if (is_builtin(cmd->args[0]))
 	{
-		ret_status = execute_builtin(cmd, env);
-		clean_child_exit(ret_status, env, NULL, NULL);
+		ret_status = execute_builtin(cmd, env, cmds_head);
+		clean_child_exit(ret_status, env, NULL, NULL, cmds_head);
 	}
 	path = get_path(cmd->args[0], *env);
 	ret_status = validate_cmd_path(path, cmd->args[0]);
 	if (ret_status != 0)
-		clean_child_exit(ret_status, env, path, NULL);
+		clean_child_exit(ret_status, env, path, NULL, cmds_head);
 	f_path = env_to_array(*env);
 	if (!f_path)
-		clean_child_exit(1, env, NULL, NULL);
+		clean_child_exit(1, env, path, NULL, cmds_head);
 	execve(path, cmd->args, f_path);
 	print_error(cmd->args[0], strerror(errno));
-	clean_child_exit(126, env, path, f_path);
+	clean_child_exit(126, env, path, f_path, cmds_head);
 }
 
 /*Cambios Clave:

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:06 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 21:51:31 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/27 19:51:54 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	handle_builtin(t_command *cmd, t_env **env)
 	or_stdin = dup(STDIN_FILENO);
 	or_stdout = dup(STDOUT_FILENO);
 	if (check_redirs(cmd) == 0)
-		status = execute_builtin(cmd, env);
+		status = execute_builtin(cmd, env, cmd);
 	dup2(or_stdin, STDIN_FILENO);
 	dup2(or_stdout, STDOUT_FILENO);
 	close(or_stdin);
@@ -61,7 +61,7 @@ static void	handle_external(t_command *cmd, t_env **env, int stdin_bk)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		close(stdin_bk);
-		execute_child(cmd, env);
+		execute_child(cmd, env, cmd);
 	}
 	else
 		handle_parent_wait(pid);
@@ -72,7 +72,7 @@ void	execute_simple_cmd(t_command *cmd, t_env **env)
 	int		std_in;
 
 	std_in = dup(STDIN_FILENO);
-	if (handle_heredocs_before_pipeline(cmd) != 0)
+	if (handle_heredocs_before_pipeline(cmd, env, cmd) != 0)
 	{
 		dup2(std_in, STDIN_FILENO); // Restaurar si se cancela con Ctrl+C
 		close(std_in);

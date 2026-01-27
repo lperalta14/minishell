@@ -6,9 +6,9 @@ void	clean_child_exit(int status, t_env **env, char *path, char **mat, t_command
 		free(path);
 	if (mat)
 		ft_freematrix(mat);
-	free_env_list(*env);
 	if (cmds)
 		free_commands(cmds);
+	free_env_list(*env);
 	rl_clear_history();
 	exit(status);
 }

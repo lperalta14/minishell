@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:43 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/25 22:03:22 by casimarasn       ###   ########.fr       */
+/*   Updated: 2026/01/27 19:30:57 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	execute_simple_cmd(t_command *cmd, t_env **env);
  * @param cmd Pointer to the command structure.
  * @param env Pointer to the environment list pointer.
  */
-void	execute_child(t_command *cmd, t_env **env);
+void	execute_child(t_command *cmd, t_env **env, t_command *cmds_head);
 
 /* ************************************************************************** */
 /*                                HEREDOCS                                    */
@@ -135,7 +135,7 @@ void	execute_child(t_command *cmd, t_env **env);
  * @param io_fd Pointer to the FD where input should be written.
  * @return int 0 on success, status code on failure/interrupt.
  */
-int		handle_heredoc(t_redir *redir, int *io_fd);
+int		handle_heredoc(t_redir *redir,t_command *cmd,t_env **env, t_command *cmds_head);
 
 /**
  * @brief Pre-scans the command list to process all heredocs.
@@ -144,7 +144,7 @@ int		handle_heredoc(t_redir *redir, int *io_fd);
  * @param cmd The head of the command list.
  * @return int 0 on success, or error code if interrupted.
  */
-int		handle_heredocs_before_pipeline(t_command *cmd);
+int		handle_heredocs_before_pipeline(t_command *cmd, t_env **env, t_command *cmds_head);
 
 /**
  * @brief Signal handler specifically for interruptions during heredoc input.
