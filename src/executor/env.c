@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:45 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/23 14:19:53 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/27 22:52:07 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_env	*get_env_node(char *str)
 	env = malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
+	env->next = NULL;
 	pos_eq = ft_strchr(str, '=');
 	if (pos_eq)
 	{ // Caso: CLAVE=VALOR
@@ -35,7 +36,6 @@ t_env	*get_env_node(char *str)
 	}
 	if (!env->key || (pos_eq && !env->value))
 		free_env_list(env);
-	env->next = NULL;
 	return (env);
 }
 
@@ -117,7 +117,7 @@ char	**env_to_array(t_env *env)
 	int		i;
 
 	count = env_size(env);
-	l_envs = malloc((count + 1) * sizeof(char *));
+	l_envs = calloc((count + 1), sizeof(char *));
 	if (!l_envs)
 		return (NULL);
 	i = 0;
