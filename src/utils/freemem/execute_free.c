@@ -1,9 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_free.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/28 10:42:25 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/28 10:42:26 by msedeno-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/minishell.h"
 
-void	clean_child_exit(int status, t_env **env, char *path, char **mat, t_command *cmds)
+void	clean_child_exit(int status, t_env **env, char **mat, t_command *cmds)
 {
-	if (path)
-		free(path);
 	if (mat)
 		ft_freematrix(mat);
 	if (cmds)

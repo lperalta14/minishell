@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:04 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/27 18:10:00 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/28 09:45:48 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_command
 	t_redir				*redirs;
 	int					fd_in;
 	int					fd_out;
+	char				*path;
 	struct s_command	*next;
 	struct s_command	*head;
 }	t_command;

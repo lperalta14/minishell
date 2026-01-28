@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:11 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/26 21:45:55 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:21:21 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ static void	main_loop(t_env **env_list)
 			else
 				input = NULL;
 		}
-			//input = readline("");// Aquí
-		//printf("%s\n",input);
 		if (!input)
 			break ;
 		if (input[0] != '\0')

@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:21 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/27 19:50:04 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:39:13 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ static void	clean_and_exit(int status, t_env **env, t_command *cmds_head)
 	exit(status);
 }
 
-int	ft_exit(t_command *cmd/*char **args*/, t_env **env, t_command *cmds_head)
+int	ft_exit(t_command *cmd, t_env **env, t_command *cmds_head)
 {
-	//ft_putendl_fd("exit", 2);
 	if (!cmds_head)
 		cmds_head = cmd;
 	if (!cmd->args || !cmd->args[1])

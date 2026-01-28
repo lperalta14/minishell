@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:14:43 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/27 19:30:57 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:51:11 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,21 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
+
+/**
+ * @struct s_pipe_state
+ * @brief Helper structure to manage pipe file descriptors state.
+ * Encapsulates the pipe FDs to satisfy Norminette argument limits.
+ * 
+ * @var s_pipe_state::prev_read File descriptor for the read end of the previous
+ * pipe.
+ * @var s_pipe_state::fd        Array containing the current pipe fds.
+ */
+typedef struct s_pipe_state
+{
+	int		prev_read;
+	int		fd[2];
+}	t_pipe_state;
 
 /* ************************************************************************** */
 /*                              ENVIRONMENT VARS                              */
@@ -106,7 +121,7 @@ char	*get_path(char *cmd, t_env *env);
 /* ************************************************************************** */
 
 /**
- * @brief excutes a single command (no pipes).
+ * @brief Executes a single command (no pipes).
  * Handles both builtins (in parent) and external commands (forking).
  * 
  * @param cmd Pointer to the command structure.
@@ -132,10 +147,13 @@ void	execute_child(t_command *cmd, t_env **env, t_command *cmds_head);
  * Reads input until delimiter is found and writes to the IO fd.
  * 
  * @param redir The redirection node containing the delimiter.
- * @param io_fd Pointer to the FD where input should be written.
+ * @param cmd The command structure to update the input FD.
+ * @param env Pointer to environment (for cleanup in child).
+ * @param cmds_head Head of command list (for cleanup in child).
  * @return int 0 on success, status code on failure/interrupt.
  */
-int		handle_heredoc(t_redir *redir,t_command *cmd,t_env **env, t_command *cmds_head);
+int		handle_heredoc(t_redir *redir, t_command *cmd, t_env **env,
+			t_command *cmds_head);
 
 /**
  * @brief Pre-scans the command list to process all heredocs.
@@ -144,7 +162,8 @@ int		handle_heredoc(t_redir *redir,t_command *cmd,t_env **env, t_command *cmds_h
  * @param cmd The head of the command list.
  * @return int 0 on success, or error code if interrupted.
  */
-int		handle_heredocs_before_pipeline(t_command *cmd, t_env **env, t_command *cmds_head);
+int		handle_heredocs_before_pipeline(t_command *cmd, t_env **env,
+			t_command *cmds_head);
 
 /**
  * @brief Signal handler specifically for interruptions during heredoc input.
@@ -152,15 +171,6 @@ int		handle_heredocs_before_pipeline(t_command *cmd, t_env **env, t_command *cmd
  * @param sig The signal number received (SIGINT).
  */
 void	handle_sigint_heredoc(int sig);
-
-/**
- * @brief Checks if the current heredoc is the last input redirection.
- * Only the last heredoc/input actually feeds the command stdin.
- * 
- * @param redir The current redirection node.
- * @return int 1 if it is the last input source, 0 otherwise.
- */
-int		is_last_heredoc(t_redir *redir);
 
 /**
  * @brief Helper to translate redirection types to open() flags.
@@ -182,6 +192,20 @@ int		get_flags(int type);
  * @param env Pointer to the environment list pointer.
  */
 void	execute_pipeline(t_command *cmd, t_env **env);
+
+/**
+ * @brief Iterates through the command list to execute the pipeline loop.
+ * It creates pipes, forks child processes, and manages the connection 
+ * of file descriptors (stdin/stdout) between commands.
+ * 
+ * @param cmd The current command node to start iterating from.
+ * @param env Pointer to the environment list pointer.
+ * @param pid Pointer to store the PID of the last forked process
+ * (used for waiting).
+ * @param head The head of the command list (passed for memory cleanup in 
+ * children).
+ */
+void	run_pipe_loop(t_command *cmd, t_env **env, pid_t *pid, t_command *head);
 
 /* ************************************************************************** */
 /*                              REDIRECTIONS                                  */
