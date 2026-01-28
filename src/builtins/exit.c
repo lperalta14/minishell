@@ -6,7 +6,7 @@
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 20:15:21 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/28 10:39:13 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/28 20:12:18 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,25 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
+static void	close_extra_fds(void)
+{
+	int	i;
+
+	i = 3;
+	while (i < 1024)
+	{
+		close(i);
+		i++;
+	}
+}
+
 static void	clean_and_exit(int status, t_env **env, t_command *cmds_head)
 {
 	free_env_list(*env);
 	if (cmds_head)
 		free_commands(cmds_head);
 	rl_clear_history();
+	close_extra_fds();
 	exit(status);
 }
 
