@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 14:37:45 by lperalta          #+#    #+#             */
+/*   Updated: 2026/01/23 14:37:46 by lperalta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_UTILS_H
 # define FT_UTILS_H
 
@@ -9,7 +21,8 @@
 
 /**
  * @file utils_bonus.h
- * @brief Utility functions for string handling, conversion, and memory management.
+ * @brief Utility functions for string handling,
+ * conversion, and memory management.
  */
 
 /**
@@ -36,7 +49,8 @@ long	ft_atolints(const char *nptr);
 
 /**
  * @file utils_bonus.h
- * @brief Utility functions for string handling, conversion, and memory management.
+ * @brief Utility functions for string handling,
+ * conversion, and memory management.
  */
 
 /**
@@ -51,7 +65,8 @@ void	ft_putnbr(int n);
  *
  * @param s1 The first string.
  * @param s2 The second string.
- * @return int Zero if strings are equal, a positive value if s1 > s2, or a negative value if s1 < s2.
+ * @return int Zero if strings are equal,
+ * a positive value if s1 > s2, or a negative value if s1 < s2.
  */
 int		ft_strcmp(const char *s1, const char *s2);
 
@@ -71,17 +86,20 @@ char	*ft_replacechar(char *s, char a, char b);
  * @param s1 The first string.
  * @param delimit The delimiter string to insert.
  * @param s2 The second string.
- * @return char* A new string with s1, delimiter, and s2 concatenated. Must be freed by the caller.
+ * @return char* A new string with s1, delimiter,
+ * and s2 concatenated. Must be freed by the caller.
  */
 char	*ft_strjoindelimit(char const *s1, char *delimit, char const *s2);
 
 /**
- * @brief Splits a string by a delimiter, respecting single quotes as grouping characters.
+ * @brief Splits a string by a delimiter,
+ * respecting single quotes as grouping characters.
  *
  * @param s The string to split.
  * @param c The delimiter character.
  * @param wcnt The initial word count (should usually be 0).
- * @return char** A NULL-terminated array of strings. Must be freed using ft_freematrix().
+ * @return char** A NULL-terminated array of strings.
+ * Must be freed using ft_freematrix().
  */
 char	**ft_splitq(char const *s, char c, int wcnt);
 

@@ -1,27 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 11:19:52 by lperalta          #+#    #+#             */
-/*   Updated: 2026/01/23 14:28:01 by lperalta         ###   ########.fr       */
+/*   Created: 2026/01/22 20:15:39 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/23 14:21:13 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../../include/minishell.h"
 
-int	ft_issign(int c)
+void	add_env(t_env **head, t_env *new)
 {
-	if (c != 43 && c != 45)
-		return (0);
-	return (1);
+	t_env	*current;
+
+	if (!new)
+		return ;
+	if (!*head)
+	{
+		*head = new;
+		return ;
+	}
+	current = *head;
+	while (current->next)
+		current = current->next;
+	current->next = new;
 }
 
-int	ft_isdigit(int c)
+int	env_size(t_env *env)
 {
-	if (c >= 48 && c <= 57)
-		return (1);
-	return (0);
+	int	count;
+
+	count = 0;
+	while (env)
+	{
+		count++;
+		env = env->next;
+	}
+	return (count);
 }

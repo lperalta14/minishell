@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   writers.c                                          :+:      :+:    :+:   */
+/*   builtin_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 13:36:31 by lperalta          #+#    #+#             */
-/*   Updated: 2025/12/16 17:35:52 by msedeno-         ###   ########.fr       */
+/*   Created: 2026/01/22 20:16:55 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/22 20:16:56 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../../include/minishell.h"
 
-int	ft_putchar(char c)
+void	free_env_list(t_env *head)
 {
-	write(1, &c, 1);
-	return (1);
+	t_env	*tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		if (head->key)
+			free(head->key);
+		if (head->value)
+			free(head->value);
+		free(head);
+		head = tmp;
+	}
 }
 
-int	ft_putstr(char *s)
+void	free_node(t_env *node)
 {
-	if (!s)
-		return (ft_putstr("(null)"));
-	write(1, s, ft_strlen(s));
-	return (ft_strlen(s));
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
+	free(node);
 }

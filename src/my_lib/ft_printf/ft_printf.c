@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   specifiers.c                                       :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:04:27 by lperalta          #+#    #+#             */
-/*   Updated: 2025/05/21 13:42:42 by lperalta         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:35:01 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printsft.h"
+#include "../includes/ft_printf.h"
 
 int	ft_specifiers(char type, va_list args)
 {

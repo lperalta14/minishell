@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   writers.c                                          :+:      :+:    :+:   */
+/*   utils_random.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 13:36:31 by lperalta          #+#    #+#             */
-/*   Updated: 2025/12/16 17:35:52 by msedeno-         ###   ########.fr       */
+/*   Created: 2026/01/22 20:17:43 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/22 20:17:44 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../include/minishell.h"
 
-int	ft_putchar(char c)
+void	skip_spaces(t_lexer_state *state)
 {
-	write(1, &c, 1);
-	return (1);
+	while (state->pos < state->len && (state->input[state->pos] == ' '
+			|| state->input[state->pos] == '\t'))
+		state->pos++;
 }
 
-int	ft_putstr(char *s)
+int	is_operator(char c)
 {
-	if (!s)
-		return (ft_putstr("(null)"));
-	write(1, s, ft_strlen(s));
-	return (ft_strlen(s));
+	return (c == '|' || c == '<' || c == '>');
 }
+
+/*int	is_word(char c)
+{
+	if (!is_operator(c) && !is_quote(c) && !isspace(c))
+		return (1);
+	return (0);
+}*/

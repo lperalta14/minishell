@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   writers.c                                          :+:      :+:    :+:   */
+/*   execute_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 13:36:31 by lperalta          #+#    #+#             */
-/*   Updated: 2025/12/16 17:35:52 by msedeno-         ###   ########.fr       */
+/*   Created: 2026/01/28 10:42:25 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/28 10:42:26 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../../include/minishell.h"
 
-int	ft_putchar(char c)
+void	clean_child_exit(int status, t_env **env, char **mat, t_command *cmds)
 {
-	write(1, &c, 1);
-	return (1);
-}
-
-int	ft_putstr(char *s)
-{
-	if (!s)
-		return (ft_putstr("(null)"));
-	write(1, s, ft_strlen(s));
-	return (ft_strlen(s));
+	if (mat)
+		ft_freematrix(mat);
+	if (cmds)
+		free_commands(cmds);
+	free_env_list(*env);
+	rl_clear_history();
+	exit(status);
 }

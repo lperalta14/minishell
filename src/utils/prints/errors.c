@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   writers.c                                          :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 13:36:31 by lperalta          #+#    #+#             */
-/*   Updated: 2025/12/16 17:35:52 by msedeno-         ###   ########.fr       */
+/*   Created: 2026/01/22 20:17:14 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/22 20:17:15 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../../include/minishell.h"
 
-int	ft_putchar(char c)
+void	print_error(char *cmd, char *msg)
 {
-	write(1, &c, 1);
-	return (1);
-}
-
-int	ft_putstr(char *s)
-{
-	if (!s)
-		return (ft_putstr("(null)"));
-	write(1, s, ft_strlen(s));
-	return (ft_strlen(s));
+	ft_putstr_fd("minishell: ", 2);
+	if (cmd)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putendl_fd(msg, 2);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 14:34:14 by lperalta          #+#    #+#             */
+/*   Updated: 2026/01/23 14:34:16 by lperalta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
@@ -41,7 +53,8 @@ int		ft_putstr(char *s);
 int		ft_putnbrcnt(int n);
 
 /**
- * @brief Prints an unsigned integer and returns the number of characters printed.
+ * @brief Prints an unsigned integer and returns
+ * the number of characters printed.
  *
  * @param n The unsigned integer to print.
  * @return int The number of characters printed.
@@ -73,6 +86,5 @@ int		ft_putptr(unsigned long n);
  * @return int The total number of characters printed.
  */
 int		ft_printf(const char *nbr, ...);
-
 
 #endif

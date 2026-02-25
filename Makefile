@@ -9,7 +9,7 @@ OBJ_DIR = obj
 INCLUDES = $(INCLUDES_DIR)/minishell.h \
 	$(INCLUDES_DIR)/libft.h \
 	$(INCLUDES_DIR)/builtins.h \
-	$(INCLUDES_DIR)/executor.h \
+	$(INCLUDES_DIR)/executer.h \
 	$(INCLUDES_DIR)/expander.h \
 	$(INCLUDES_DIR)/parser.h \
 	$(INCLUDES_DIR)/lexer.h \
@@ -24,17 +24,17 @@ TOK_DIR = src/tokenizer
 UTILS_DIR = src/utils
 
 # Source files
-BUILTINS = $(BUIL_DIR)/cdcommand.c
+BUILTINS = $(BUIL_DIR)/builtins.c $(BUIL_DIR)/cd.c $(BUIL_DIR)/echo.c $(BUIL_DIR)/env.c $(BUIL_DIR)/exit.c $(BUIL_DIR)/export.c $(BUIL_DIR)/export_utils.c $(BUIL_DIR)/pwd.c $(BUIL_DIR)/unset.c 
 
-EXECUTOR = $(EXE_DIR)/pipes.c
+EXECUTOR = $(EXE_DIR)/pipes.c $(EXE_DIR)/execute.c $(EXE_DIR)/execute_utils.c $(EXE_DIR)/env.c $(EXE_DIR)/env_utils.c $(EXE_DIR)/path.c $(EXE_DIR)/heredoc.c $(EXE_DIR)/redirs.c
 
-EXPANDER = $(EXP_DIR)/expand.c
+EXPANDER = $(EXP_DIR)/expand.c $(EXP_DIR)/expand_utils.c
 
-PARSER = $(PARS_DIR)/parse.c
+PARSER = $(PARS_DIR)/parse.c $(PARS_DIR)/parse_utils.c $(PARS_DIR)/parse_redirs.c
 
-TOKENIZER = $(TOK_DIR)/token.c $(TOK_DIR)/quotes.c $(TOK_DIR)/utils_tokens.c
+TOKENIZER = $(TOK_DIR)/token.c $(TOK_DIR)/quotes.c $(TOK_DIR)/utils_tokens.c $(TOK_DIR)/utils_quotes.c
 
-UTILS = $(UTILS_DIR)/prints/banner.c $(UTILS_DIR)/prints/tokens.c
+UTILS = $(UTILS_DIR)/utils_random.c $(UTILS_DIR)/signals.c $(UTILS_DIR)/freemem/parse_free.c $(UTILS_DIR)/freemem/free_token.c $(UTILS_DIR)/freemem/builtin_free.c $(UTILS_DIR)/freemem/execute_free.c $(UTILS_DIR)/prints/banner.c $(UTILS_DIR)/prints/tokens.c $(UTILS_DIR)/prints/parser.c $(UTILS_DIR)/prints/errors.c
 
 SRCS = src/main.c $(BUILTINS) $(EXECUTOR) $(EXPANDER) $(PARSER) \
 	$(TOKENIZER) $(UTILS)
@@ -48,9 +48,27 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 LIBFT_INC = -I$(LIBFT_DIR)/includes
 
 # Compiler and flags
+#CC = cc
+#CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC) -I/opt/homebrew/opt/readline/include #a partir del -I es de mac
+#LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory #a partir del -lreadline es de mac
+#LDFLAGS = -lreadline
+
+# Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I$(INCLUDES_DIR) $(LIBFT_INC)
-LDFLAGS = -lreadline
+
+# Detect Operating Sysem (OS Detection)
+UNAME_S := $(shell uname -s)
+
+# Conditional compilation flags
+ifeq ($(UNAME_S),Darwin)
+	# MAC
+	CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC) -I/opt/homebrew/opt/readline/include
+	LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline -lhistory
+else
+	# LINUX (School & GitHub)
+	CFLAGS = -Wall -Wextra -Werror -g -fPIE -I$(INCLUDES_DIR) $(LIBFT_INC)
+	LDFLAGS = -lreadline -lhistory
+endif
 
 # Utils
 RM = rm -rf
@@ -95,3 +113,18 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+# valgrind \
+    --leak-check=full \
+    --show-leak-kinds=all \
+    --track-fds=yes \
+    --trace-children=yes \
+    --suppressions=tests/level0/readline.supp \
+    ./minishell
+
+#Explicación de las banderas:
+#--leak-check=full: Análisis completo de memoria.
+#--show-leak-kinds=all: Muestra todos los tipos de fugas (incluso "still reachable" que no suprimas).
+#--track-fds=yes: Lo que pediste. Te dirá al final si dejaste algún file descriptor abierto (pipes, archivos, etc.).
+#--trace-children=yes: Analiza también los comandos que ejecutas dentro (forks), no solo el proceso padre.
+#--suppressions=...: Indica el archivo con reglas para ignorar errores conocidos.

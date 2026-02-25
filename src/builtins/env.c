@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   writers.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 13:36:31 by lperalta          #+#    #+#             */
-/*   Updated: 2025/12/16 17:35:52 by msedeno-         ###   ########.fr       */
+/*   Created: 2026/01/22 20:15:17 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/22 20:15:18 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../include/minishell.h"
 
-int	ft_putchar(char c)
+int	ft_env(t_env *env, char **args)
 {
-	write(1, &c, 1);
-	return (1);
-}
-
-int	ft_putstr(char *s)
-{
-	if (!s)
-		return (ft_putstr("(null)"));
-	write(1, s, ft_strlen(s));
-	return (ft_strlen(s));
+	if (args && args[1])
+	{
+		ft_putstr_fd("env: '", 2);
+		ft_putstr_fd(args[1], 2);
+		ft_putendl_fd("': No such file or directory", 2);
+		return (127);
+	}
+	while (env)
+	{
+		if (env->value)
+		{
+			ft_putstr_fd(env->key, 1);
+			ft_putchar_fd('=', 1);
+			ft_putendl_fd(env->value, 1);
+		}
+		env = env->next;
+	}
+	return (0);
 }

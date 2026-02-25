@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_freematrix.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42.fr>          #+#  +:+       +#+        */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-14 14:53:03 by lperalta          #+#    #+#             */
-/*   Updated: 2025-10-14 14:53:03 by lperalta         ###   ########.fr       */
+/*   Created: 2025/10/14 14:53:03 by lperalta          #+#    #+#             */
+/*   Updated: 2025/12/11 16:56:27 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_freematrix(char **str)
 {
-	int i;
+	int	i;
 
 	if (!str)
 		return ;
