@@ -468,10 +468,10 @@ El proyecto incluye hooks automatizados:
       <a href="https://github.com/casimarasn">
         <img src="https://cdn.intra.42.fr/users/1c2b22c55757980443f96ecd768eddf3/msedeno-.jpg" width="100px;" alt="Colaborador"/>
         <br />
-        <sub><b>Colaborador</b></sub>
+        <sub><b>María Sedeno</b></sub>
       </a>
       <br />
-      <sub>colaborador@student.42.fr</sub>
+      <sub>msedeno-@student.42malaga.com</sub>
     </td>
   </tr>
 </table>
