@@ -462,7 +462,7 @@ El proyecto incluye hooks automatizados:
         <sub><b>Luis Peralta</b></sub>
       </a>
       <br />
-      <sub>lperalta@student.42.fr</sub>
+      <sub> lperalta@student.42malaga.com</sub>
     </td>
     <td align="center">
       <a href="https://github.com/casimarasn">
