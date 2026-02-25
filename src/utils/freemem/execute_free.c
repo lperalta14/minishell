@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_random.c                                     :+:      :+:    :+:   */
+/*   execute_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/22 20:17:43 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:17:44 by msedeno-         ###   ########.fr       */
+/*   Created: 2026/01/28 10:42:25 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/28 10:42:26 by msedeno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
-void	skip_spaces(t_lexer_state *state)
+void	clean_child_exit(int status, t_env **env, char **mat, t_command *cmds)
 {
-	while (state->pos < state->len && (state->input[state->pos] == ' '
-			|| state->input[state->pos] == '\t'))
-		state->pos++;
+	if (mat)
+		ft_freematrix(mat);
+	if (cmds)
+		free_commands(cmds);
+	free_env_list(*env);
+	rl_clear_history();
+	exit(status);
 }
-
-int	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-}
-
-/*int	is_word(char c)
-{
-	if (!is_operator(c) && !is_quote(c) && !isspace(c))
-		return (1);
-	return (0);
-}*/

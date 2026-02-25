@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 20:16:06 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/27 17:03:01 by msedeno-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/lexer.h"
 
 char	*extract_var_name(char *str, int *i)
@@ -11,7 +23,7 @@ char	*extract_var_name(char *str, int *i)
 	if (!ft_isalpha(str[*i]) && str[*i] != '_')
 		return (NULL);
 	start = *i;
-	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_' || str[*i] == ' '))
 		(*i)++;
 	return (ft_substr(str, start, *i - start));
 }
@@ -44,6 +56,7 @@ int	copy_var_value(char *dst, char *src, int *i, t_env *env)
 
 	(*i)++;
 	var_name = extract_var_name(src, i);
+	//ft_printf("DEBUG: var_name='%s'\n", var_name);
 	if (!var_name)
 	{
 		dst[0] = '$';

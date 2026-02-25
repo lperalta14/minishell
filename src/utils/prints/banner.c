@@ -6,30 +6,21 @@
 /*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 17:19:52 by lperalta          #+#    #+#             */
-/*   Updated: 2025/12/17 12:39:40 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:45:16 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-/*
-          _____    __ _____  __          __  __    __  
-  /\\/\\    \\_   \\/\\ \\ \\\\_   \\/ _\\  /\\  /\\/__\\/ /   / /  
- /    \\    / /\\/  \\/ / / /\\/\\ \\  / /_/ /_\\ / /   / /   
-/ /\\/\\ \\/\\/ /_/ /\\  /\\/ /_  _\\ \\/ __  //__/ /___/ /___ 
-\\/    \\/\\____/\\_\\ \\/\\____/  \\__/\\/ /_/\\__/\\____/\\____/ 
-                                                       
-*/
-
 /**
- * @brief "crear comentario en ingles explicando que la funcion abre un txt donde hay 
- * un banner en codigo ascii y lo imprime repitiendo 6 colores"
+ * @brief "crear comentario en ingles explicando que la funcion abre 
+ * un txt donde hay un banner en codigo ascii y lo imprime repitiendo 6 colores"
  * 
  * @param text, path of txt 
  */
 void	print_banner(char *text)
 {
-	int		i = 0;
+	int		i;
 	int		fd;
 	char	*line;
 	char	*color[6];
@@ -42,7 +33,7 @@ void	print_banner(char *text)
 	color[4] = BLUE;
 	color[5] = PURPLE;
 	fd = open(text, O_RDONLY);
-	if (fd<0)
+	if (fd < 0)
 		return ;
 	line = get_next_line(fd);
 	while (line && ++i)
@@ -51,7 +42,7 @@ void	print_banner(char *text)
 		free(line);
 		line = get_next_line(fd);
 	}
-	printf("%s%s%s%s%s%s%s%s%s%s%s\n", RED, "by: ", ORANGE, 
+	printf("%s%s%s%s%s%s%s%s%s%s%s\n", RED, "by: ", ORANGE,
 		"msed", GREEN, "eno- &", BLUE, "& lpera", PURPLE, "lta :)", NC);
 	close(fd);
 }

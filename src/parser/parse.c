@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 20:16:24 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/28 09:48:18 by msedeno-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 t_command	*parse(t_token *tokens)
@@ -12,6 +24,7 @@ t_command	*parse(t_token *tokens)
 	cmds = create_command(&tokens);
 	if (!cmds)
 		return (NULL);
+	cmds->head = cmds;
 	current = cmds;
 	while (tokens && tokens->type == TK_PIPE)
 	{
@@ -19,6 +32,7 @@ t_command	*parse(t_token *tokens)
 		current->next = create_command(&tokens);
 		if (!current->next)
 			return (free_commands(cmds), NULL);
+		current->next->head = cmds;
 		current = current->next;
 	}
 	return (cmds);
@@ -34,7 +48,11 @@ t_command	*create_command(t_token **tokens)
 		return (NULL);
 	cmd->args = NULL;
 	cmd->redirs = NULL;
+	cmd->fd_in = -1;
+	cmd->fd_out = -1;
+	cmd->path = NULL;
 	cmd->next = NULL;
+	cmd->head = NULL;
 	start = *tokens;
 	cmd->args = extract_args(tokens);
 	if (!cmd->args)

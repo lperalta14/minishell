@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_free.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 20:16:55 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/22 20:16:56 by msedeno-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/minishell.h"
 
 void	free_env_list(t_env *head)
@@ -14,4 +26,13 @@ void	free_env_list(t_env *head)
 		free(head);
 		head = tmp;
 	}
+}
+
+void	free_node(t_env *node)
+{
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
+	free(node);
 }

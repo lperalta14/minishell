@@ -1,35 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/22 20:15:17 by msedeno-          #+#    #+#             */
-/*   Updated: 2026/01/22 20:15:18 by msedeno-         ###   ########.fr       */
+/*   Created: 2026/01/22 20:15:39 by msedeno-          #+#    #+#             */
+/*   Updated: 2026/01/23 14:21:13 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_env(t_env *env, char **args)
+void	add_env(t_env **head, t_env *new)
 {
-	if (args && args[1])
+	t_env	*current;
+
+	if (!new)
+		return ;
+	if (!*head)
 	{
-		ft_putstr_fd("env: '", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putendl_fd("': No such file or directory", 2);
-		return (127);
+		*head = new;
+		return ;
 	}
+	current = *head;
+	while (current->next)
+		current = current->next;
+	current->next = new;
+}
+
+int	env_size(t_env *env)
+{
+	int	count;
+
+	count = 0;
 	while (env)
 	{
-		if (env->value)
-		{
-			ft_putstr_fd(env->key, 1);
-			ft_putchar_fd('=', 1);
-			ft_putendl_fd(env->value, 1);
-		}
+		count++;
 		env = env->next;
 	}
-	return (0);
+	return (count);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msedeno- <msedeno-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: casimarasn <casimarasn@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:44:54 by lperalta          #+#    #+#             */
-/*   Updated: 2025/12/15 18:05:28 by msedeno-         ###   ########.fr       */
+/*   Updated: 2026/01/23 16:29:04 by casimarasn       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ int		ft_islower(int c);
  * 0 en caso contrario.
  */
 int		ft_isalpha(int c);
+
+/**
+ * @brief comprueba si un carácter es '+' o '-'.
+ * 
+ * @param c Carácter a evaluar (representado como un entero).
+ * @return 1 si el carácter es entre '+' o '-', 0 en caso contrario. 
+ */
+int		ft_issign(int c);
 
 /**
  * @brief Comprueba si un carácter es un dígito decimal.

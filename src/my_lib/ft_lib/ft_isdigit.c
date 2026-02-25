@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperalta <lperalta@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: lperalta <lperalta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:19:52 by lperalta          #+#    #+#             */
-/*   Updated: 2025/04/22 11:27:40 by lperalta         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:28:01 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
+
+int	ft_issign(int c)
+{
+	if (c != 43 && c != 45)
+		return (0);
+	return (1);
+}
 
 int	ft_isdigit(int c)
 {
