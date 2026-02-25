@@ -1,6 +1,4 @@
 <div align="center">
-
-![WORKINPROGRESS](banners/workinprogres.gif)
   
 ![Minishell Banner](banners/minishell.gif)
 
