@@ -95,6 +95,6 @@ valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
 ## Authors
 
-**Luis Peralta** · [GitHub](https://github.com/lperalta14) · [LinkedIn](https://www.linkedin.com/in/lperaltamunoz/)
+**Luis Peralta** · [GitHub](https://github.com/lperalta14) · [LinkedIn](www.linkedin.com/in/lperaltamuñoz)
 
 Maria Sedeño · [GitHub](https://github.com/casimarasn) · 42 Málaga
