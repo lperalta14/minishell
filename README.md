@@ -40,7 +40,7 @@ pipes, redirections and signal management.
 ### Build
 
 ```bash
-git clone git@github.com:lperalta14/minishell.git
+git clone https://github.com/lperalta14/minishell.git
 cd minishell
 make
 ```
@@ -80,7 +80,7 @@ The project is organized into independent modules for tokenization, parsing, exp
 
 ## Testing
 
-A custom Bash-based test script is included to compare Minishell behaviour
+A custom Bash-based test suite is included to compare Minishell behaviour
 against Bash across commands, quotes, variables, pipes, redirections and
 other edge cases.
 
