@@ -54,6 +54,7 @@ Example:
 minihell> echo "Hello, world!" | grep Hello
 Hello, world!
 ```
+the prompt is intentionally 'minihell' — a nod to how painful this project is 😄
 
 ## Architecture
 ```
